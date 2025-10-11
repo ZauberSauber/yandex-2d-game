@@ -1,11 +1,11 @@
 import {
   useDispatch as useDispatchBase,
   useSelector as useSelectorBase,
-  TypedUseSelectorHook,
   useStore as useStoreBase,
 } from 'react-redux';
-import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
+import type { TypedUseSelectorHook } from 'react-redux';
 
 import friendsReducer from './slices/friendsSlice';
 import ssrReducer from './slices/ssrSlice';
