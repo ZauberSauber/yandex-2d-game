@@ -1,3 +1,9 @@
-export { MainPage } from './Main';
-export { NotFoundPage } from './NotFound';
-export { FriendsPage } from './FriendsPage';
+export * from './EndScreen';
+export * from './StartScreen';
+export * from './blog';
+export * from './leaderboard';
+export * from './profile';
+export * from './signIp';
+export * from './signUp';
+export * from './main';
+export * from './notFound';
