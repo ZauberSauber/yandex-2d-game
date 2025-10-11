@@ -1,19 +1,13 @@
 import { useEffect } from 'react';
+
+import { selectPageHasBeenInitializedOnServer, setPageHasBeenInitializedOnServer } from '@slices';
+
 import { useDispatch, useSelector, useStore } from '../store';
-import {
-  setPageHasBeenInitializedOnServer,
-  selectPageHasBeenInitializedOnServer,
-} from '../slices/ssrSlice';
-import { PageInitArgs, PageInitContext } from '../routes';
+import type { PageInitArgs, PageInitContext } from '../routes';
 
 const getCookie = (name: string) => {
   const matches = document.cookie.match(
-    new RegExp(
-      '(?:^|; )' +
-        // eslint-disable-next-line
-        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-        '=([^;]*)'
-    )
+    new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\/+^])/g, '\\$1') + '=([^;]*)')
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
@@ -37,5 +31,5 @@ export const usePage = ({ initPage }: PageProps) => {
       return;
     }
     initPage({ dispatch, state: store.getState(), ctx: createContext() });
-  }, []);
+  }, [dispatch, initPage, pageHasBeenInitializedOnServer, store]);
 };

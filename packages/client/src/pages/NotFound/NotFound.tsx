@@ -1,7 +1,9 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import { usePage } from '@hooks';
 
-import { Header } from '../components/Header';
-import { usePage } from '../hooks/usePage';
+import { Header } from '@components/Header';
+
+import { initNotFoundPage } from './initNotFoundPage';
 
 export const NotFoundPage = () => {
   usePage({ initPage: initNotFoundPage });
@@ -18,5 +20,3 @@ export const NotFoundPage = () => {
     </div>
   );
 };
-
-export const initNotFoundPage = () => Promise.resolve();

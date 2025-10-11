@@ -1,0 +1,76 @@
+module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: ['./tsconfig.json'],
+    ecmaVersion: 'es2020',
+    sourceType: 'module',
+  },
+  env: { browser: true, node: true, es2020: true },
+  settings: {
+    'import/resolver': {
+      typescript: { project: './tsconfig.json' },
+      node: { extensions: ['.js', '.jsx', '.ts', '.tsx', '.mts', '.mjs'] },
+    },
+    'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx', '.mts'] },
+  },
+  extends: ['plugin:@typescript-eslint/recommended', 'airbnb-typescript', 'prettier'],
+  rules: {
+    'import/extensions': 'off',
+    'import/no-duplicates': ['error', { 'prefer-inline': false, considerQueryString: true }],
+    'import/no-extraneous-dependencies': 'off',
+    'import/no-cycle': 'error',
+    'import/prefer-default-export': 'off',
+    'import/named': 'error',
+    'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+    'arrow-parens': ['warn', 'always'],
+    'arrow-body-style': 'warn',
+    'max-classes-per-file': 'warn',
+    'class-methods-use-this': 'off',
+    'global-require': 'off',
+    'no-use-before-define': 'off',
+    'no-shadow': 'off',
+    'no-loss-of-precision': 'off',
+
+    'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { args: 'all', argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        prefer: 'type-imports',
+        disallowTypeAnnotations: false,
+        fixStyle: 'separate-type-imports',
+      },
+    ],
+    '@typescript-eslint/ban-types': 'warn',
+    '@typescript-eslint/no-shadow': 'error',
+    '@typescript-eslint/no-useless-constructor': 'error',
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-unused-expressions': 'warn',
+    '@typescript-eslint/type-annotation-spacing': 'error',
+    '@typescript-eslint/no-loss-of-precision': 'off',
+    '@typescript-eslint/naming-convention': [
+      'warn',
+      { selector: 'variable', format: null, leadingUnderscore: 'allow' },
+      { selector: 'typeLike', format: ['PascalCase'] },
+      { selector: 'enumMember', format: ['camelCase', 'PascalCase'] },
+    ],
+
+    'react/jsx-filename-extension': 'off',
+
+    'lines-between-class-members': ['warn', 'always', { exceptAfterSingleLine: false }],
+  },
+  plugins: ['@typescript-eslint', 'import', 'simple-import-sort'],
+  ignorePatterns: [
+    'node_modules/',
+    'dist/',
+    '**/*.min.js',
+    '**/*.config.js',
+    'packages/client/server/index.js',
+    'client/.eslintrc.*',
+    'server/.eslintrc.*',
+  ],
+};
