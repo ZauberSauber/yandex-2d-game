@@ -1,6 +1,6 @@
-import { useSelector } from './store';
+import { selectUser } from '@slices';
 
-import { selectUser } from './slices/userSlice';
+import { useSelector } from './store';
 
 const App = () => {
   const user = useSelector(selectUser);

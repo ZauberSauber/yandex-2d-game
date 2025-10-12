@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "composite": true,
-    "target": "es2019",
+    "target": "es2020",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "lib": ["es2019", "DOM"]
+    "lib": ["es2020", "DOM"]
   },
   "include": ["server/index.ts"]
 }

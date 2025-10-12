@@ -6,4 +6,5 @@ package-lock.json
 *.config.js
 *.config.ts
 .eslintrc.js
+!vite.config.ts
 

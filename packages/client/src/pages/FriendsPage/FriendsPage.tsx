@@ -1,11 +1,11 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
+import { usePage } from '@hooks';
 
-import { useSelector } from '../store';
-import { Header } from '../components/Header';
-import { fetchFriendsThunk, selectFriends, selectIsLoadingFriends } from '../slices/friendsSlice';
-import { fetchUserThunk, selectUser } from '../slices/userSlice';
-import { PageInitArgs } from '../routes';
-import { usePage } from '../hooks/usePage';
+import { Header } from '@components/Header';
+import { selectFriends, selectIsLoadingFriends, selectUser } from '@slices';
+import { useSelector } from '@src/store';
+
+import { initFriendsPage } from './initFriendsPage';
 
 export const FriendsPage = () => {
   const friends = useSelector(selectFriends);
@@ -13,6 +13,7 @@ export const FriendsPage = () => {
   const user = useSelector(selectUser);
 
   usePage({ initPage: initFriendsPage });
+
   return (
     <div className="App">
       <Helmet>
@@ -47,12 +48,4 @@ export const FriendsPage = () => {
       )}
     </div>
   );
-};
-
-export const initFriendsPage = ({ dispatch, state }: PageInitArgs) => {
-  const queue: Array<Promise<unknown>> = [dispatch(fetchFriendsThunk())];
-  if (!selectUser(state)) {
-    queue.push(dispatch(fetchUserThunk()));
-  }
-  return Promise.all(queue);
 };
