@@ -3,24 +3,57 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@components": ["src/components"],
-      "@slices/*": ["src/slices/*"],
-      "@slices": ["src/slices"],
-      "@pages": ["src/pages"],
-      "@pages/*": ["src/pages/*"],
-      "@hooks": ["src/hooks"]
+      "@src/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@components": [
+        "src/components"
+      ],
+      "@slices/*": [
+        "src/slices/*"
+      ],
+      "@slices": [
+        "src/slices"
+      ],
+      "@pages": [
+        "src/pages"
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@hooks": [
+        "src/hooks"
+      ],
+      "@layout": [
+        "src/layout"
+      ]
     },
-    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2020"
+    ],
     "jsx": "react-jsx",
     "useDefineForClassFields": true,
     "noEmit": true,
-    "types": ["vite/client"]
+    "types": [
+      "vite/client"
+    ]
   },
-  "include": ["src", "src/vite-env.d.ts", "vite.config.ts"],
+  "include": [
+    "src",
+    "src/vite-env.d.ts",
+    "vite.config.ts"
+  ],
   "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.server.json" }
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.server.json"
+    }
   ]
 }

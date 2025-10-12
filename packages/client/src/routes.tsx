@@ -1,8 +1,3 @@
-import { FriendsPage, MainPage, NotFoundPage } from '@pages';
-import { initFriendsPage } from '@pages/FriendsPage/initFriendsPage';
-import { initMainPage } from '@pages/Main/initMaiPage';
-import { initNotFoundPage } from '@pages/NotFound/initNotFoundPage';
-
 import type { AppDispatch, RootState } from './store';
 
 export type PageInitContext = {
@@ -18,17 +13,23 @@ export type PageInitArgs = {
 export const routes = [
   {
     path: '/',
-    Component: MainPage,
-    fetchData: initMainPage,
+    Component: () => <div>Main Page</div>,
+    fetchData: (props: PageInitArgs) => {
+      void props;
+    },
   },
   {
     path: '/friends',
-    Component: FriendsPage,
-    fetchData: initFriendsPage,
+    Component: () => <div>Main Page</div>,
+    fetchData: (props: PageInitArgs) => {
+      void props;
+    },
   },
   {
     path: '*',
-    Component: NotFoundPage,
-    fetchData: initNotFoundPage,
+    Component: () => <div>Main Page</div>,
+    fetchData: (props: PageInitArgs) => {
+      void props;
+    },
   },
 ];
