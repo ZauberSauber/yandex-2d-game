@@ -1,0 +1,31 @@
+ $color-neon-blue: #0ff0fc;
+  $color-neon-pink: #ff2a6d;
+  $color-neon-purple: #9d00ff;
+  $color-neon-cyan: #0f8;
+
+  /* Background Colors */
+  $color-dark-bg: #0a0a12;
+  $color-darker-bg: #050508;
+
+  /* Status Colors */
+  $color-error: #ff3860;
+  $color-success: #2ecc71;
+  $color-warning: #f39c12;
+
+  /* Text Colors */
+  $color-text: #fff;
+  $color-text-secondary: #ccc;
+
+  /* Common styles */
+  $border-color: rgb(255 255 255 / 10%);
+  $glow-intensity: 0.3;
+
+  /* Typography */
+  $font-main: 'Rajdhani', sans-serif;
+  $font-heading: 'Orbitron', sans-serif;
+  $base-font-size: 16px;
+
+  /* Animations */
+  $transition-duration: 0.3s;
+  $transition-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+

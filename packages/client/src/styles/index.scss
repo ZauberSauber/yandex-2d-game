@@ -1,0 +1,55 @@
+@use './variables.scss' as v;
+
+/* Global Resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: v.$base-font-size;
+}
+
+body {
+  background: v.$color-dark-bg;
+  color: v.$color-text;
+  font-family: v.$font-main;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: v.$font-heading;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* Selection */
+::selection {
+  background: v.$color-neon-blue;
+  color: v.$color-dark-bg;
+}
