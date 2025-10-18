@@ -1,5 +1,5 @@
 export * from './EndScreen';
-export * from './StartScreen';
+export * from './preGame';
 export * from './blog';
 export * from './leaderboard';
 export * from './profile';

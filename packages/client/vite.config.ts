@@ -24,6 +24,8 @@ export default defineConfig({
   ssr: {
     format: 'cjs',
   },
+  resolve: { alias: { styles: path.resolve(__dirname, './src/styles') } },
+  css: { modules: { generateScopedName: '[name]_[local]__[hash:base64:5]' } },
   plugins: [
     react(),
     viteTsconfigPaths(),

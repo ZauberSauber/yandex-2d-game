@@ -1,5 +1,27 @@
 @use './variables.scss' as v;
 
+::-webkit-scrollbar,
+::-webkit-scrollbar:horizontal {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: v.$color-neon-blue;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: v.$color-neon-purple;
+}
+
+
 /* Global Resets */
 * {
   margin: 0;

@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { Card, Col, Divider, Flex, Layout, List, Row, Space, Typography } from 'antd';
 
 import { Button } from '@components/Button';
+import { PATHS } from '@src/routes';
 
 import { FEATURES } from './constants';
 
@@ -9,6 +11,8 @@ import styles from './MainPage.module.scss';
 export const MainPage = () => {
   const { Header, Content } = Layout;
   const { Title, Paragraph, Text } = Typography;
+
+  const navigate = useNavigate();
 
   return (
     <Layout className={styles.layout}>
@@ -32,7 +36,7 @@ export const MainPage = () => {
             </div>
 
             <Space direction="vertical" size="large" style={{ width: '100%' }} />
-            <Button className={styles['start-button']}>
+            <Button className={styles['start-button']} onClick={() => navigate(PATHS.START)}>
               НАЧАТЬ ИГРУ
             </Button>
           </Space>
@@ -98,9 +102,7 @@ export const MainPage = () => {
 
         <Row justify="center" className={styles['action-row']}>
           <Col>
-            <Button>
-              НАЧАТЬ ПОГРУЖЕНИЕ
-            </Button>
+            <Button>НАЧАТЬ ПОГРУЖЕНИЕ</Button>
           </Col>
         </Row>
       </Content>

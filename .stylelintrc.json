@@ -44,6 +44,7 @@
       "transition",
       "animation"
     ],
+    "selector-pseudo-class-no-unknown": [true, { "ignorePseudoClasses": ["global"] }],
     "declaration-block-no-duplicate-properties": true,
     "no-duplicate-selectors": true,
     "block-no-empty": true,
@@ -53,9 +54,9 @@
     "declaration-block-no-shorthand-property-overrides": true
   },
   "ignoreFiles": [
-    "build/*",
-    "dist/*",
-    "node_modules/**/*",
+    "**/build/*",
+    "**/dist/*",
+    "**/node_modules/**",
     "**/*.min.css",
     "coverage/**/*",
     "*.config.js",

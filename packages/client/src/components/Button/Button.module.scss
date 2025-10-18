@@ -1,18 +1,21 @@
-@use '../../styles/variables.scss' as v;
+@use 'styles/variables.scss' as v;
 
 .button {
-  padding: 16px 25px;
-  border: 1px solid v.$color-neon-blue !important;
-  background: transparent;
-  color: v.$color-neon-blue !important;
   font-weight: bold;
   transition: all v.$transition-duration v.$transition-easing;
   border-radius: 0;
 
-  &:hover {
-    border-color: v.$color-neon-pink !important;;
-    color: v.$color-neon-pink !important;;
-    box-shadow: 0 0 15px rgb(v.$color-neon-pink, v.$glow-intensity) !important;;
-    transform: translateY(-2px) !important;;
+  &:global(.ant-btn) {
+    padding: 16px 25px;
+    border: 1px solid v.$color-neon-blue;
+    background: transparent;
+    color: v.$color-neon-blue;
+  }
+
+  &:global(.ant-btn):not(:disabled):hover {
+    border-color: v.$color-neon-pink;
+    color: v.$color-neon-pink;
+    box-shadow: 0 0 15px rgba(v.$color-neon-pink, v.$glow-intensity);
+    transform: translateY(-2px);
   }
 }

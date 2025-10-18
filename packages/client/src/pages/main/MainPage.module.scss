@@ -1,4 +1,5 @@
-@use '../../styles/variables.scss' as v;
+@use 'styles/variables.scss' as v;
+@use 'styles/default.scss' as d;
 
 .layout {
   width: 70vw;
@@ -18,9 +19,9 @@
     border-bottom: none;
 
     .main-title {
-      color: v.$color-neon-blue;
-      text-shadow: 0 0 10px v.$color-neon-blue, 0 0 20px v.$color-neon-blue;
       margin-bottom: 20px;
+
+      @include d.neonTitle();
     }
 
     .sub-title {
@@ -29,6 +30,7 @@
     }
 
     .start-button {
+      padding: 25px 30px;
       margin-top: 25px;
       font-size: 22px;
     }
@@ -51,9 +53,9 @@
 
       .card-title {
         margin: 0 0 30px;
-        color: v.$color-neon-blue;
         text-align: center;
-        text-shadow: 0 0 10px v.$color-neon-blue, 0 0 20px v.$color-neon-blue;
+
+        @include d.neonTitle();
       }
 
       .paragraph {
@@ -73,9 +75,8 @@
 
           .list-text {
             position: relative;
-            padding: 0;
+            padding: 0 0 0 20px;
             color: v.$color-neon-blue;
-            padding-left: 20px;
 
             &::before {
               position: absolute;

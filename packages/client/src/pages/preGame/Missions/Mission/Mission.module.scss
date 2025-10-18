@@ -1,0 +1,37 @@
+@use 'styles/variables' as v;
+@use 'styles/default' as d;
+
+.mission {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: min-content 50px;
+  place-items: start start;
+  gap: 10px;
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  border: 1px solid v.$color-neon-blue;
+
+  .title {
+    @include d.neonTitle;
+  }
+
+  .description {
+    color: #ddd;
+  }
+
+  .award {
+    color: v.$color-neon-cyan;
+  }
+
+  .complete {
+    place-self: center center;
+    padding-bottom: 5px;
+
+    @include d.neonTitle(v.$color-neon-cyan);
+  }
+
+  .btn {
+    place-self: center center;
+  }
+}
