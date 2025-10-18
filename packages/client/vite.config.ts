@@ -31,7 +31,7 @@ export default defineConfig({
       typescript: { tsconfigPath: './tsconfig.json' },
       stylelint: {
         watchPath: 'src',
-        lintCommand: 'stylelint "**/*.{css,scss,sass}"',
+        lintCommand: 'stylelint "**/*.{css,scss}"',
         dev: { logLevel: ['error'] },
       },
       eslint: {

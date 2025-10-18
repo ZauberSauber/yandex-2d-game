@@ -7,6 +7,8 @@
   "rules": {
     "color-hex-length": "short",
     "color-named": "never",
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": true,
     "order/order": [
       "dollar-variables",
       "custom-properties",
@@ -42,7 +44,6 @@
       "transition",
       "animation"
     ],
-    "declaration-no-important": true,
     "declaration-block-no-duplicate-properties": true,
     "no-duplicate-selectors": true,
     "block-no-empty": true,
