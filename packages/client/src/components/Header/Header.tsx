@@ -10,7 +10,7 @@ export const Header = () => (
     <Link to="/end">Последний экран</Link>
     <Link to="/profile">Профиль</Link>
     <Link to="/leaderboard">Лидербоард</Link>
-    <Link to="/blog">Блог</Link>
+    <Link to="/forum">Форум</Link>
     <Link to="/sign-in">Войти</Link>
     <Link to="/sign-up">Регистрация</Link>
   </Flex>

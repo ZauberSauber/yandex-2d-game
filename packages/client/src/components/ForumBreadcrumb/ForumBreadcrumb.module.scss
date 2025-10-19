@@ -1,0 +1,48 @@
+@use '../../styles/variables.scss' as v;
+
+.breadcrumb-container {
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid v.$color-neon-blue;
+
+  .breadcrumb {
+    .ant-breadcrumb-separator {
+      margin: 0 8px;
+      color: v.$color-neon-pink;
+    }
+
+    .ant-breadcrumb-link {
+      color: v.$color-text-secondary;
+      transition: all v.$transition-duration v.$transition-easing;
+
+      &:hover {
+        color: v.$color-neon-blue;
+      }
+    }
+
+    .breadcrumb-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: v.$color-text-secondary;
+      transition: all v.$transition-duration v.$transition-easing;
+      cursor: pointer;
+
+      &:hover {
+        color: v.$color-neon-blue;
+        text-shadow: 0 0 5px v.$color-neon-blue;
+      }
+
+      &:last-child {
+        color: v.$color-neon-blue;
+        cursor: default;
+        font-weight: bold;
+
+        &:hover {
+          color: v.$color-neon-blue;
+          text-shadow: 0 0 5px v.$color-neon-blue;
+        }
+      }
+    }
+  }
+}

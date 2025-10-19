@@ -1,0 +1,185 @@
+@use '../../styles/variables.scss' as v;
+
+.create-topic-page {
+  width: 70vw;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid v.$color-neon-blue;
+  background: v.$color-dark-bg;
+  min-height: 100vh;
+
+  .header {
+    margin-bottom: 30px;
+
+    .back-button {
+      border: 1px solid v.$color-neon-blue;
+      background: transparent;
+      color: v.$color-neon-blue;
+      margin-bottom: 20px;
+      transition: all v.$transition-duration v.$transition-easing;
+
+      &:hover {
+        border-color: v.$color-neon-pink;
+        color: v.$color-neon-pink;
+        box-shadow: 0 0 10px rgb(v.$color-neon-pink, v.$glow-intensity);
+      }
+    }
+
+    .title {
+      color: v.$color-neon-blue;
+      text-shadow: 0 0 10px v.$color-neon-blue, 0 0 20px v.$color-neon-blue;
+      font-family: v.$font-heading;
+    }
+  }
+
+  .form-card {
+    border: 1px solid v.$color-neon-blue;
+    background: rgb(0 0 0 / 70%);
+    border-radius: 8px;
+    animation: glitch-border 3s infinite alternate;
+
+    .form {
+      .label {
+        color: v.$color-neon-blue;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .input {
+        border: 1px solid v.$color-neon-purple;
+        background: transparent;
+        color: v.$color-text;
+        border-radius: 4px;
+        transition: all v.$transition-duration v.$transition-easing;
+
+        &:focus {
+          border-color: v.$color-neon-blue;
+          box-shadow: 0 0 10px rgb(v.$color-neon-blue, v.$glow-intensity);
+        }
+
+        &:hover {
+          border-color: v.$color-neon-blue;
+        }
+
+        input {
+          border: none;
+          background: transparent;
+          color: v.$color-text;
+
+          &::placeholder {
+            color: v.$color-text-secondary;
+          }
+        }
+      }
+
+      .select,
+      .tags-select {
+        .ant-select-selector {
+          border: 1px solid v.$color-neon-purple !important;
+          background: transparent !important;
+          color: v.$color-text !important;
+          border-radius: 4px !important;
+          transition: all v.$transition-duration v.$transition-easing !important;
+
+          &:hover {
+            border-color: v.$color-neon-blue !important;
+          }
+        }
+
+        .ant-select-selection-placeholder {
+          color: v.$color-text-secondary !important;
+        }
+
+        .ant-select-selection-item {
+          color: v.$color-text !important;
+        }
+
+        &.ant-select-focused .ant-select-selector {
+          border-color: v.$color-neon-blue !important;
+          box-shadow: 0 0 10px rgb(v.$color-neon-blue, v.$glow-intensity) !important;
+        }
+      }
+
+      .textarea {
+        border: 1px solid v.$color-neon-purple;
+        background: transparent;
+        color: v.$color-text;
+        border-radius: 4px;
+        transition: all v.$transition-duration v.$transition-easing;
+
+        &:focus {
+          border-color: v.$color-neon-blue;
+          box-shadow: 0 0 10px rgb(v.$color-neon-blue, v.$glow-intensity);
+        }
+
+        &:hover {
+          border-color: v.$color-neon-blue;
+        }
+
+        textarea {
+          border: none;
+          background: transparent;
+          color: v.$color-text;
+          resize: vertical;
+
+          &::placeholder {
+            color: v.$color-text-secondary;
+          }
+        }
+      }
+
+      .submit-section {
+        text-align: center;
+        margin-top: 30px;
+
+        .submit-button {
+          height: auto;
+          padding: 12px 30px;
+          border: 1px solid v.$color-neon-blue;
+          background: v.$color-neon-blue;
+          color: v.$color-dark-bg;
+          font-size: 16px;
+          font-weight: bold;
+          transition: all v.$transition-duration v.$transition-easing;
+
+          &:hover {
+            background: v.$color-neon-pink;
+            border-color: v.$color-neon-pink;
+            box-shadow: 0 0 15px rgb(v.$color-neon-pink, v.$glow-intensity);
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+
+  @keyframes glitch-border {
+    0% {
+      box-shadow: 0 0 10px rgb(v.$color-neon-blue, 0.5);
+      border-color: v.$color-neon-blue;
+    }
+
+    25% {
+      box-shadow: 0 0 20px rgb(v.$color-neon-pink, 0.7),
+        0 0 30px rgb(v.$color-neon-blue, 0.5);
+      border-color: v.$color-neon-pink;
+    }
+
+    50% {
+      box-shadow: 0 0 25px rgb(v.$color-neon-blue, 0.8),
+        0 0 40px rgb(v.$color-neon-pink, 0.6);
+      border-color: v.$color-neon-blue;
+    }
+
+    75% {
+      box-shadow: 0 0 15px rgb(v.$color-neon-pink, 0.9),
+        0 0 25px rgb(v.$color-neon-blue, 0.7);
+      border-color: v.$color-neon-pink;
+    }
+
+    100% {
+      box-shadow: 0 0 10px rgb(v.$color-neon-blue, 0.5);
+      border-color: v.$color-neon-blue;
+    }
+  }
+}

@@ -13,6 +13,8 @@ import {
   StartScreen,
 } from '@pages';
 
+import { CreateTopicPage, ForumPage, TopicPage } from './pages/forum';
+
 export function App() {
   return (
     <BrowserRouter>
@@ -29,6 +31,9 @@ export function App() {
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:id" element={<LeaderboardPage />} />
+          <Route path="/forum" element={<ForumPage />} />
+          <Route path="/forum/create-topic" element={<CreateTopicPage />} />
+          <Route path="/forum/topic/:id" element={<TopicPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
