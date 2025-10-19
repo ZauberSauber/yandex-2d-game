@@ -1,22 +1,22 @@
 import { Button } from 'antd';
-import classNames from 'classnames';
+import cn from 'classnames';
+import type { ButtonProps } from 'antd';
 import type { ReactNode } from 'react';
 
-import type { ClassName } from '../types';
+import type { IClassName } from '@types';
 
 import styles from './Button.module.scss';
 
-interface ButtonProps {
+interface IButtonProps extends Omit<ButtonProps, 'className'> {
   children: ReactNode;
-  size?: 'small' | 'middle' | 'large';
-  className: ClassName;
+  className?: IClassName;
 }
 
-export const ButtonComponent = (props: ButtonProps) => {
-  const { children, size, className, ...restProps } = props;
+export const ButtonComponent = (props: IButtonProps) => {
+  const { children, className, ...restProps } = props;
 
   return (
-    <Button ghost size={size} className={classNames(styles.button, className)} {...restProps}>
+    <Button ghost {...restProps} className={cn(styles.button, className)}>
       {children}
     </Button>
   );

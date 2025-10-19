@@ -1,0 +1,36 @@
+@use 'styles/variables' as v;
+@use 'styles/default' as d;
+
+$gap: 20px;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+  margin: 15px;
+  padding: 10px;
+  border: 1px solid v.$color-neon-blue;
+
+  .name {
+    margin-bottom: 10px;
+
+    @include d.neonTitle;
+  }
+
+  .name-value {
+    @include d.neonTitle(v.$color-neon-cyan)
+  }
+
+  .progress {
+    display: grid;
+    gap: 5px;
+    grid-template-rows: repeat(3, 1fr);
+
+    .item {
+      padding: 5px 10px;
+      border: 1px solid v.$color-neon-purple;
+      background: rgba(v.$color-neon-purple, 0.1);
+      color: v.$color-neon-blue;
+    }
+  }
+}
