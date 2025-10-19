@@ -7,4 +7,4 @@ export * from './signIp';
 export * from './signUp';
 export * from './main';
 export * from './notFound';
-export * from './Game';
+export * from './game/Game';

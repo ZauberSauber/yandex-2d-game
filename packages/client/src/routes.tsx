@@ -1,4 +1,4 @@
-import { Game } from '@pages/Game';
+import { Game } from '@pages/game/Game';
 import { PreGame } from '@pages/preGame';
 
 import type { AppDispatch, RootState } from './store';

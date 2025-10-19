@@ -1,0 +1,10 @@
+@use './variables.scss' as v;
+
+/* stylelint-disable property-no-unknown, selector-pseudo-class-no-unknown */
+:export {
+  colorNeonBlue: v.$color-neon-blue;
+  colorNeonPink: v.$color-neon-pink;
+  colorNeonPurple: v.$color-neon-purple;
+  colorNeonCyan: v.$color-neon-cyan;
+  colorDarkBg: v.$color-dark-bg;
+}

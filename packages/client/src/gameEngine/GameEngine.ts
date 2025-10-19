@@ -1,20 +1,31 @@
-import { END_COLOR, EXP_PER_CYCLE, FRAME_INTERVAL, START_COLOR } from './constants';
-import { SKILLS } from './constants/skills';
-import { ESkillName } from './types';
-import { getProgressColor } from './utils/getProgressColor';
-import type { TSkill } from './types';
+import { FRAME_INTERVAL } from './constants';
+import PageManager from './PageManager';
+import BattlePage from './pages/BattlePage';
+import CharacterPage from './pages/CharacterPage';
+import FactoryPage from './pages/FactoryPage';
+import InventoryPage from './pages/InventoryPage';
+import RaidsPage from './pages/RaidsPage';
+import SkillsPage from './pages/SkillsPage';
+import { EGamePage } from './types';
+
+import styles from '@pages/game/Game.module.scss';
 
 /* todo:
  * получение ресурсов и банк
  * настроить время получения опыта
  * анимировать фон заняий
  */
+
+type TGameEngine = {
+  containerId: string,
+  onResourceUpdate: () => void,
+  onGameOver: () => void,
+};
+
 export default class GameEngine {
   private canvas: HTMLCanvasElement;
 
-  private ctx: CanvasRenderingContext2D | null = null;
-
-  private currentScale = 0;
+  private ctx: CanvasRenderingContext2D;
 
   private animationId: number | null = null;
 
@@ -22,207 +33,89 @@ export default class GameEngine {
 
   private isAnimating = false;
 
-  private isPaused = true;
+  private pageManager: PageManager;
 
-  private pageSkill: TSkill = SKILLS.hacking;
+  private onGameOver: () => void;
 
-  private activeSkillKeyName: ESkillName | null = null;
+  private onResourceUpdate: () => void;
 
-  private page: ESkillName = ESkillName.hacking;
+  constructor({ containerId = 'game', onGameOver, onResourceUpdate }: TGameEngine) {
+    const gameContainer = document.getElementById(containerId);
 
-  constructor() {
-    this.canvas = document.getElementById('game') as HTMLCanvasElement;
-    this.ctx = this.canvas.getContext('2d');
-
-    this.setupEventListeners();
-    this.drawPage();
-  }
-
-  private setupEventListeners(): void {
-    const menu = document.getElementById('menu') as HTMLDivElement;
-
-    if (!menu) {
-      return console.error('Menu element not found');
+    if (!gameContainer) {
+      throw new Error(`Не найден контейнер с id: ${containerId}`);
     }
 
-    menu.addEventListener('click', (e) => {
-      const target = e.target as HTMLButtonElement;
-      if (target.classList.contains('btn-simple')) {
-        this.page = target.dataset.skill as ESkillName;
-        this.pageSkill = SKILLS[this.page as keyof typeof SKILLS];
-        this.handleMenuClick();
-      }
+    this.onGameOver = onGameOver;
+    this.onResourceUpdate = onResourceUpdate;
+    
+    this.canvas = this.createCanvas(gameContainer);
+    this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
-      if (!this.pageSkill) {
-        return console.error('Active skill not set');
-      }
+    this.pageManager = new PageManager(this.canvas, this.ctx);
+    this.setupPages();
 
-      if (target.classList.contains('btn-play')) {
-        this.isPaused = !this.isPaused;
-
-        if (this.isPaused) {
-          this.currentScale = 0;
-          SKILLS[this.activeSkillKeyName as ESkillName].isActive = false;
-          this.activeSkillKeyName = null;
-          this.destroy();
-          this.drawPage();
-        } else {
-          this.activeSkillKeyName = this.page;
-          SKILLS[this.activeSkillKeyName as ESkillName].isActive = true;
-          this.startAnimation();
-        }
-      }
-    });
+    this.startRendering();
   }
 
-  private handleMenuClick(): void {
-    this.drawPage();
+  private createCanvas(gameContainer: HTMLElement): HTMLCanvasElement {
+    const canvas = document.createElement('canvas') as HTMLCanvasElement;
+    canvas.classList.add(styles['game-canvas']);
+    canvas.width = 800;
+    canvas.height = 600;
+
+    gameContainer.innerHTML = '';
+    gameContainer.appendChild(canvas);
+
+    return canvas;
   }
 
-  private startAnimation(): void {
+  private setupPages(): void {
+    this.pageManager.registerPage(EGamePage.character, new CharacterPage());
+    this.pageManager.registerPage(EGamePage.factory, new FactoryPage());
+    this.pageManager.registerPage(EGamePage.inventory, new InventoryPage());
+    this.pageManager.registerPage(EGamePage.raids, new RaidsPage());
+    this.pageManager.registerPage(EGamePage.skills, new SkillsPage());
+    this.pageManager.registerPage(EGamePage.battle, new BattlePage());
+
+    // Стартовая страница
+    this.pageManager.setPage(EGamePage.raids);
+  }
+
+  private startRendering(): void {
     if (this.isAnimating) return;
 
     this.isAnimating = true;
-    this.animatePage();
-  }
+    
+    this.destroy();
+  
+    const renderLoop = (currenetTime = 0) => {
+      const deltaTime = currenetTime - this.lastFrameTime;
 
-  private calculateProgress(): void {
-    if (this.isPaused) {
-      return;
-    }
+      if (deltaTime >= FRAME_INTERVAL) {
+        this.lastFrameTime = currenetTime;
 
-    if (!this.activeSkillKeyName) {
-      return;
-    }
-
-    // скорость получения опыта
-    this.currentScale += 42;
-
-    if (this.currentScale >= SKILLS[this.activeSkillKeyName].timeTogetExp) {
-      SKILLS[this.activeSkillKeyName].exp += EXP_PER_CYCLE;
-
-      if (SKILLS[this.activeSkillKeyName].exp >= SKILLS[this.activeSkillKeyName].expToLvl) {
-        SKILLS[this.activeSkillKeyName].lvl += 1;
-        SKILLS[this.activeSkillKeyName].exp = 0;
+        this.pageManager.render();
       }
 
-      this.currentScale = 0;
+      this.animationId = requestAnimationFrame(renderLoop);
+    };
+  
+      renderLoop();
     }
+
+  private endGame(): void {
+    this.onGameOver();
   }
 
-  private drawPage(): void {
-    if (!this.ctx) {
-      return console.error('Canvas context not available');
-    }
-
-    // Очистка canvas
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // Фон
-    this.ctx.fillStyle = '#ffffffaf';
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-    this.calculateProgress();
-
-    const skillProgress = this.pageSkill.isActive ? this.currentScale : 0;
-
-    this.drawActionProgress(skillProgress, this.pageSkill?.timeTogetExp || 0);
-    this.drawAction();
-  }
-
-  private animatePage = (currenetTime = 0): void => {
-    const deeltaTime = currenetTime - this.lastFrameTime;
-
-    if (deeltaTime >= FRAME_INTERVAL) {
-      this.lastFrameTime = currenetTime;
-      this.drawPage();
-    }
-
-    this.animationId = requestAnimationFrame(this.animatePage);
-  };
-
-  private drawAction(): void {
-    if (!this.ctx) {
-      return;
-    }
-
-    const posY = 20;
-
-    this.ctx.fillStyle = '#000';
-    this.ctx.font = '14px Arial';
-    this.ctx.textAlign = 'center';
-    const text = `${this.pageSkill?.name || ''} ур. ${this.pageSkill?.lvl || ''}`;
-    this.ctx.fillText(text, this.canvas.width / 2, posY);
-
-    this.drawBar(
-      15,
-      posY + 10,
-      this.canvas.width - 30,
-      20,
-      this.pageSkill?.exp || 0,
-      this.pageSkill?.expToLvl || 0
-    );
-  }
-
-  private drawBar(
-    posX: number,
-    posY: number,
-    width: number,
-    height: number,
-    value: number,
-    maxValue: number
-  ): void {
-    if (!this.ctx) {
-      return;
-    }
-
-    this.ctx.save();
-
-    // Фон шкалы
-    this.ctx.fillStyle = '#f0f0f0';
-    this.ctx.fillRect(posX, posY, width, height);
-
-    // Заполненная часть
-    const progressWidth = (value / maxValue) * width;
-    const currenColor = getProgressColor(START_COLOR, END_COLOR, value / maxValue);
-    this.ctx.shadowColor = currenColor;
-    this.ctx.shadowBlur = 20;
-    this.ctx.shadowOffsetX = 0; // No horizontal offset for the shadow
-    this.ctx.shadowOffsetY = 0; // No vertical offset for the shadow
-    this.ctx.fillStyle = currenColor;
-    this.ctx.fillRect(posX, posY, progressWidth, height);
-
-    this.ctx.restore();
-  }
-
-  private drawActionProgress(value: number, maxValue: number): void {
-    if (!this.ctx) {
-      return;
-    }
-
-    const width = this.canvas.width;
-    const height = 40;
-    const posX = 0;
-    const posY = this.canvas.height - height;
-
-    this.drawBar(posX, posY, width, height, value, maxValue);
-
-    // Граница
-    this.ctx.strokeStyle = 'rgba(138, 43, 226, 1)';
-    this.ctx.lineWidth = 2;
-    this.ctx.strokeRect(posX, posY, width, height);
-
-    // Текст
-    this.ctx.fillStyle = '#000';
-    this.ctx.font = '14px Arial';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillText(`Текущее значение: ${value.toFixed(0)}`, width / 2, posY - 10);
+  private updateResource(): void {
+    this.onResourceUpdate();
   }
 
   public destroy(): void {
     if (this.animationId) {
-      this.isAnimating = false;
       cancelAnimationFrame(this.animationId);
+      this.animationId = null;
     }
   }
 }

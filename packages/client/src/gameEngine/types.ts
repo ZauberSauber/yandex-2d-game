@@ -1,15 +1,17 @@
+import type PageManager from "./PageManager";
+
 export enum ESkillName {
-  'employmentWork' = 'employmentWork',
-  'hacking' = 'hacking',
-  'research' = 'research',
-  'productTesting' = 'productTesting',
-  'scavenging' = 'scavenging',
-  'freelance' = 'freelance',
-  'spy' = 'spy',
-  'carTheft' = 'carTheft',
-  'mercenary' = 'mercenary',
-  'hostages' = 'hostages',
-  'corporateRaids' = 'corporateRaids',
+  employmentWork = 'employmentWork',
+  hacking = 'hacking',
+  research = 'research',
+  productTesting = 'productTesting',
+  scavenging = 'scavenging',
+  freelance = 'freelance',
+  spy = 'spy',
+  carTheft = 'carTheft',
+  mercenary = 'mercenary',
+  hostages = 'hostages',
+  corporateRaids = 'corporateRaids',
 }
 
 export type TSkill = {
@@ -17,7 +19,7 @@ export type TSkill = {
   lvl: number;
   expToLvl: number;
   exp: number;
-  timeTogetExp: number;
+  timeToGetExp: number;
   description: string;
   isActive: boolean;
 };
@@ -31,3 +33,21 @@ export type TRGB = {
   g: number;
   b: number;
 };
+
+export enum EGamePage {
+  character = 'character',
+  skills = 'skills',
+  inventory = 'inventory',
+  raids = 'raids',
+  factory = 'factory',
+  battle = 'battle',
+}
+
+export type TGamePage = {
+  [page in EGamePage]: {
+    title: string;
+    isNotNav?: boolean;
+  }
+}
+
+export type TPageManager = PageManager;
