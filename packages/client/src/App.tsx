@@ -4,6 +4,7 @@ import { Layout } from '@layout';
 import {
   BlogPage,
   EndScreen,
+  Game,
   LeaderboardPage,
   MainPage,
   NotFoundPage,
@@ -21,6 +22,7 @@ export const App = () => (
         <Route path="/start" element={<PreGame />} />
         {/* TODO: выпилить рут после https://yandex-2d-game.atlassian.net/browse/TASK-16 */}
         <Route path="/end" element={<EndScreen />} />
+        <Route path="/game" element={<Game />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/profile" element={<ProfilePage />} />
