@@ -25,6 +25,9 @@ export enum PATHS {
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
   BLOG = '/blog',
+  FORUM = '/forum',
+  FORUM_CREATE_TOPIC = '/forum/create-topic',
+  FORUM_TOPIC = '/forum/topic',
   LEADERBOARD = '/leaderboard',
 }
 
