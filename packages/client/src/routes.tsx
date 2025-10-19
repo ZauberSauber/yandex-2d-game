@@ -1,3 +1,4 @@
+import { Game } from '@pages/Game';
 import { PreGame } from '@pages/preGame';
 
 import type { AppDispatch, RootState } from './store';
@@ -40,6 +41,10 @@ export const routes = [
     fetchData: (props: PageInitArgs) => {
       void props;
     },
+  },
+  {
+    path: '/game',
+    Component: Game,
   },
   {
     path: '*',
