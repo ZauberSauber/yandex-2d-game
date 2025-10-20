@@ -21,6 +21,6 @@
     "noEmit": true,
     "types": ["vite/client"]
   },
-  "include": ["src", "src/vite-env.d.ts", "vite.config.ts"],
+  "include": ["src", "src/vite-env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.server.json" }]
 }

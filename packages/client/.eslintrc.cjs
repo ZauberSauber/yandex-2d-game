@@ -3,7 +3,7 @@ const { builtinModules } = require('node:module');
 module.exports = {
   extends: ['../../.eslintrc.cjs', 'plugin:react/recommended'],
   parserOptions: {
-    project: ['./tsconfig.json'],
+    project: './tsconfig.json',
     ecmaFeatures: { jsx: true },
     ecmaVersion: 'es2020',
     sourceType: 'module',
@@ -63,5 +63,5 @@ module.exports = {
     'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
   },
   plugins: ['react', 'react-hooks', 'jsx-a11y', 'react-refresh'],
-  ignorePatterns: ['server/**', 'node_modules/**', 'dist/**'],
+  ignorePatterns: ['server/**', 'node_modules/**', 'dist/**', '.eslintrc.cjs', 'vite.config.ts'],
 };

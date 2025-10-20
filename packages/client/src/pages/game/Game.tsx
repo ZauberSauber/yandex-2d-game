@@ -6,12 +6,14 @@ import styles from './Game.module.scss';
 
 export const Game = () => {
   const onGameOver = () => {
-    console.log('Game over')
-  }
+    // eslint-disable-next-line no-console
+    console.log('Game over');
+  };
 
   const onResourceUpdate = () => {
-    console.log('Update resource')
-  }
+    // eslint-disable-next-line no-console
+    console.log('Update resource');
+  };
 
   useEffect(() => {
     new GameEngine({

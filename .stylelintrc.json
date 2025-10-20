@@ -8,6 +8,7 @@
     "color-hex-length": "short",
     "color-named": "never",
     "at-rule-no-unknown": null,
+    "selector-class-pattern": null,
     "scss/at-rule-no-unknown": true,
     "order/order": [
       "dollar-variables",
@@ -54,8 +55,8 @@
     "declaration-block-no-shorthand-property-overrides": true
   },
   "ignoreFiles": [
-    "**/build/*",
-    "**/dist/*",
+    "**/build/**",
+    "**/dist/**",
     "**/node_modules/**",
     "**/*.min.css",
     "coverage/**/*",

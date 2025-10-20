@@ -27,7 +27,7 @@ export const PreGame = () => {
       <h4 className={styles.title}>Neo‑Tokyo Network</h4>
       <div className={styles.wrapper}>
         <GameProfile />
-        <Tabs items={tabsItems} className={styles['ant-tabs-nav']} />
+        <Tabs items={tabsItems} className={styles.antTabsNav} />
       </div>
     </div>
   );
