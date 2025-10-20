@@ -9,6 +9,7 @@ export default class ActivityManager {
 
   private activeSkillKeyName: ESkillName | null = null;
   
+  // @ts-expect-error заиспользовать при напсании логики получения опыта
   private calculateProgress(): void {
     if (this.isPaused) {
       return;
