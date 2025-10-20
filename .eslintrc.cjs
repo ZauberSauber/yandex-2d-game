@@ -65,8 +65,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import', 'simple-import-sort'],
   ignorePatterns: [
-    'node_modules/',
-    'dist/',
+    '**/node_modules/**',
+    '**/dist/**',
     '**/*.min.js',
     '**/*.config.js',
     'packages/client/server/index.js',
