@@ -104,10 +104,12 @@ export default class GameEngine {
       renderLoop();
     }
 
+  // @ts-expect-error использовать для сохранения в бд
   private endGame(): void {
     this.onGameOver();
   }
 
+  // @ts-expect-error использовать для сохранения в бд
   private updateResource(): void {
     this.onResourceUpdate();
   }
