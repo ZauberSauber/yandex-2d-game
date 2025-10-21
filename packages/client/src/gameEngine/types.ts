@@ -1,4 +1,4 @@
-import type PageManager from "./PageManager";
+import type PageManager from './PageManager';
 
 export enum ESkillName {
   employmentWork = 'employmentWork',
@@ -47,7 +47,7 @@ export type TGamePage = {
   [page in EGamePage]: {
     title: string;
     isNotNav?: boolean;
-  }
-}
+  };
+};
 
 export type TPageManager = PageManager;
