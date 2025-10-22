@@ -9,7 +9,7 @@
     "lint": "eslint \"**/*.{js,ts}\"",
     "tsc": "tsc --noEmit --p ./tsconfig.json",
     "format": "prettier --write .",
-    "check_errors": "npm run tsc && npm run lint",
+    "check-errors": "npm run tsc && npm run lint",
     "test": "jest ."
   },
   "dependencies": {
