@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from '@layout';
 import {
   BlogPage,
-  EndScreen,
+  EndGame,
   Game,
   LeaderboardPage,
   MainPage,
@@ -20,9 +20,8 @@ export const App = () => (
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/start" element={<PreGame />} />
-        {/* TODO: выпилить рут после https://yandex-2d-game.atlassian.net/browse/TASK-16 */}
-        <Route path="/end" element={<EndScreen />} />
         <Route path="/game" element={<Game />} />
+        <Route path="/end" element={<EndGame />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/profile" element={<ProfilePage />} />

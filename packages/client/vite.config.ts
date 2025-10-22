@@ -23,7 +23,12 @@ export default defineConfig({
     chunkSizeWarningLimit: 5000,
     outDir: path.join(__dirname, 'dist/client'),
   },
-  resolve: { alias: { styles: path.resolve(__dirname, './src/styles') } },
+  resolve: {
+    alias: {
+      styles: path.resolve(__dirname, './src/styles'),
+      src: path.resolve(__dirname, './src'),
+    },
+  },
   css: {
     preprocessorOptions: { scss: { quietDeps: true } },
     modules: { generateScopedName: '[name]_[local]__[hash:base64:5]' },
@@ -34,13 +39,15 @@ export default defineConfig({
     pluginChecker({
       typescript: { tsconfigPath: path.resolve(__dirname, './tsconfig.json') },
       stylelint: {
-        watchPath: 'src',
-        lintCommand: 'stylelint "**/*.{css,scss}"',
+        watchPath: './src',
+        lintCommand:
+          'stylelint "**/*.{css,scss}" --cache --cache-location ./node_modules/.cache/stylelint/.stylelintcache',
         dev: { logLevel: ['error'] },
       },
       eslint: {
-        watchPath: 'src',
-        lintCommand: 'eslint "**/*.{ts,tsx}"',
+        watchPath: './src',
+        lintCommand:
+          'eslint "**/*.{ts,tsx}" --cache --cache-location ./node_modules/.cache/eslint/.eslintcache',
         dev: { logLevel: ['error'] },
       },
     }),

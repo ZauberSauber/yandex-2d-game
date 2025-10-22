@@ -1,0 +1,6 @@
+@use 'styles/variables' as v;
+@use 'styles/default' as d;
+
+.title {
+  @include d.neonTitle(v.$color-neon-pink)
+}

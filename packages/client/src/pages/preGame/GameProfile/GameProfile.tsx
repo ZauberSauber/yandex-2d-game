@@ -1,6 +1,6 @@
 import { Flex } from 'antd';
 
-import { Button } from '@components';
+import { Button } from '@components/Button';
 
 import styles from './GameProfile.module.scss';
 
