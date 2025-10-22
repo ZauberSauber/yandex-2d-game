@@ -1,0 +1,30 @@
+@use 'styles/variables' as v;
+@use 'styles/default' as d;
+@use '../../../components/tabs/variables' as tabs;
+
+$gap: 20px;
+
+.wrapper {
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+  height: calc(100% - #{tabs.$tabsBottomMargin});
+  padding: 10px;
+  border: 1px solid v.$color-neon-blue;
+
+  .title {
+    padding: 5px 0 10px;
+    text-align: center;
+
+    @include d.neonTitle;
+  }
+
+  .missions {
+    display: flex;
+  }
+
+  .helper-text {
+    margin-top: 10px;
+
+    @include d.neonTitle(rgba(v.$color-neon-pink,0.75));
+  }
+}

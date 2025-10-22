@@ -1,5 +1,5 @@
 export * from './EndScreen';
-export * from './StartScreen';
+export * from './preGame';
 export * from './blog';
 export * from './leaderboard';
 export * from './profile';
@@ -7,3 +7,4 @@ export * from './signIp';
 export * from './signUp';
 export * from './main';
 export * from './notFound';
+export * from './game/Game';

@@ -1,13 +1,9 @@
 const { builtinModules } = require('node:module');
-const base = require('../../.eslintrc.cjs');
 
 module.exports = {
-  extends: [
-    '../../.eslintrc.cjs',
-    'plugin:react/recommended',
-  ],
+  extends: ['../../.eslintrc.cjs', 'plugin:react/recommended'],
   parserOptions: {
-    project: ['./tsconfig.json'],
+    project: './tsconfig.json',
     ecmaFeatures: { jsx: true },
     ecmaVersion: 'es2020',
     sourceType: 'module',
@@ -18,7 +14,7 @@ module.exports = {
       typescript: { project: './tsconfig.json' },
       node: { extensions: ['.js', '.jsx', '.ts', '.tsx', '.mts', '.mjs'] },
     },
-    'import/internal-regex': '^(@src|@components|@slices|@pages)(/|$)',
+    'import/internal-regex': '^(@src|@components|@slices|@pages|@types|@layout)(/|$)',
   },
 
   rules: {
@@ -38,13 +34,12 @@ module.exports = {
             '^react',
             '^react-router-dom',
             '^react+',
-            '^mobx+',
-            '^@?(?!(src|components|slices|pages)\\b)\\w',
-            '^@?(?!(common|components|slices|pages)\\b)\\w(.+)?\\u0000$',
+            '^@?(?!(src|components|slices|pages|types|layout)\\b)\\w',
+            '^@?(?!(common|components|slices|pages|types|layout)\\b)\\w(.+)?\\u0000$',
           ],
           [
-            '^(@src|@components|@slices|@pages)(/|$|/.+)?',
-            '^(@src|@components|@slices|@pages)(/|$|/.+)?\\u0000$',
+            '^(@src|@components|@slices|@pages|@types|@layout)(/|$|/.+)?',
+            '^(@src|@components|@slices|@pages|@types|@layout)(/|$|/.+)?\\u0000$',
           ],
           ['^\\.\\./', '^\\./', '^\\.\\./(.+)?\\u0000$', '^\\./(.+)?\\u0000$'],
           ['^.+\\.scss$'],
@@ -61,17 +56,12 @@ module.exports = {
     'react/display-name': 'off',
     'react-refresh/only-export-components': ['error', { allowConstantExport: true }],
     'react-hooks/rules-of-hooks': 'error',
+    'react/jsx-filename-extension': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/label-has-associated-control': ['error', { required: { some: ['nesting', 'id'] } }],
     'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
   },
-  plugins: [
-    ...(base.plugins || []),
-    'react',
-    'react-hooks',
-    'jsx-a11y',
-    'react-refresh',
-  ],
-  ignorePatterns: ['server/**'],
+  plugins: ['react', 'react-hooks', 'jsx-a11y', 'react-refresh'],
+  ignorePatterns: ['server/**', 'node_modules/**', 'dist/**', '.eslintrc.cjs', 'vite.config.ts'],
 };

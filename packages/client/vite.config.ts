@@ -19,16 +19,20 @@ export default defineConfig({
     __INTERNAL_SERVER_URL__: JSON.stringify(process.env.INTERNAL_SERVER_URL),
   },
   build: {
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 5000,
     outDir: path.join(__dirname, 'dist/client'),
   },
-  ssr: {
-    format: 'cjs',
+  resolve: { alias: { styles: path.resolve(__dirname, './src/styles') } },
+  css: {
+    preprocessorOptions: { scss: { quietDeps: true } },
+    modules: { generateScopedName: '[name]_[local]__[hash:base64:5]' },
   },
   plugins: [
     react(),
     viteTsconfigPaths(),
     pluginChecker({
-      typescript: { tsconfigPath: './tsconfig.json' },
+      typescript: { tsconfigPath: path.resolve(__dirname, './tsconfig.json') },
       stylelint: {
         watchPath: 'src',
         lintCommand: 'stylelint "**/*.{css,scss}"',

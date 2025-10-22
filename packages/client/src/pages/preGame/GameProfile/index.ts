@@ -1,0 +1,1 @@
+export { GameProfile } from './GameProfile';
