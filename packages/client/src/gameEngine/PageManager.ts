@@ -1,40 +1,25 @@
-import { GAME_PAGES } from "./constants";
-import SideMenu from "./SideMenu";
-import type AbstractGamePage from "./AbstractGamePage";
-import type { EGamePage } from "./types";
+import { GAME_PAGES } from './constants';
+import SideMenu from './SideMenu';
+import type AbstractGamePage from './AbstractGamePage';
+import type { EGamePage } from './types';
 
 export default class PageManager {
-  private static __instance: PageManager;
-    
   private pages: Map<string, AbstractGamePage> = new Map();
 
   public currentPage: AbstractGamePage | null = null;
 
   public sideMenu: SideMenu | null = null;
 
-  constructor(
-    public canvas: HTMLCanvasElement,
-    private ctx: CanvasRenderingContext2D
-  ) {
-    if (PageManager.__instance) {
-      return PageManager.__instance;
-    }
-
+  constructor(public canvas: HTMLCanvasElement, private ctx: CanvasRenderingContext2D) {
     this.sideMenu = new SideMenu(this);
     this.setupEventListeners();
-
-    PageManager.__instance = this;
-  }
-
-  public static getInstance(): PageManager {
-    if (!PageManager.__instance) {
-      throw new Error("PageManager не был инициализирован");
-    }
-
-    return PageManager.__instance;
   }
 
   registerPage(name: EGamePage, page: AbstractGamePage): void {
+    page.changePage = (pageName) => {
+      this.setPage(pageName);
+    };
+
     this.pages.set(name, page);
 
     if (!GAME_PAGES[name].isNotNav) {

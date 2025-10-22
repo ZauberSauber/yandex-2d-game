@@ -1,7 +1,7 @@
-import { StyleColors } from "@src/styles/colors";
+import { StyleColors } from '@src/styles/colors';
 
-import AbstractGamePage from "../AbstractGamePage";
-import { drawPageTitle } from "../utils/drawPageTitle";
+import AbstractGamePage from '../AbstractGamePage';
+import { drawPageTitle } from '../utils/drawPageTitle';
 
 export default class InventoryPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
