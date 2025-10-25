@@ -8,11 +8,15 @@
     "build": "tsc --project tsconfig.server.json && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
     "preview": "node server/index.js",
     "tsc": "tsc --noEmit --p ./tsconfig.json",
-    "check_errors": "npm run tsc && npm run lint",
+    "check-errors": "npm run tsc && npm run lint",
     "lint": "eslint \"**/*.{js,ts,tsx}\" && stylelint \"src/**/*.{css,scss}\"",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"**/*.{js,ts,tsx,css,scss}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "clear-vite-cache": "rimraf ./node_modules/.vite",
+    "clear-eslint-cache": "rimraf ./node_modules/.cache/eslint",
+    "clear-stylelint-cache": "rimraf ./node_modules/.cache/stylelint",
+    "clear-cache": "concurrently --kill-others 'npm:clear-vite-cache' 'npm:clear-eslint-cache' 'npm:clear-stylelint-cache'"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",

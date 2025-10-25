@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['./tsconfig.json'],
+    project: './tsconfig.json',
     ecmaVersion: 'es2020',
     sourceType: 'module',
   },
@@ -56,7 +56,7 @@ module.exports = {
       'warn',
       { selector: 'variable', format: null, leadingUnderscore: 'allow' },
       { selector: 'typeLike', format: ['PascalCase'] },
-      { selector: 'enumMember', format: ['camelCase', 'PascalCase'] },
+      { selector: 'enumMember', format: ['camelCase', 'PascalCase', 'UPPER_CASE'] },
     ],
 
     'react/jsx-filename-extension': 'off',

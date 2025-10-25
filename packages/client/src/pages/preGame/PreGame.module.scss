@@ -4,8 +4,10 @@
 $title-vertical-padding: 8px;
 $title-height: 20px;
 $footer-height: 3vh;
+$title-margin-top: 10px;
 
 .title {
+  margin-top: 10px;
   border-bottom: 1px solid v.$color-neon-blue;
   border-top: 1px solid v.$color-neon-blue;
   height: calc(20px + #{$title-vertical-padding} * 2);
@@ -17,9 +19,13 @@ $footer-height: 3vh;
 .wrapper {
   display: grid;
   gap: 10px;
-  height: calc(100vh - #{v.$header-height} - $title-height - #{$title-vertical-padding} * 2 - $footer-height);
+  height: calc(100vh - #{v.$header-height} - $title-height - #{$title-vertical-padding} * 2 - $footer-height - $title-margin-top);
   border-bottom: 1px solid v.$color-neon-blue;
-  grid-template-columns: 0.5fr 1fr
+  grid-template-columns: 0.5fr 1fr;
+
+  :global(.ant-tabs) {
+    overflow: hidden;
+  }
 }
 
 .antTabsNav {

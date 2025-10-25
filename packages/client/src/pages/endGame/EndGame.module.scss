@@ -1,0 +1,26 @@
+@use 'styles/variables' as v;
+@use 'styles/default' as d;
+
+$margin: 20px;
+
+.wrapper {
+  height: calc(100vh - #{v.$header-height} - #{$margin} * 2);
+  margin: 20px;
+  border: 1px solid v.$color-neon-blue;
+  overflow-y: scroll;
+}
+
+.statusTitle {
+  display: flex;
+  place-content: center;
+  font-size: 4em;
+}
+
+.actionBtn {
+  font-size: 2em;
+
+  &:global(.ant-btn) {
+    padding: 45px;
+    text-transform: uppercase;
+  }
+}
