@@ -1,6 +1,6 @@
-import { StyleColors } from "@src/styles/colors";
+import { StyleColors } from '@src/styles/colors';
 
-import { MAIN_FONT } from "../constants";
+import { MAIN_FONT } from '../constants';
 
 export const drawPageTitle = (ctx: CanvasRenderingContext2D, title = '') => {
   ctx.save();
@@ -11,4 +11,4 @@ export const drawPageTitle = (ctx: CanvasRenderingContext2D, title = '') => {
   ctx.fillText(title, ctx.canvas.width / 2, 20);
 
   ctx.restore();
-}
+};

@@ -1,4 +1,4 @@
-export * from './EndScreen';
+export * from './endGame';
 export * from './preGame';
 export * from './blog';
 export * from './leaderboard';

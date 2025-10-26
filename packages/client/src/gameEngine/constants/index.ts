@@ -1,4 +1,4 @@
-import type { TGamePage } from "../types";
+import type { TGamePage } from '../types';
 
 export const MAIN_FONT = '16px Rajdhani, sans-serif';
 
@@ -11,22 +11,22 @@ export const PROGRESS_SPEED = 42;
 
 export const GAME_PAGES: TGamePage = {
   character: {
-    title: "Персонаж",
+    title: 'Персонаж',
   },
   skills: {
-    title: "Навыки",
+    title: 'Навыки',
   },
   inventory: {
-    title: "Инвентарь",
+    title: 'Инвентарь',
   },
   raids: {
-    title: "Рейды",
+    title: 'Рейды',
   },
   factory: {
-    title: "Производство",
+    title: 'Производство',
   },
   battle: {
-    title: "Бой",
+    title: 'Бой',
     isNotNav: true,
-  }
-}
+  },
+};

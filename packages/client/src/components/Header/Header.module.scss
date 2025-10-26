@@ -1,7 +1,7 @@
 @use 'styles/variables' as v;
 
 .header {
-  place-content: center center;
+  align-items: center;
+  align-content: center;
   height: v.$header-height;
-  color: v.$color-neon-blue;
 }

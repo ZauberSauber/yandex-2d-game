@@ -1,4 +1,4 @@
-import { Button } from '@components';
+import { Button } from '@components/Button';
 
 import styles from './Mission.module.scss';
 
