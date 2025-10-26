@@ -1,0 +1,1 @@
+export { CircleAvatar } from './CircleAvatar';

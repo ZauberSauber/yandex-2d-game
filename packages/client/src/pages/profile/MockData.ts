@@ -1,44 +1,47 @@
 export const userMockData = {
   avatar: '',
-  displayName: 'Neo_Tokyo_User',
   firstName: 'Neo',
   secondName: 'Tokyo',
+  displayName: 'Neo_Tokyo_User',
   login: 'Neo_Tokyo_User',
   email: 'user@neotokyo.net',
-  phone: '+70000000000',
   biography: 'Хакер из будущего. Специализация: нейронные сети и кибербезопасность.',
   level: 42,
   rating: 1850,
   statistics: [
     {
-      name: 'message',
+      name: 'Сообщений',
       value: 156,
     },
     {
-      name: 'message',
-      value: 156,
+      name: 'Тем создано',
+      value: 24,
     },
     {
-      name: 'activity',
+      name: 'Активность',
       value: 89,
     },
     {
-      name: 'firstActivity',
+      name: 'На платформе',
       value: '17.10.2020',
     },
   ],
   achivments: [
     {
-      name: 'theFirstHack',
+      name: 'Первый взлом',
+      description: 'Взломана первая система',
     },
     {
-      name: 'activeParticipant',
+      name: 'Активный участник',
+      description: '100 сообщений на форуме',
     },
     {
-      name: 'top10',
+      name: 'Топ-10',
+      description: 'попадание в топ-10 лидерборда',
     },
     {
-      name: 'speed',
+      name: 'Скорость',
+      description: 'Взлом за менее чем 5 минут',
     },
   ],
 };
