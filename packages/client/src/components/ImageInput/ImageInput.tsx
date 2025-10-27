@@ -23,7 +23,7 @@ interface ImageInputProps {
   disabled?: boolean;
   downloadImgPending?: boolean;
   onChangeSrcAvatar: (value: string) => void;
-  onChangeFileAvatar: (value: FormData) => void;
+  onChangeFileAvatar: (value: File) => void;
 }
 
 export const ImageInput = ({
@@ -38,24 +38,16 @@ export const ImageInput = ({
   const src = getSrc(rawPathImg);
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.[0]) return;
+    const fileImg = e.target.files?.[0];
+    if (!fileImg) return;
 
-    const fileImg = e.target.files[0];
-    if (fileImg) {
-      const img = new Image();
-      img.src = URL.createObjectURL(fileImg);
-      const reader = new FileReader();
+    const reader = new FileReader();
 
-      img.onload = () => {
-        const imageFormData = new FormData(document.forms[1]);
-        onChangeFileAvatar(imageFormData);
-
-        reader.onload = () => {
-          onChangeSrcAvatar(String(reader.result));
-        };
-        reader.readAsDataURL(fileImg);
-      };
-    }
+    reader.onload = () => {
+      onChangeSrcAvatar(reader.result as string);
+      onChangeFileAvatar(fileImg);
+    };
+    reader.readAsDataURL(fileImg);
   };
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {

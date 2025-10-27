@@ -6,7 +6,7 @@ import style from './ModalChangeAvatar.module.scss';
 interface ModalChangeAvatarProps {
   srcAvatar: string;
   onChangeSrcAvatar: (value: string) => void;
-  onChangeFileAvatar: (value: FormData) => void;
+  onChangeFileAvatar: (value: File) => void;
   onClickSave: () => void;
   onClickCancel: () => void;
 }

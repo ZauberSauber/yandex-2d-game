@@ -19,8 +19,8 @@ export const ProfilePage = () => {
   // здесь будут почищены useState
   const [isOpenChangeAvatarModal, setIsOpenChangeAvatarModal] = useState(false);
   const [srcAvatar, setSrcAvatar] = useState('');
-  const [srcAvatarProfile, setSrcAvatarProfile] = useState('');
-  const [srcSavedAvatar, setSrcSavedAvatar] = useState<FormData | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -38,7 +38,7 @@ export const ProfilePage = () => {
         <div className={style['header-container']}>
           <div className={style['avatar-container']}>
             <CircleAvatar
-              srcAvatar={srcAvatarProfile}
+              srcAvatar={avatarPreview}
               sizeImg="100"
               onClick={() => setIsOpenChangeAvatarModal(true)}
             />
@@ -119,6 +119,7 @@ export const ProfilePage = () => {
               <div className={style.data}>
                 <Text className={style.label}> Текущий пароль</Text>
                 <Input
+                  type="password"
                   value={oldPassword}
                   onChange={(e) => {
                     setOldPassword(e.target.value);
@@ -128,6 +129,7 @@ export const ProfilePage = () => {
               <div className={style.data}>
                 <Text className={style.label}> Новый пароль</Text>
                 <Input
+                  type="password"
                   value={newPassword}
                   onChange={(e) => {
                     setNewPassword(e.target.value);
@@ -137,6 +139,7 @@ export const ProfilePage = () => {
               <div className={style.data}>
                 <Text className={style.label}> Подтверждение пароля</Text>
                 <Input
+                  type="password"
                   value={repeatNewPassword}
                   onChange={(e) => {
                     setRepeatNewPassword(e.target.value);
@@ -152,13 +155,15 @@ export const ProfilePage = () => {
         <ModalChangeAvatar
           srcAvatar={srcAvatar}
           onChangeSrcAvatar={setSrcAvatar}
-          onChangeFileAvatar={setSrcSavedAvatar}
+          onChangeFileAvatar={setAvatarFile}
           onClickSave={() => {
-            if (srcSavedAvatar) {
-              profileApi.uploadAvatar(srcSavedAvatar);
+            if (avatarFile) {
+              const formImg = new FormData();
+              formImg.append('avatar', avatarFile);
+              profileApi.uploadAvatar(formImg);
             }
 
-            setSrcAvatarProfile(srcAvatar);
+            setAvatarPreview(srcAvatar);
             setIsOpenChangeAvatarModal(false);
           }}
           onClickCancel={() => setIsOpenChangeAvatarModal(false)}
