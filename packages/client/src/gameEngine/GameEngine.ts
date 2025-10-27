@@ -17,9 +17,9 @@ import styles from '@pages/game/Game.module.scss';
  */
 
 type TGameEngine = {
-  containerId: string,
-  onResourceUpdate: () => void,
-  onGameOver: () => void,
+  containerId: string;
+  onResourceUpdate: () => void;
+  onGameOver: () => void;
 };
 
 export default class GameEngine {
@@ -48,7 +48,7 @@ export default class GameEngine {
 
     this.onGameOver = onGameOver;
     this.onResourceUpdate = onResourceUpdate;
-    
+
     this.canvas = this.createCanvas(gameContainer);
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
@@ -60,7 +60,7 @@ export default class GameEngine {
 
   private createCanvas(gameContainer: HTMLElement): HTMLCanvasElement {
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
-    canvas.classList.add(styles['game-canvas']);
+    canvas.classList.add(styles.gameCanvas);
     canvas.width = 800;
     canvas.height = 600;
 
@@ -86,9 +86,9 @@ export default class GameEngine {
     if (this.isAnimating) return;
 
     this.isAnimating = true;
-    
+
     this.destroy();
-  
+
     const renderLoop = (currenetTime = 0) => {
       const deltaTime = currenetTime - this.lastFrameTime;
 
@@ -100,9 +100,9 @@ export default class GameEngine {
 
       this.animationId = requestAnimationFrame(renderLoop);
     };
-  
-      renderLoop();
-    }
+
+    renderLoop();
+  }
 
   // @ts-expect-error использовать для сохранения в бд
   private endGame(): void {

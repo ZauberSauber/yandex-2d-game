@@ -1,0 +1,21 @@
+@use 'styles/variables' as v;
+@use 'styles/default' as d;
+
+.title {
+  @include d.neonTitle(v.$color-neon-cyan)
+}
+
+.info {
+  display: flex;
+  gap: 5px;
+
+  .label {
+    @include d.neonTitle(v.$color-neon-cyan)
+  }
+
+  .text {
+    @include d.neonTitle(v.$color-neon-purple)
+  }
+}
+
+

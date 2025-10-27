@@ -1,6 +1,6 @@
-import { EXP_PER_CYCLE, PROGRESS_SPEED } from "./constants";
-import { SKILLS } from "./constants/skills";
-import type { ESkillName } from "./types";
+import { EXP_PER_CYCLE, PROGRESS_SPEED } from './constants';
+import { SKILLS } from './constants/skills';
+import type { ESkillName } from './types';
 
 export default class ActivityManager {
   private currentScale = 0;
@@ -8,7 +8,7 @@ export default class ActivityManager {
   private isPaused = false;
 
   private activeSkillKeyName: ESkillName | null = null;
-  
+
   // @ts-expect-error заиспользовать при напсании логики получения опыта
   private calculateProgress(): void {
     if (this.isPaused) {

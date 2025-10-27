@@ -26,4 +26,14 @@
       }
     }
   }
+
+  &.hideBottomLine {
+    :global {
+      .ant-tabs-nav {
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
 }

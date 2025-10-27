@@ -10,13 +10,7 @@
     "at-rule-no-unknown": null,
     "selector-class-pattern": null,
     "scss/at-rule-no-unknown": true,
-    "order/order": [
-      "dollar-variables",
-      "custom-properties",
-      "declarations",
-      "rules",
-      "at-rules"
-    ],
+    "order/order": ["dollar-variables", "custom-properties", "declarations", "rules", "at-rules"],
     "order/properties-order": [
       "position",
       "z-index",
@@ -52,7 +46,8 @@
     "comment-no-empty": true,
     "no-empty-source": true,
     "property-no-deprecated": true,
-    "declaration-block-no-shorthand-property-overrides": true
+    "declaration-block-no-shorthand-property-overrides": true,
+    "nesting-selector-no-missing-scoping-root": null
   },
   "ignoreFiles": [
     "**/build/**",

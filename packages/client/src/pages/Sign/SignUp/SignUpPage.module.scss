@@ -1,0 +1,88 @@
+@use '../../../styles/variables' as v;
+@use '../mixins' as *;
+@use '../auth' as *;
+@use '../../../styles/animations' as *;
+
+.signup-page {
+  @extend .auth-container;
+}
+
+.signup-container {
+  @include auth-container-shine;
+
+  @extend .page-container--signup;
+}
+
+.signup-header {
+  @extend .auth-header;
+}
+
+.signup-title {
+  animation: auth-simple-flicker 3s infinite;
+
+  @include auth-title-glitch(
+    v.$color-neon-pink,
+    v.$color-neon-purple,
+    auth-glitch-move-1,
+    auth-glitch-move-2
+  );
+
+  @extend .auth-title;
+}
+
+.signup-subtitle {
+  @extend .auth-subtitle;
+}
+
+.form {
+  &__actions {
+    @extend .form-actions;
+  }
+}
+
+.signup-input-group {
+  &__label {
+    @extend .input-label--pink;
+  }
+
+  &__required {
+    color: v.$color-neon-pink;
+    margin-left: 0.2rem;
+  }
+
+  @extend .input-group;
+}
+
+.neon-button {
+  &:global(.ant-btn) {
+    box-shadow: 0 0 20px rgb(74 158 255 / 60%), 0 0 8px rgb(255 255 255 / 25%) inset !important;
+  }
+
+  &:hover {
+    box-shadow: 0 0 25px rgb(74 158 255 / 80%), 0 0 12px rgb(255 255 255 / 35%) inset !important;
+  }
+
+  @extend .auth-button-common;
+
+  @include auth-button-ant-overrides(
+    linear-gradient(135deg, #4a9eff, #00d4aa),
+    linear-gradient(135deg, #00d4aa, #ffa726),
+    #4a9eff
+  );
+  @include auth-button-loading-effect;
+
+  @extend .neon-button--signup;
+}
+
+.terms {
+  @extend .terms;
+}
+
+.signup-footer {
+  @include auth-footer;
+  @include neon-link(v.$color-neon-blue, v.$color-neon-purple, rgba(v.$color-neon-purple, 0.5));
+}
+
+.signup-footer .neon-link {
+  margin-left: 0.5rem;
+}

@@ -1,9 +1,9 @@
-import { StyleColors } from "@src/styles/colors";
+import { StyleColors } from '@src/styles/colors';
 
-import AbstractGamePage from "../AbstractGamePage";
-import { drawBar } from "../utils/drawBar";
-import { drawPageTitle } from "../utils/drawPageTitle";
-import { drawImg } from "../utils/drawThumb";
+import AbstractGamePage from '../AbstractGamePage';
+import { drawBar } from '../utils/drawBar';
+import { drawImg } from '../utils/drawImg';
+import { drawPageTitle } from '../utils/drawPageTitle';
 
 export default class SkillsPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
@@ -37,7 +37,7 @@ export default class SkillsPage extends AbstractGamePage {
       ctx.textAlign = 'left';
 
       const textYpos = rowHeight + rowHeight / 2 + shiftY + 5;
-      
+
       // Уровень
       ctx.fillText('1/100', posX + 50, textYpos);
       // Пргресс в процентах
@@ -45,7 +45,15 @@ export default class SkillsPage extends AbstractGamePage {
       // Пргресс в количестве
       ctx.fillText('250/1000', posX + 180, textYpos);
 
-      drawBar(ctx, posX + 280, textYpos - 10, 220, 10, 25, 100);
+      drawBar({
+        ctx,
+        posX: posX + 280,
+        posY: textYpos - 10,
+        width: 220,
+        height: 10,
+        value: 25,
+        maxValue: 100,
+      });
 
       ctx.fillStyle = StyleColors.colorNeonPurple;
       ctx.fillRect(posX, rowHeight * 2 + shiftY, 500, 1);

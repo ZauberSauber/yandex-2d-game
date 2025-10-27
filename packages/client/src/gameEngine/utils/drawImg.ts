@@ -5,10 +5,15 @@ type TDrawImgProps = {
   width?: number;
   height?: number;
   src?: string;
-}
+};
 
 export const drawImg = ({
-  ctx, posX, posY, width = 40, height = 40, src = '',
+  ctx,
+  posX,
+  posY,
+  width = 40,
+  height = 40,
+  src = '',
 }: TDrawImgProps): void => {
   if (src.length) {
     const img = new Image();
@@ -16,7 +21,7 @@ export const drawImg = ({
     img.src = src;
     img.onload = () => {
       ctx.drawImage(img, posX, posY, width, height);
-    }
+    };
 
     return;
   }
@@ -32,4 +37,4 @@ export const drawImg = ({
   ctx.fillText('no img', posX + width / 2, posY + height / 2 + 3, width);
 
   ctx.restore();
-}
+};

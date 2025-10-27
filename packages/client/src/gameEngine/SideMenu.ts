@@ -1,8 +1,8 @@
-import { StyleColors } from "@src/styles/colors";
+import { StyleColors } from '@src/styles/colors';
 
-import { GAME_PAGES, MAIN_FONT } from "./constants";
-import { drawImg } from "./utils/drawThumb";
-import type { EGamePage, TPageManager } from "./types";
+import { GAME_PAGES, MAIN_FONT } from './constants';
+import { drawImg } from './utils/drawImg';
+import type { EGamePage, TPageManager } from './types';
 
 export default class SideMenu {
   private menuButtons: { name: EGamePage; top: number; bottom: number; left: number }[] = [];
@@ -19,12 +19,12 @@ export default class SideMenu {
 
   private hoveredButtonIndex: number | null = null;
 
-  constructor(private pageManager: TPageManager) { }
+  constructor(private pageManager: TPageManager) {}
 
   addMenuItem(pageName: EGamePage): void {
     const topY = this.menuY + this.menuButtons.length * (this.itemHeight + this.itemOffset);
     const bottomY = topY + this.itemHeight;
-  
+
     this.menuButtons.push({
       name: pageName,
       top: topY,
@@ -68,7 +68,11 @@ export default class SideMenu {
 
       ctx.textAlign = 'left';
       ctx.shadowColor = 'transparent';
-      ctx.fillText(GAME_PAGES[item.name].title, item.left + 20, item.top + this.itemHeight / 2 + fontSize / 2);
+      ctx.fillText(
+        GAME_PAGES[item.name].title,
+        item.left + 20,
+        item.top + this.itemHeight / 2 + fontSize / 2
+      );
     });
 
     ctx.restore();
@@ -97,8 +101,7 @@ export default class SideMenu {
     for (let i = 0; i < this.menuButtons.length; i++) {
       const item = this.menuButtons[i];
 
-      if (x >= item.left && x < item.left + this.menuWidth &&
-        y >= item.top && y < item.bottom) {
+      if (x >= item.left && x < item.left + this.menuWidth && y >= item.top && y < item.bottom) {
         return i;
       }
     }

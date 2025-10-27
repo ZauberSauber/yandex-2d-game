@@ -1,0 +1,125 @@
+@use 'styles/variables.scss' as v;
+@use 'styles/default.scss' as d;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 50px 25px;
+
+  .header-container {
+    display: flex;
+    margin-bottom: 30px;
+
+    .avatar-container {
+      width: 100px;
+      height: 100px;
+    }
+
+    .description-container {
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+
+      .display-name {
+        @include d.neonTitle();
+      }
+
+      .text {
+        color: v.$color-text;
+        font-size: 16px;
+      }
+
+      .description {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .statistics-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+
+    .statistic {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 16px;
+      border: 1px solid v.$color-blue-violet;
+
+      .count {
+        color: v.$color-neon-blue;
+      }
+
+      .text {
+        color: v.$color-text-gray;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .info-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(350px, 1fr));
+    gap: 20px;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+
+      .title {
+        @include d.neonTitle();
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        border: 1px solid v.$color-neon-blue;
+
+        .data {
+          display: flex;
+          flex-direction: column;
+
+          .label {
+            color: v.$color-neon-blue;
+            font-size: 16px;
+          }
+        }
+
+        .achivments {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          border: 1px solid v.$color-blue-violet;
+
+          .title {
+            color: v.$color-text;
+            font-size: 14px;
+          }
+
+          .text {
+            color: v.$color-text-gray;
+            font-size: 12px;
+          }
+        }
+
+        &.content-achivments {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+    }
+  }
+}
