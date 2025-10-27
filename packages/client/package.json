@@ -19,6 +19,7 @@
     "clear-cache": "concurrently --kill-others 'npm:clear-vite-cache' 'npm:clear-eslint-cache' 'npm:clear-stylelint-cache'"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.1.0",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.27.4",
     "classnames": "^2.5.1",
