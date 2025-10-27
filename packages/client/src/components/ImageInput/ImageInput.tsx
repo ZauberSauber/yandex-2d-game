@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { Flex } from 'antd';
 import cn from 'classnames';
 
 import { Spinner } from '../Spinner';
@@ -12,6 +13,7 @@ const getSrc = (path: string) => {
   }
 
   return path;
+  //TODO: расскоментировать после реализации авторизации и получения информации об пользователе
   // return `https:${BASE_URLS.RESOURCES}${path.replace('/', '')}`;
 };
 
@@ -78,7 +80,7 @@ export const ImageInput = ({
   return (
     <>
       {!downloadImgPending && (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Flex justify="center">
           <div className={cn(style['image-downloader-container'], error && style.error)}>
             {src && (
               <div
@@ -101,7 +103,7 @@ export const ImageInput = ({
             </div>
           </div>
           {error && error}
-        </div>
+        </Flex>
       )}
       {downloadImgPending && <Spinner title={'Загрузка'} />}
     </>

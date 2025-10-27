@@ -15,6 +15,8 @@ import style from './ProfilePage.module.scss';
 export const ProfilePage = () => {
   const { Title, Text } = Typography;
 
+  //TODO: в рамках задачи по созданию хранилища в 6-ом спринте
+  // здесь будут почищены useState
   const [isOpenChangeAvatarModal, setIsOpenChangeAvatarModal] = useState(false);
   const [srcAvatar, setSrcAvatar] = useState('');
   const [srcAvatarProfile, setSrcAvatarProfile] = useState('');

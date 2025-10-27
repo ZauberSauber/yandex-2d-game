@@ -9,8 +9,8 @@ type TextAreaComponentProps = {
   className?: IClassName;
 };
 
-export const TextAreaComponent = ({ value, className }: TextAreaComponentProps) => {
-  const { TextArea } = Input;
+const { TextArea } = Input;
 
-  return <TextArea className={cn(style['text-area'], className)} rows={4} value={value} />;
-};
+export const TextAreaComponent = ({ value, className }: TextAreaComponentProps) => (
+  <TextArea className={cn(style['text-area'], className)} rows={4} value={value} />
+);
