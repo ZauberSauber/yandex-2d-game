@@ -53,6 +53,10 @@
   @extend .input-group;
 }
 
+.error-message {
+  @extend .error-message;
+}
+
 .neon-button {
   &:global(.ant-btn) {
     box-shadow: 0 0 20px rgb(74 158 255 / 60%), 0 0 8px rgb(255 255 255 / 25%) inset !important;

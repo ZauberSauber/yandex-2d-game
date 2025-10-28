@@ -1,21 +1,31 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
+import { useAppDispatch, useAppSelector } from '@hooks';
+import type { SignUpFormData } from '@src/types/forms';
 import type { FormEvent } from 'react';
 
-import { ButtonComponent } from '../../../components/Button/Button';
-import { FormField } from '../../../components/FormField';
-import { InputComponent } from '../../../components/Input';
+import { ButtonComponent } from '@components/Button/Button';
+import { FormField } from '@components/FormField';
+import { InputComponent } from '@components/Input';
 import {
-  FORM_IDS,
-  FORM_LABELS,
-  FORM_PLACEHOLDERS,
-  FORM_SUBMIT_DELAY,
-} from '../../../constants/forms';
-import type { SignUpFormData } from '../../../types/forms';
+  clearError,
+  selectAuthError,
+  selectAuthLoading,
+  selectIsAuthenticated,
+  signUpThunk,
+} from '@slices/authSlice';
+import { FORM_IDS, FORM_LABELS, FORM_PLACEHOLDERS } from '@src/constants/forms';
 
 import styles from './SignUpPage.module.scss';
 
 export const SignUpPage = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const error = useAppSelector(selectAuthError);
+  const isLoading = useAppSelector(selectAuthLoading);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
   const [formData, setFormData] = useState<SignUpFormData>({
     first_name: '',
     second_name: '',
@@ -24,7 +34,12 @@ export const SignUpPage = () => {
     password: '',
     phone: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,14 +51,14 @@ export const SignUpPage = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // TODO: Добавить логику регистрации
-    console.log('Registration data:', formData);
+    dispatch(clearError());
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, FORM_SUBMIT_DELAY);
+    const result = await dispatch(signUpThunk(formData));
+
+    if (signUpThunk.fulfilled.match(result)) {
+      navigate('/sign-in');
+    }
   };
 
   return (
@@ -61,6 +76,12 @@ export const SignUpPage = () => {
           id={FORM_IDS.SIGNUP}
           onSubmit={handleSubmit}
           aria-label="Форма регистрации">
+          {error && (
+            <div className={styles['error-message']} role="alert">
+              {error}
+            </div>
+          )}
+
           <FormField id="first_name" label={FORM_LABELS.FIRST_NAME} required>
             <InputComponent
               id="first_name"
@@ -160,10 +181,9 @@ export const SignUpPage = () => {
         </form>
 
         <footer className={styles['signup-footer']}>
-          УЖЕ ЕСТЬ АККАУНТ?
-          <a href="/sign-in" className={styles['neon-link']} aria-label="Перейти к авторизации">
-            ВОЙТИ
-          </a>
+          <Link to="/sign-in" className={styles['neon-link']} aria-label="Перейти к авторизации">
+            УЖЕ ЕСТЬ АККАУНТ? ВОЙТИ
+          </Link>
         </footer>
       </section>
     </main>
