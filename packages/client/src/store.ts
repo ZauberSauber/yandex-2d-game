@@ -7,6 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 
+import authReducer from './slices/authSlice';
 import friendsReducer from './slices/friendsSlice';
 import ssrReducer from './slices/ssrSlice';
 import userReducer from './slices/userSlice';
@@ -20,6 +21,7 @@ declare global {
 }
 
 export const reducer = combineReducers({
+  auth: authReducer,
   friends: friendsReducer,
   ssr: ssrReducer,
   user: userReducer,

@@ -50,6 +50,10 @@
   @extend .form-actions;
 }
 
+.error-message {
+  @extend .error-message;
+}
+
 .login-links {
   display: flex;
   justify-content: center;

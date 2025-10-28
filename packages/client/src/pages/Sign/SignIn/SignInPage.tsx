@@ -1,26 +1,45 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginOutlined } from '@ant-design/icons';
 import type { FormEvent } from 'react';
+import type { Location } from 'react-router-dom';
 
 import { ButtonComponent } from '../../../components/Button/Button';
 import { FormField } from '../../../components/FormField';
 import { InputComponent } from '../../../components/Input';
+import { FORM_IDS, FORM_LABELS, FORM_PLACEHOLDERS } from '../../../constants/forms';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
-  FORM_IDS,
-  FORM_LABELS,
-  FORM_PLACEHOLDERS,
-  FORM_SUBMIT_DELAY,
-} from '../../../constants/forms';
+  clearError,
+  selectAuthError,
+  selectAuthLoading,
+  selectIsAuthenticated,
+  signInThunk,
+} from '../../../slices/authSlice';
 import type { LoginFormData } from '../../../types/forms';
 
 import styles from './SignInPage.module.scss';
 
 export const SignInPage = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const error = useAppSelector(selectAuthError);
+  const isLoading = useAppSelector(selectAuthLoading);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
   const [formData, setFormData] = useState<LoginFormData>({
     login: '',
     password: '',
   });
-  const [isLoading, setIsLoading] = useState(false);
+
+  // Редирект если пользователь уже авторизован
+  useEffect(() => {
+    if (isAuthenticated) {
+      const from = (location.state as { from?: Location })?.from;
+      navigate(from?.pathname || '/', { replace: true });
+    }
+  }, [isAuthenticated, navigate, location]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,14 +51,16 @@ export const SignInPage = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // TODO: Добавить логику авторизации
-    console.log('Login data:', formData);
+    // Очищаем предыдущую ошибку
+    dispatch(clearError());
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, FORM_SUBMIT_DELAY);
+    const result = await dispatch(signInThunk(formData));
+
+    if (signInThunk.fulfilled.match(result)) {
+      const from = (location.state as { from?: Location })?.from;
+      navigate(from?.pathname || '/');
+    }
   };
 
   return (
@@ -57,6 +78,12 @@ export const SignInPage = () => {
           id={FORM_IDS.LOGIN}
           onSubmit={handleSubmit}
           aria-label="Форма авторизации">
+          {error && (
+            <div className={styles['error-message']} role="alert">
+              {error}
+            </div>
+          )}
+
           <FormField id="login" label={FORM_LABELS.LOGIN} required>
             <InputComponent
               id="login"
@@ -99,9 +126,9 @@ export const SignInPage = () => {
           </div>
 
           <div className={styles['login-links']}>
-            <a href="/sign-up" className={styles['neon-link']} aria-label="Перейти к регистрации">
+            <Link to="/sign-up" className={styles['neon-link']} aria-label="Перейти к регистрации">
               Регистрация
-            </a>
+            </Link>
           </div>
         </form>
       </section>

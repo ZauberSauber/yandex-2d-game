@@ -1,4 +1,5 @@
-import axios, { HttpStatusCode, isAxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
+import type { HttpStatusCode } from 'axios';
 
 import { RequestMethods } from './types';
 
@@ -27,12 +28,15 @@ type TCustomShape = { [key: string]: unknown };
 type TFetchConfig = <Data, Params>(
   data: Data,
   params: Params,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  customConfig?: Partial<typeof axiosConfig> & { withCredentials?: boolean }
 ) => {
   method: RequestMethods;
   data?: TCustomShape;
   params?: TCustomShape;
   signal?: AbortSignal;
+  withCredentials?: boolean;
+  [key: string]: unknown;
 };
 
 export type TRequestResult<Data> = {
@@ -47,17 +51,18 @@ export const fetchTemplate =
   async (
     requestData: RequestData | TCustomShape = {},
     requestParams: TCustomShape = {},
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    customConfig?: Partial<typeof axiosConfig> & { withCredentials?: boolean }
   ): Promise<TRequestResult<ResponseData>> => {
     try {
       const finalUrl = isStringUrl(url) ? url : url(requestData);
-      const result = await axiosInstance(finalUrl, getConfig(requestData, requestParams, signal));
-      // response нету в 200, но есть в 400х
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Unreachable code error
-      const { data, status } = result?.response || result || {};
+      const config = getConfig(requestData, requestParams, signal, customConfig);
+      const result = await axiosInstance(finalUrl, config);
 
-      if (status === HttpStatusCode.Ok) {
+      const data = result.data as ResponseData;
+      const status = result.status;
+
+      if (status >= 200 && status < 300) {
         return { error: false, data, status };
       }
 
@@ -76,13 +81,15 @@ export const fetchTemplate =
 
 const generateFetch = (method: RequestMethods) =>
   fetchTemplate(
-    <Data, Params, AbortSignal>(
+    <Data, Params>(
       requestData?: Data,
       requestParams?: Params,
-      signal?: AbortSignal
+      signal?: AbortSignal,
+      customConfig?: Partial<typeof axiosConfig> & { withCredentials?: boolean }
     ) => ({
       method,
       ...(requestData ? { data: requestData, params: requestParams || {}, signal } : {}),
+      ...customConfig,
     })
   );
 
