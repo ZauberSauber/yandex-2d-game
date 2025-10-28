@@ -4,30 +4,28 @@ $color-neon-light-pink: #f0f;
 $color-neon-purple: #9d00ff;
 $color-blue-violet: #8a2be2;
 $color-neon-cyan: #0f8;
+$color-neon-green: #2ecc71;
+$color-neon-orange: #ff8c00;
 $color-smoke-white: #f3f3f3;
-
-/* Background Colors */
 $color-dark-bg: #0a0a12;
 $color-darker-bg: #050508;
 $color-light-gray-bg: #ccc;
 
-/* Status Colors */
 $color-error: #ff3860;
 $color-success: #2ecc71;
 $color-warning: #f39c12;
 
-/* Text Colors */
 $color-text: #fff;
 $color-text-secondary: #ccc;
 $color-text-gray: #aaa;
 
-/* Common styles */
 $border-color: rgb(255 255 255 / 10%);
 $glow-intensity: 0.3;
 
 /* Typography */
 $font-main: 'Rajdhani', sans-serif;
 $font-heading: 'Orbitron', sans-serif;
+$font-monospace: 'Courier New', monospace;
 $base-font-size: 16px;
 
 /* Animations */
@@ -35,6 +33,11 @@ $transition-duration: 0.3s;
 $transition-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
 $header-height: 35px;
+
+$border-radius: 4px;
+$spacing-unit: 1rem;
+$input-height: 48px;
+$z-index-modal: 1000;
 
 /* z-index */
 $z-index-modal: 1000;

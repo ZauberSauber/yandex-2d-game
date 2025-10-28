@@ -1,6 +1,8 @@
 import { Game } from '@pages/game/Game';
 import { PreGame } from '@pages/preGame';
 
+import { SignInPage } from './pages/Sign/SignIn';
+import { SignUpPage } from './pages/Sign/SignUp';
 import type { AppDispatch, RootState } from './store';
 
 export type PageInitContext = {
@@ -27,6 +29,16 @@ export enum PATHS {
 }
 
 export const routes = [
+  {
+    path: PATHS.SIGN_IN,
+    Component: SignInPage,
+    fetchData: () => Promise.resolve(),
+  },
+  {
+    path: PATHS.SIGN_UP,
+    Component: SignUpPage,
+    fetchData: () => Promise.resolve(),
+  },
   {
     path: PATHS.HOME,
     Component: () => <div>Main Page</div>,

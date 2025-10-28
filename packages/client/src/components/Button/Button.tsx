@@ -3,7 +3,7 @@ import cn from 'classnames';
 import type { ButtonProps } from 'antd';
 import type { ReactNode } from 'react';
 
-import type { IClassName } from '@types';
+import type { IClassName } from '../../types/className';
 
 import styles from './Button.module.scss';
 

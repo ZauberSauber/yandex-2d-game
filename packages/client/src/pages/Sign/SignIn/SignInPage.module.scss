@@ -1,0 +1,108 @@
+@use '../../../styles/variables' as v;
+@use '../mixins' as *;
+@use '../auth' as *;
+@use '../../../styles/animations' as *;
+
+.login-page {
+  @extend .auth-container;
+}
+
+.login-container {
+  @include auth-container-shine;
+
+  @extend .page-container--signin;
+}
+
+.login-header {
+  @extend .auth-header;
+}
+
+.login-title {
+  @include auth-title-glitch-simple(
+    v.$color-neon-pink,
+    v.$color-neon-purple,
+    auth-glitch-anim-1,
+    auth-glitch-anim-2
+  );
+
+  @extend .auth-title;
+}
+
+.login-subtitle {
+  @extend .auth-subtitle;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login-input-group {
+  @extend .input-group;
+}
+
+.login-input-label {
+  @extend .input-label--blue-heading;
+}
+
+.form-actions {
+  @extend .form-actions;
+}
+
+.login-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+
+  .neon-link {
+    @include neon-link(v.$color-neon-cyan, v.$color-neon-cyan, rgba(v.$color-neon-cyan, 0.5));
+  }
+}
+
+.login-button {
+  &::before {
+    position: absolute;
+    z-index: -1;
+    background: linear-gradient(45deg, v.$color-neon-purple, v.$color-neon-pink, v.$color-neon-blue, v.$color-neon-cyan);
+    animation: border-gradient-shift 8s ease-in-out infinite;
+    content: '';
+    inset: -2px;
+    border-radius: calc(v.$border-radius + 2px);
+    background-size: 300% 300%;
+    pointer-events: none;
+    filter: blur(0.5px);
+    opacity: 0.6;
+  }
+
+  &:not(:disabled):hover {
+    &::before {
+      filter: blur(1px);
+      opacity: 0.8;
+      animation-duration: 4s;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    animation: auth-pulse-ring 4s infinite !important;
+    content: '';
+    border-radius: v.$border-radius;
+    box-shadow: 0 0 0 0 rgba(v.$color-neon-purple, 70%);
+    pointer-events: none;
+  }
+
+  @extend .auth-button-common;
+
+  @include auth-button-ant-overrides(
+    linear-gradient(135deg, v.$color-neon-purple, v.$color-neon-pink),
+    linear-gradient(135deg, v.$color-neon-pink, v.$color-neon-purple),
+    v.$color-neon-purple
+  );
+  @include auth-button-loading-effect;
+
+  @extend .neon-button--signin;
+}
+

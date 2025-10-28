@@ -10,7 +10,10 @@ export default class PageManager {
 
   public sideMenu: SideMenu | null = null;
 
-  constructor(public canvas: HTMLCanvasElement, private ctx: CanvasRenderingContext2D) {
+  constructor(
+    public canvas: HTMLCanvasElement,
+    private ctx: CanvasRenderingContext2D
+  ) {
     this.sideMenu = new SideMenu(this);
     this.setupEventListeners();
   }

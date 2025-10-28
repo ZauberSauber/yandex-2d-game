@@ -106,7 +106,6 @@ export default class FactoryPage extends AbstractGamePage {
 
       ctx.fillText(this.blocks[index], this.posX + 30 + 130 * index, posY);
     }
-    
 
     // Иконки предметов
     // TODO: если уровеь крафта < уровня предмета, то иконка будет залочена

@@ -1,0 +1,363 @@
+@use './variables' as v;
+
+/* Border gradient animation */
+@keyframes border-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  25% {
+    background-position: 50% 0%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  75% {
+    background-position: 50% 100%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Glitch animations */
+@keyframes glitch-anim-1 {
+  0% {
+    transform: translate(0);
+    opacity: 0.7;
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+    opacity: 0.5;
+  }
+
+  40% {
+    transform: translate(2px, -2px);
+    opacity: 0.8;
+  }
+
+  60% {
+    transform: translate(-1px, 1px);
+    opacity: 0.6;
+  }
+
+  80% {
+    transform: translate(1px, -1px);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translate(0);
+    opacity: 0.7;
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    transform: translate(0);
+    opacity: 0.7;
+  }
+
+  25% {
+    transform: translate(2px, -2px);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate(-2px, 2px);
+    opacity: 0.8;
+  }
+
+  75% {
+    transform: translate(1px, -1px);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(0);
+    opacity: 0.7;
+  }
+}
+
+@keyframes glitch-flicker {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(v.$color-neon-blue, v.$glow-intensity);
+  }
+
+  25% {
+    opacity: 0.8;
+    text-shadow: 2px 0 8px rgba(v.$color-neon-pink, 80%);
+  }
+
+  50% {
+    opacity: 0.9;
+    text-shadow: -2px 0 8px rgba(v.$color-neon-purple, 80%);
+  }
+
+  75% {
+    opacity: 0.7;
+    text-shadow: 0 0 8px rgba(v.$color-neon-blue, v.$glow-intensity);
+  }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes shine {
+  0% { transform: rotate(30deg) translate(-30%, -30%); }
+  100% { transform: rotate(30deg) translate(30%, 30%); }
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 22%, 24%, 55% { opacity: 0.5; }
+}
+
+@keyframes neon-pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.9;
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 25px rgb(157 0 255 / 70%);
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Auth Page Animations */
+@keyframes auth-shine {
+  0% { transform: rotate(30deg) translate(-30%, -30%); }
+  100% { transform: rotate(30deg) translate(30%, 30%); }
+}
+
+@keyframes auth-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes auth-pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes auth-color-shift {
+  0% {
+    background: linear-gradient(135deg, v.$color-neon-blue, v.$color-neon-blue);
+    background-color: transparent;
+    box-shadow: 0 0 20px rgba(v.$color-neon-blue, 60%), 0 0 8px rgba(#fff, 25%) inset;
+  }
+
+  12.5% {
+    background: linear-gradient(135deg, v.$color-neon-cyan, v.$color-neon-cyan);
+    background-color: transparent;
+    box-shadow: 0 0 22px rgba(v.$color-neon-cyan, 70%), 0 0 10px rgba(#fff, 30%) inset;
+  }
+
+  25% {
+    background: linear-gradient(135deg, v.$color-neon-cyan, v.$color-neon-blue);
+    background-color: transparent;
+    box-shadow: 0 0 25px rgba(v.$color-neon-cyan, 80%), 0 0 12px rgba(#fff, 35%) inset;
+  }
+
+  37.5% {
+    background: linear-gradient(135deg, v.$color-neon-cyan, v.$color-neon-cyan);
+    background-color: transparent;
+    box-shadow: 0 0 40px rgba(v.$color-neon-cyan, 140%), 0 0 18px rgba(#fff, 60%) inset;
+  }
+
+  50% {
+    background: linear-gradient(135deg, v.$color-neon-cyan, v.$color-neon-blue);
+    background-color: transparent;
+    box-shadow: 0 0 45px rgba(v.$color-neon-cyan, 160%), 0 0 20px rgba(#fff, 70%) inset;
+  }
+
+  62.5% {
+    background: linear-gradient(135deg, v.$color-neon-blue, v.$color-neon-blue);
+    background-color: transparent;
+    box-shadow: 0 0 40px rgba(v.$color-neon-blue, 140%), 0 0 18px rgba(#fff, 60%) inset;
+  }
+
+  75% {
+    background: linear-gradient(135deg, v.$color-neon-blue, v.$color-neon-purple);
+    background-color: transparent;
+    box-shadow: 0 0 35px rgba(v.$color-neon-purple, 120%), 0 0 15px rgba(#fff, 50%) inset;
+  }
+
+  87.5% {
+    background: linear-gradient(135deg, v.$color-neon-purple, v.$color-neon-purple);
+    background-color: transparent;
+    box-shadow: 0 0 30px rgba(v.$color-neon-purple, 100%), 0 0 12px rgba(#fff, 40%) inset;
+  }
+
+  100% {
+    background: linear-gradient(135deg, v.$color-neon-purple, v.$color-neon-blue);
+    background-color: transparent;
+    box-shadow: 0 0 20px rgba(v.$color-neon-blue, 60%), 0 0 8px rgba(#fff, 25%) inset;
+  }
+}
+
+@keyframes auth-glitch-anim-1 {
+  0% {
+    clip-path: polygon(0 32px, 9999px 32px, 9999px 78px, 0 78px);
+  }
+
+  20% {
+    clip-path: polygon(0 8px, 9999px 8px, 9999px 32px, 0 32px);
+  }
+
+  40% {
+    clip-path: polygon(0 64px, 9999px 64px, 9999px 99px, 0 99px);
+  }
+
+  60% {
+    clip-path: polygon(0 12px, 9999px 12px, 9999px 45px, 0 45px);
+  }
+
+  80% {
+    clip-path: polygon(0 70px, 9999px 70px, 9999px 92px, 0 92px);
+  }
+
+  100% {
+    clip-path: polygon(0 23px, 9999px 23px, 9999px 85px, 0 85px);
+  }
+}
+
+@keyframes auth-glitch-anim-2 {
+  0% {
+    clip-path: polygon(0 95px, 9999px 95px, 9999px 15px, 0 15px);
+  }
+
+  20% {
+    clip-path: polygon(0 3px, 9999px 3px, 9999px 99px, 0 99px);
+  }
+
+  40% {
+    clip-path: polygon(0 55px, 9999px 55px, 9999px 72px, 0 72px);
+  }
+
+  60% {
+    clip-path: polygon(0 28px, 9999px 28px, 9999px 60px, 0 60px);
+  }
+
+  80% {
+    clip-path: polygon(0 88px, 9999px 88px, 9999px 12px, 0 12px);
+  }
+
+  100% {
+    clip-path: polygon(0 40px, 9999px 40px, 9999px 33px, 0 33px);
+  }
+}
+
+@keyframes auth-simple-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 22%, 24%, 55% { opacity: 0.5; }
+}
+
+@keyframes auth-glitch-move-1 {
+  0% {
+    clip-path: polygon(0 32px, 9999px 32px, 9999px 78px, 0 78px);
+  }
+
+  20% {
+    clip-path: polygon(0 8px, 9999px 8px, 9999px 32px, 0 32px);
+  }
+
+  40% {
+    clip-path: polygon(0 64px, 9999px 64px, 9999px 99px, 0 99px);
+  }
+
+  60% {
+    clip-path: polygon(0 12px, 9999px 12px, 9999px 45px, 0 45px);
+  }
+
+  80% {
+    clip-path: polygon(0 70px, 9999px 70px, 9999px 92px, 0 92px);
+  }
+
+  100% {
+    clip-path: polygon(0 23px, 9999px 23px, 9999px 85px, 0 85px);
+  }
+}
+
+@keyframes auth-glitch-move-2 {
+  0% {
+    clip-path: polygon(0 95px, 9999px 95px, 9999px 15px, 0 15px);
+  }
+
+  20% {
+    clip-path: polygon(0 3px, 9999px 3px, 9999px 99px, 0 99px);
+  }
+
+  40% {
+    clip-path: polygon(0 55px, 9999px 55px, 9999px 72px, 0 72px);
+  }
+
+  60% {
+    clip-path: polygon(0 28px, 9999px 28px, 9999px 60px, 0 60px);
+  }
+
+  80% {
+    clip-path: polygon(0 88px, 9999px 88px, 9999px 12px, 0 12px);
+  }
+
+  100% {
+    clip-path: polygon(0 40px, 9999px 40px, 9999px 33px, 0 33px);
+  }
+}
+
+
+
