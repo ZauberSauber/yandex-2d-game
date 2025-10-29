@@ -93,6 +93,13 @@ const generateFetch = (method: RequestMethods) =>
     })
   );
 
+export const extractErrorMessage = (data: unknown): string => {
+  if (data && typeof data === 'object' && 'reason' in data) {
+    return (data as { reason: string }).reason;
+  }
+  return '';
+};
+
 export const API = {
   get: generateFetch(RequestMethods.GET),
   post: generateFetch(RequestMethods.POST),

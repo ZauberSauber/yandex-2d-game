@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '@hooks';
 import type { SignUpFormData } from '@src/types/forms';
 import type { FormEvent } from 'react';
 
@@ -16,15 +15,16 @@ import {
   signUpThunk,
 } from '@slices/authSlice';
 import { FORM_IDS, FORM_LABELS, FORM_PLACEHOLDERS } from '@src/constants/forms';
+import { useDispatch, useSelector } from '@src/store';
 
 import styles from './SignUpPage.module.scss';
 
 export const SignUpPage = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const error = useAppSelector(selectAuthError);
-  const isLoading = useAppSelector(selectAuthLoading);
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const error = useSelector(selectAuthError);
+  const isLoading = useSelector(selectAuthLoading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const [formData, setFormData] = useState<SignUpFormData>({
     first_name: '',

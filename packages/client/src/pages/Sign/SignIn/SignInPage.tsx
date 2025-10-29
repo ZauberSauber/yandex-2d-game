@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoginOutlined } from '@ant-design/icons';
-import { useAppDispatch, useAppSelector } from '@hooks';
 import type { LoginFormData } from '@src/types/forms';
 import type { FormEvent } from 'react';
 import type { Location } from 'react-router-dom';
@@ -17,16 +16,17 @@ import {
   signInThunk,
 } from '@slices/authSlice';
 import { FORM_IDS, FORM_LABELS, FORM_PLACEHOLDERS } from '@src/constants/forms';
+import { useDispatch, useSelector } from '@src/store';
 
 import styles from './SignInPage.module.scss';
 
 export const SignInPage = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const error = useAppSelector(selectAuthError);
-  const isLoading = useAppSelector(selectAuthLoading);
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const error = useSelector(selectAuthError);
+  const isLoading = useSelector(selectAuthLoading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const [formData, setFormData] = useState<LoginFormData>({
     login: '',

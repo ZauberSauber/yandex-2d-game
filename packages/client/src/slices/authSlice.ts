@@ -1,29 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { User } from '@src/api/authApi/types';
 import type { RootState } from '@src/store';
 
 import { authApi } from '@src/api/authApi';
+import { extractErrorMessage } from '@src/utils/api/api';
 
 export interface AuthState {
-  user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
-  user: null,
   isAuthenticated: false,
   isLoading: false,
   error: null,
-};
-
-const extractErrorMessage = (data: unknown): string => {
-  if (data && typeof data === 'object' && 'reason' in data) {
-    return (data as { reason: string }).reason;
-  }
-  return '';
 };
 
 export const signInThunk = createAsyncThunk(
@@ -35,13 +25,7 @@ export const signInThunk = createAsyncThunk(
       return rejectWithValue(extractErrorMessage(result.data) || 'Неверный логин или пароль');
     }
 
-    const userResult = await authApi.getUser();
-
-    if (userResult.error || !userResult.data) {
-      return rejectWithValue('Не удалось получить данные пользователя');
-    }
-
-    return userResult.data;
+    return true;
   }
 );
 
@@ -64,7 +48,7 @@ export const signUpThunk = createAsyncThunk(
       return rejectWithValue(extractErrorMessage(result.data) || 'Ошибка регистрации');
     }
 
-    return result.data;
+    return true;
   }
 );
 
@@ -75,7 +59,7 @@ export const checkAuthThunk = createAsyncThunk('auth/checkAuth', async (_, { rej
     return rejectWithValue('Не авторизован');
   }
 
-  return result.data;
+  return true;
 });
 
 export const logoutThunk = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
@@ -102,8 +86,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(signInThunk.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
+      .addCase(signInThunk.fulfilled, (state) => {
         state.isAuthenticated = true;
         state.isLoading = false;
         state.error = null;
@@ -117,8 +100,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(signUpThunk.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
+      .addCase(signUpThunk.fulfilled, (state) => {
         state.isAuthenticated = true;
         state.isLoading = false;
         state.error = null;
@@ -131,14 +113,12 @@ export const authSlice = createSlice({
       .addCase(checkAuthThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(checkAuthThunk.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
+      .addCase(checkAuthThunk.fulfilled, (state) => {
         state.isAuthenticated = true;
         state.isLoading = false;
         state.error = null;
       })
       .addCase(checkAuthThunk.rejected, (state) => {
-        state.user = null;
         state.isAuthenticated = false;
         state.isLoading = false;
       })
@@ -146,7 +126,6 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(logoutThunk.fulfilled, (state) => {
-        state.user = null;
         state.isAuthenticated = false;
         state.isLoading = false;
         state.error = null;
@@ -160,7 +139,6 @@ export const authSlice = createSlice({
 export const { clearError } = authSlice.actions;
 
 export const selectAuth = (state: RootState) => state.auth;
-export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const selectAuthError = (state: RootState) => state.auth.error;
 export const selectAuthLoading = (state: RootState) => state.auth.isLoading;
