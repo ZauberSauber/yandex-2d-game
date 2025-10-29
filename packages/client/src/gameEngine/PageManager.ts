@@ -27,7 +27,7 @@ export default class PageManager {
     }
   }
 
-  setPage(name: string): void {
+  setPage(name: EGamePage): void {
     const newPage = this.pages.get(name);
 
     if (!newPage) {
@@ -68,12 +68,10 @@ export default class PageManager {
   }
 
   private setupEventListeners(): void {
-    // Обработка движения мыши для подсветки меню
     this.canvas.addEventListener('mousemove', (event) => {
       this.sideMenu?.updateHover(event.offsetX, event.offsetY);
     });
 
-    // Обработка кликов для меню
     this.canvas.addEventListener('click', (event) => {
       this.sideMenu?.handleClick(event.offsetX, event.offsetY);
 

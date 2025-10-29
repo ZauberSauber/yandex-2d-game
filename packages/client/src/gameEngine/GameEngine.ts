@@ -1,3 +1,4 @@
+import ActivityManager from './ActivityManager';
 import { FRAME_INTERVAL } from './constants';
 import PageManager from './PageManager';
 import BattlePage from './pages/BattlePage';
@@ -6,14 +7,18 @@ import FactoryPage from './pages/FactoryPage';
 import InventoryPage from './pages/InventoryPage';
 import RaidsPage from './pages/RaidsPage';
 import SkillsPage from './pages/SkillsPage';
+import PlayerManager from './PlayerManager';
 import { EGamePage } from './types';
 
 import styles from '@pages/game/Game.module.scss';
 
 /* todo:
- * получение ресурсов и банк
- * настроить время получения опыта
- * анимировать фон заняий
+ * бой: сделать выбор активного навыка и получение опыта для него
+ * бой: сделать получение рессурсов
+ * бой: добавить логику использования аптечек
+ * страница инвентаря: отображение списка ресурсов (использовать контейнер поверх канваса)
+ * страница навыков: вывод актуального состояния навыков
+ * производство: реализовать логику крафта, скрафченные вещи надевать автоматом, настроить отображение на странице персонажа
  */
 
 type TGameEngine = {
@@ -33,7 +38,11 @@ export default class GameEngine {
 
   private isAnimating = false;
 
+  private activutyManager: ActivityManager;
+
   private pageManager: PageManager;
+
+  private playerManager: PlayerManager;
 
   private onGameOver: () => void;
 
@@ -52,6 +61,8 @@ export default class GameEngine {
     this.canvas = this.createCanvas(gameContainer);
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
+    this.activutyManager = new ActivityManager();
+    this.playerManager = new PlayerManager();
     this.pageManager = new PageManager(this.canvas, this.ctx);
     this.setupPages();
 
@@ -95,6 +106,14 @@ export default class GameEngine {
       if (deltaTime >= FRAME_INTERVAL) {
         this.lastFrameTime = currenetTime;
 
+        this.activutyManager.update(currenetTime);
+        this.playerManager.update(currenetTime);
+
+        if (this.playerManager.getHP() <= 0) {
+          this.endGame();
+          return;
+        }
+
         this.pageManager.render();
       }
 
@@ -104,8 +123,12 @@ export default class GameEngine {
     renderLoop();
   }
 
-  // @ts-expect-error использовать для сохранения в бд
   private endGame(): void {
+    if (this.isAnimating) {
+      this.isAnimating = false;
+      this.destroy();
+    }
+
     this.onGameOver();
   }
 

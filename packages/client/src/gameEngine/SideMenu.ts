@@ -1,11 +1,14 @@
 import { StyleColors } from '@src/styles/colors';
 
+import ButtonManager from './ButtonManager';
 import { GAME_PAGES, MAIN_FONT } from './constants';
+import PlayerManager from './PlayerManager';
+import { EGamePage } from './types';
 import { drawImg } from './utils/drawImg';
-import type { EGamePage, TPageManager } from './types';
+import type { TPageManager } from './types';
 
 export default class SideMenu {
-  private menuButtons: { name: EGamePage; top: number; bottom: number; left: number }[] = [];
+  private buttonManager;
 
   private menuWidth = 200;
 
@@ -19,17 +22,20 @@ export default class SideMenu {
 
   private hoveredButtonIndex: number | null = null;
 
-  constructor(private pageManager: TPageManager) {}
+  constructor(private pageManager: TPageManager) {
+    this.buttonManager = new ButtonManager<EGamePage>();
+  }
 
   addMenuItem(pageName: EGamePage): void {
-    const topY = this.menuY + this.menuButtons.length * (this.itemHeight + this.itemOffset);
-    const bottomY = topY + this.itemHeight;
+    const topY =
+      this.menuY + this.buttonManager.getButtons().length * (this.itemHeight + this.itemOffset);
 
-    this.menuButtons.push({
+    this.buttonManager.addButton({
       name: pageName,
-      top: topY,
-      bottom: bottomY,
-      left: this.menuX,
+      x: this.menuX,
+      y: topY,
+      height: this.itemHeight,
+      width: this.menuX + this.menuWidth,
     });
   }
 
@@ -40,7 +46,7 @@ export default class SideMenu {
     ctx.font = MAIN_FONT;
     ctx.save();
 
-    this.menuButtons.forEach((item, index) => {
+    this.buttonManager.getButtons().forEach((button, index) => {
       // Подсветка при наведении
       if (index === this.hoveredButtonIndex) {
         ctx.strokeStyle = StyleColors.colorNeonPink;
@@ -63,15 +69,15 @@ export default class SideMenu {
       const shadowPower = 3;
 
       for (let i = 0; i < shadowPower; i++) {
-        ctx.strokeRect(item.left, item.top, this.menuWidth, this.itemHeight);
+        ctx.strokeRect(button.x, button.y, this.menuWidth, this.itemHeight);
       }
 
       ctx.textAlign = 'left';
       ctx.shadowColor = 'transparent';
       ctx.fillText(
-        GAME_PAGES[item.name].title,
-        item.left + 20,
-        item.top + this.itemHeight / 2 + fontSize / 2
+        GAME_PAGES[button.name || EGamePage.raids].title,
+        button.x + 20,
+        button.y + this.itemHeight / 2 + fontSize / 2
       );
     });
 
@@ -81,7 +87,10 @@ export default class SideMenu {
   }
 
   private drawHUD(ctx: CanvasRenderingContext2D): void {
-    // Показатели песонажа: точность, сила, защита, здоровье
+    const { health, accuracy, defense, power } = PlayerManager.getInstance().getPlayerState();
+    const props = [accuracy, defense, power, health];
+
+    // Показатели персонажа: точность, сила, защита, здоровье
     for (let index = 0; index < 4; index++) {
       drawImg({
         ctx,
@@ -89,7 +98,7 @@ export default class SideMenu {
         posY: 60 + 50 * index,
       });
 
-      const text = index === 3 ? '- 100' : '- 1';
+      const text = `- ${props[index]}`;
       ctx.font = MAIN_FONT;
       ctx.textAlign = 'left';
       ctx.fillStyle = StyleColors.colorNeonCyan;
@@ -97,37 +106,19 @@ export default class SideMenu {
     }
   }
 
-  getButtonIndex(x: number, y: number): number {
-    for (let i = 0; i < this.menuButtons.length; i++) {
-      const item = this.menuButtons[i];
-
-      if (x >= item.left && x < item.left + this.menuWidth && y >= item.top && y < item.bottom) {
-        return i;
-      }
-    }
-
-    return -1;
-  }
-
   handleClick(x: number, y: number): void {
     // Проверка клика по элементам меню
-    if (x >= this.menuX && x < this.menuWidth && y >= this.menuY) {
-      const buttonIndex = this.getButtonIndex(x, y);
+    const buttonIndex = this.buttonManager.getButtonIndex(x, y);
 
-      if (buttonIndex >= 0) {
-        const pageName = this.menuButtons[buttonIndex].name;
+    if (buttonIndex >= 0) {
+      const pageName = this.buttonManager.getButtons()[buttonIndex].name;
 
-        this.pageManager.setPage(pageName);
-      }
+      this.pageManager.setPage(pageName as EGamePage);
     }
   }
 
   // Обновление позиции курсора для подсветки
   updateHover(x: number, y: number): void {
-    if (x >= this.menuX && x < this.menuWidth && y >= this.menuY) {
-      this.hoveredButtonIndex = this.getButtonIndex(x, y);
-    } else {
-      this.hoveredButtonIndex = null;
-    }
+    this.hoveredButtonIndex = this.buttonManager.getButtonIndex(x, y);
   }
 }
