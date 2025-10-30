@@ -7,12 +7,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 
+import authReducer from './slices/authSlice';
 import friendsReducer from './slices/friendsSlice';
 import ssrReducer from './slices/ssrSlice';
 import userReducer from './slices/userSlice';
 
-// Глобально декларируем в window наш ключик
-// и задаем ему тип такой же как у стейта в сторе
 declare global {
   interface Window {
     APP_INITIAL_STATE: RootState;
@@ -20,6 +19,7 @@ declare global {
 }
 
 export const reducer = combineReducers({
+  auth: authReducer,
   friends: friendsReducer,
   ssr: ssrReducer,
   user: userReducer,
