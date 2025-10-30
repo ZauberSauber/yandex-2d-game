@@ -7,7 +7,7 @@ type TDrawImgProps = {
   src?: string;
 };
 
-const imageCache = new Map<string, {img: HTMLImageElement, status: 'pending' | 'loaded'}>();
+const imageCache = new Map<string, { img: HTMLImageElement; status: 'pending' | 'loaded' }>();
 
 const drawPlaceholder = (
   ctx: CanvasRenderingContext2D,
@@ -49,7 +49,7 @@ export const drawImg = ({
 
     // Если изображение еще не загружалось - начинаем загрузку
     const img = new Image();
-    
+
     img.src = src;
     imageCache.set(src, { img, status: 'pending' });
 

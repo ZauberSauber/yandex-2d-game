@@ -9,14 +9,14 @@ import { EGamePage, ELocation } from '../types';
 import { drawImg } from '../utils/drawImg';
 import { drawMultilineText } from '../utils/drawMultilineText';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { TButton } from '../types';
+import type { TButton, TLocation } from '../types';
 
 export default class RaidsPage extends AbstractGamePage {
   private buttonManager;
 
   private activeLocationName = ELocation.megaplexDumps;
 
-  private activeLocation = LOCATIONS[this.activeLocationName];
+  private activeLocation = LOCATIONS[ELocation.megaplexDumps];
 
   constructor() {
     super();
@@ -47,6 +47,11 @@ export default class RaidsPage extends AbstractGamePage {
     ]);
   }
 
+  setActiveRaid(location: TLocation) {
+    this.activeLocationName = location.key;
+    this.activeLocation = LOCATIONS[location.key];
+  }
+
   render(ctx: CanvasRenderingContext2D) {
     // Фон
     ctx.fillStyle = StyleColors.colorDarkBg;
@@ -59,6 +64,9 @@ export default class RaidsPage extends AbstractGamePage {
   }
 
   private drawRaidCard(ctx: CanvasRenderingContext2D, posX: number, posY: number) {
+    const { battleLocation } = PlayerManager.getInstance().playerState;
+    this.setActiveRaid(battleLocation ?? LOCATIONS[ELocation.megaplexDumps]);
+
     // Рамка
     ctx.strokeStyle = StyleColors.colorNeonBlue;
     ctx.lineWidth = 1;
@@ -100,8 +108,12 @@ export default class RaidsPage extends AbstractGamePage {
       lineHeight: 20,
     });
 
-    ctx.fillText('Количество: 10', textX, posY + 180);
-    ctx.fillText('Макс ур противников: 25', textX, posY + 205);
+    ctx.fillText(`Количество: ${this.activeLocation.enemysCount}`, textX, posY + 180);
+    ctx.fillText(
+      `Макс ур противников: ${this.activeLocation.enemies.reduce((acc, { lvl }) => (acc > lvl ? acc : lvl), 0)}`,
+      textX,
+      posY + 205
+    );
     ctx.fillText(`Награда: ${this.activeLocation.reward}`, textX, posY + 230);
 
     const raidButton = this.buttonManager.getButtonByName('raid') as TButton;

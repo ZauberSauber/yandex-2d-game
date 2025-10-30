@@ -13,7 +13,9 @@
       "@hooks": ["src/hooks"],
       "@layout": ["src/layout"],
       "@types": ["src/types"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
+      "@utils": ["src/utils"]
     },
     "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "jsx": "react-jsx",

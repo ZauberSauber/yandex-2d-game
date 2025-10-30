@@ -6,7 +6,7 @@
     "build": "tsc --p ./tsconfig.prod.json",
     "preview": "node ./dist/index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.ts",
-    "lint": "eslint \"**/*.{js,ts}\"",
+    "lint": "eslint \"**/*.{js,ts}\" --max-warnings=0",
     "tsc": "tsc --noEmit --p ./tsconfig.json",
     "format": "prettier --write .",
     "check-errors": "npm run tsc && npm run lint",

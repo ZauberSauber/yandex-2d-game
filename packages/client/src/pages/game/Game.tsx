@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { Variants } from '@pages/endGame/constants';
+import { PATHS } from '@src/routes/constants';
 
 import GameEngine from '../../gameEngine/GameEngine';
 
@@ -8,10 +11,10 @@ import styles from './Game.module.scss';
 export const Game = () => {
   const [gameEngine, setGameEngine] = useState<GameEngine | null>(null);
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const onGameOver = () => {
-    // todo: вынести PATHS, чтобы не было циклической связи
-    navigate('/end');
+    navigate(PATHS.END, { state: { isComplete: Variants.GAME_OVER } });
   };
 
   const onResourceUpdate = () => {
@@ -24,6 +27,7 @@ export const Game = () => {
       containerId: 'game',
       onGameOver,
       onResourceUpdate,
+      playerStatsInit: state,
     });
 
     setGameEngine(engine);
@@ -31,7 +35,8 @@ export const Game = () => {
     return () => {
       gameEngine?.destroy();
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   return (
     <div id="container">

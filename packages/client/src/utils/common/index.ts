@@ -1,0 +1,1 @@
+export { typedObjectEntries } from './typedObjectEntries';

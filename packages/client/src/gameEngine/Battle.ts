@@ -1,6 +1,14 @@
 import { ESkillName } from './types';
 import type ActivityManager from './ActivityManager';
-import type { EItem, TBattle, TBattleEnemy, TBattlePlayer, TEnemy, TLocation } from './types';
+import type {
+  EItem,
+  TBattle,
+  TBattleEnemy,
+  TBattlePlayer,
+  TEnemy,
+  TLocation,
+  TSetupBattleProps,
+} from './types';
 
 const BATTLE_ACTIVITIES = {
   searchEnemy: 'searchEnemy',
@@ -8,6 +16,7 @@ const BATTLE_ACTIVITIES = {
   enemyAttack: 'enemyAttack',
 };
 
+// TODO: hitChanceK, damageK, critChance, critMultiplier возможно тоже надо вынести в PlayerManager и добавить PlayerStats и TEnemy?
 export default class Battle {
   private activityManager;
 
@@ -19,8 +28,10 @@ export default class Battle {
   // коэффицент снижения урона, чем больше, тем меньше урон
   private damageK = 1.5;
 
+  // у всех модов фиксированный шанс
   private critChance = 0.05;
 
+  // у всех фиксированный крит, включая игрока
   private critMultiplier = 1.25;
 
   private battle: TBattle;
@@ -60,6 +71,8 @@ export default class Battle {
         power: 1,
         minAttack: 1,
         maxAttack: 10,
+        damageMultiplier: 1,
+        criticalHitChance: 0.05,
       },
       enemyDefeated: this.enemyDefeated,
       activeSkill: ESkillName.accuracy,
@@ -89,10 +102,15 @@ export default class Battle {
     }
   }
 
-  start(playerHP: number, maxPlayerHP: number): void {
+  start(stats: TSetupBattleProps): void {
     this.battle.state = 'idle';
-    this.battle.player.health = playerHP;
-    this.battle.player.maxHealth = maxPlayerHP;
+    this.battle.player.health = stats.playerHP;
+    this.battle.player.maxHealth = stats.maxPlayerHP;
+    this.battle.player.attackSpeed = stats.attackSpeed;
+    this.battle.player.minAttack = stats.minAttack;
+    this.battle.player.maxAttack = stats.maxAttack;
+    this.battle.player.criticalHitChance = stats.criticalHitChance;
+    this.battle.player.damageMultiplier = stats.damageMultiplier;
 
     this.searchEnemy();
   }
@@ -167,28 +185,31 @@ export default class Battle {
     let finalDamage = 0;
 
     if (activityState?.isComplete) {
-      const attacker =
-        person === 'player'
-          ? (this.battle.player as TBattlePlayer)
-          : (this.battle.enemy as TBattleEnemy);
-      const defender =
-        person === 'player'
-          ? (this.battle.enemy as TBattleEnemy)
-          : (this.battle.player as TBattlePlayer);
+      const isPerson = person === 'player';
+
+      const attacker = (isPerson ? this.battle.player : this.battle.enemy) as
+        | TBattleEnemy
+        | TBattlePlayer;
+      const defender = (isPerson ? this.battle.enemy : this.battle.player) as
+        | TBattlePlayer
+        | TBattleEnemy;
 
       const hitChance =
-        attacker?.accuracy / (attacker?.accuracy + defender?.defense * this.hitChanceK);
+        attacker.accuracy / (attacker.accuracy + defender.defense * this.hitChanceK);
       const currentChance = Math.random();
 
       if (currentChance <= hitChance) {
-        const damageMultiplier =
-          attacker?.power / (attacker?.power + defender?.defense * this.damageK);
+        const attackerDmgMultiplier = attacker.power * (attacker.damageMultiplier || 1);
+        const finalDamageMultiplier =
+          attackerDmgMultiplier / (attackerDmgMultiplier + defender.defense * this.damageK);
+
         const potentialDamage =
-          Math.random() * (attacker?.maxAttack - attacker?.minAttack) + attacker?.minAttack;
-        const isCritical = Math.random() < this.critChance;
+          Math.random() * (attacker.maxAttack - attacker.minAttack) + attacker.minAttack;
+        const isCritical =
+          Math.random() < (isPerson ? this.battle.player.criticalHitChance : this.critChance);
 
         finalDamage = Math.floor(
-          potentialDamage * damageMultiplier * (isCritical ? this.critMultiplier : 1)
+          potentialDamage * finalDamageMultiplier * (isCritical ? this.critMultiplier : 1)
         );
       }
 
@@ -218,6 +239,8 @@ export default class Battle {
         maxHealth: enemy?.health || 100,
         name: enemy?.name || 'Enemy',
         description: enemy?.description || '',
+        lvl: enemy?.lvl || 1,
+        damageMultiplier: enemy?.damageMultiplier || 1,
       };
 
       this.activityManager.stopActivity(BATTLE_ACTIVITIES.searchEnemy);

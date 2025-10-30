@@ -1,17 +1,21 @@
-import { EItem   } from '../types';
+import { EItem, ELocation } from '../types';
 import { ENEMIES } from './enemies';
-import type {ELocation, TLocation} from '../types';
+import type { TLocation } from '../types';
 
 export const LOCATIONS: Record<ELocation, TLocation> = {
   megaplexDumps: {
+    key: ELocation.megaplexDumps,
     name: 'Свалки Мегаполиса',
     enemies: [ENEMIES.scavScum, ENEMIES.gibberingHorde, ENEMIES.scrapjackers],
     enemyBoss: ENEMIES.ratKing,
     enemysCount: 10,
     resources: [EItem.rustyIron],
     reward: 'Мусорный криптор',
+    achievementText: 'Покинуть свалку',
+    isComplete: true,
   },
   gutterStreets: {
+    key: ELocation.gutterStreets,
     name: 'Улицы Отбросов',
     enemies: [ENEMIES.gutterPunk, ENEMIES.shadyBackAlleyDealer, ENEMIES.roadRashRider],
     enemyBoss: ENEMIES.gangLeaderSledgehammer,
@@ -20,6 +24,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Уличный криптор',
   },
   neonDistricts: {
+    key: ELocation.neonDistricts,
     name: 'Районы Световой Рекламы',
     enemies: [ENEMIES.rentaCop, ENEMIES.adDroneAggressor, ENEMIES.mallMaulers],
     enemyBoss: ENEMIES.securityAiSphinx,
@@ -28,6 +33,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Световой криптор',
   },
   undergroundTechBars: {
+    key: ELocation.undergroundTechBars,
     name: 'Подпольные Техно-Бары',
     enemies: [ENEMIES.undergroundBrawler, ENEMIES.ghostInTheSystem, ENEMIES.graftedBrute],
     enemyBoss: ENEMIES.legendaryMechanic,
@@ -36,6 +42,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Техно-Барный криптор',
   },
   corporateWarehouses: {
+    key: ELocation.corporateWarehouses,
     name: 'Корпоративные Склады',
     enemies: [
       ENEMIES.corporateSecurityOfficer,
@@ -48,6 +55,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Складской криптор',
   },
   specOpsBarracks: {
+    key: ELocation.specOpsBarracks,
     name: 'Казармы Спецподразделений',
     enemies: [ENEMIES.specOpsTrooper, ENEMIES.phantomSniper, ENEMIES.combatEngineer],
     enemyBoss: ENEMIES.squadCommanderValkyrie,
@@ -56,6 +64,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Спец криптор',
   },
   corporateBlackBagDumps: {
+    key: ELocation.corporateBlackBagDumps,
     name: 'Засекреченные Мусоропроводы',
     enemies: [
       ENEMIES.corperateResearcherGoneMad,
@@ -68,6 +77,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Складской криптор',
   },
   digitizedWorkshops: {
+    key: ELocation.digitizedWorkshops,
     name: 'Оцифрованные Мастерские Легенд',
     enemies: [ENEMIES.elitePrivateGuards, ENEMIES.smartHomeSystem, ENEMIES.automatedCombatButler],
     enemyBoss: ENEMIES.legendaryArtisan,
@@ -76,6 +86,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Мастерский криптор',
   },
   corporateSpireCores: {
+    key: ELocation.corporateSpireCores,
     name: 'Центральные Ядра Корпоративных Башен',
     enemies: [ENEMIES.eliteCyberGuard, ENEMIES.realitySuppressor, ENEMIES.aiAspect],
     enemyBoss: ENEMIES.directorOfNewTechnologies,
@@ -84,6 +95,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Ядерный криптор',
   },
   netsDeadZones: {
+    key: ELocation.netsDeadZones,
     name: 'Мертвые Зоны Сети',
     enemies: [ENEMIES.shardsOfLostMinds, ENEMIES.thresholdGuardian, ENEMIES.echoOfTheFirstAI],
     enemyBoss: ENEMIES.abyss,

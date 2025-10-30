@@ -7,9 +7,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  @else {
+  } @else {
     display: -webkit-box;
     -webkit-line-clamp: $line;
     -webkit-box-orient: vertical;

@@ -14,7 +14,7 @@ module.exports = {
       typescript: { project: './tsconfig.json' },
       node: { extensions: ['.js', '.jsx', '.ts', '.tsx', '.mts', '.mjs'] },
     },
-    'import/internal-regex': '^(@src|@components|@slices|@pages|@types|@layout)(/|$)',
+    'import/internal-regex': '^(@src|@components|@slices|@pages|@types|@layout|@utils)(/|$)',
   },
 
   rules: {
@@ -34,12 +34,12 @@ module.exports = {
             '^react',
             '^react-router-dom',
             '^react+',
-            '^@?(?!(src|components|slices|pages|types|layout)\\b)\\w',
-            '^@?(?!(common|components|slices|pages|types|layout)\\b)\\w(.+)?\\u0000$',
+            '^@?(?!(src|components|slices|pages|types|layout|utils)\\b)\\w',
+            '^@?(?!(common|components|slices|pages|types|layout|utils)\\b)\\w(.+)?\\u0000$',
           ],
           [
-            '^(@src|@components|@slices|@pages|@types|@layout)(/|$|/.+)?',
-            '^(@src|@components|@slices|@pages|@types|@layout)(/|$|/.+)?\\u0000$',
+            '^(@src|@components|@slices|@pages|@types|@layout|@utils)(/|$|/.+)?',
+            '^(@src|@components|@slices|@pages|@types|@layout|@utils)(/|$|/.+)?\\u0000$',
           ],
           ['^\\.\\./', '^\\./', '^\\.\\./(.+)?\\u0000$', '^\\./(.+)?\\u0000$'],
           ['^.+\\.scss$'],

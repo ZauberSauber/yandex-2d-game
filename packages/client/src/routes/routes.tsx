@@ -1,35 +1,7 @@
-import { Game } from '@pages/game/Game';
-import { PreGame } from '@pages/preGame';
+import { EndGame, Game, PreGame, SignInPage, SignUpPage } from '@pages';
 
-import { SignInPage } from './pages/Sign/SignIn';
-import { SignUpPage } from './pages/Sign/SignUp';
-import type { AppDispatch, RootState } from './store';
-
-export type PageInitContext = {
-  clientToken?: string;
-};
-
-export type PageInitArgs = {
-  dispatch: AppDispatch;
-  state: RootState;
-  ctx: PageInitContext;
-};
-
-export enum PATHS {
-  HOME = '/',
-  START = '/start',
-  END = '/end',
-  GAME = '/game',
-  FRIENDS = '/friends',
-  PROFILE = '/profile',
-  SIGN_IN = '/sign-in',
-  SIGN_UP = '/sign-up',
-  BLOG = '/blog',
-  FORUM = '/forum',
-  FORUM_CREATE_TOPIC = '/forum/create-topic',
-  FORUM_TOPIC = '/forum/topic',
-  LEADERBOARD = '/leaderboard',
-}
+import { PATHS } from './constants';
+import type { PageInitArgs } from './types';
 
 export const routes = [
   {
@@ -58,7 +30,7 @@ export const routes = [
   },
   {
     path: PATHS.END,
-    Component: PreGame,
+    Component: EndGame,
     fetchData: (props: PageInitArgs) => {
       void props;
     },

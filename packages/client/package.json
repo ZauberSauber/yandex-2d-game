@@ -9,7 +9,7 @@
     "preview": "node server/index.js",
     "tsc": "tsc --noEmit --p ./tsconfig.json",
     "check-errors": "npm run tsc && npm run lint",
-    "lint": "eslint \"**/*.{js,ts,tsx}\" && stylelint \"src/**/*.{css,scss}\"",
+    "lint": "eslint \"**/*.{js,ts,tsx}\" --max-warnings=0 && stylelint \"src/**/*.{css,scss}\" --max-warnings=0",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"**/*.{js,ts,tsx,css,scss}\"",
     "prepare": "husky",
