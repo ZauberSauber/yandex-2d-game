@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import GameEngine from '../../gameEngine/GameEngine';
 
@@ -6,10 +7,11 @@ import styles from './Game.module.scss';
 
 export const Game = () => {
   const [gameEngine, setGameEngine] = useState<GameEngine | null>(null);
+  const navigate = useNavigate();
 
   const onGameOver = () => {
-    // eslint-disable-next-line no-console
-    console.log('Game over');
+    // todo: вынести PATHS, чтобы не было циклической связи
+    navigate('/end');
   };
 
   const onResourceUpdate = () => {

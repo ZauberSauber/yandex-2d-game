@@ -1,36 +1,70 @@
-import { EXP_PER_CYCLE, PROGRESS_SPEED } from './constants';
-import { SKILLS } from './constants/skills';
-import type { ESkillName } from './types';
+import type { TActivity } from './types';
 
 export default class ActivityManager {
-  private currentScale = 0;
+  private static _instance: ActivityManager | null = null;
 
-  private isPaused = false;
+  private currentTime = 0;
 
-  private activeSkillKeyName: ESkillName | null = null;
+  private activities: Map<string, TActivity> = new Map();
 
-  // @ts-expect-error заиспользовать при напсании логики получения опыта
-  private calculateProgress(): void {
-    if (this.isPaused) {
-      return;
+  constructor() {
+    if (ActivityManager._instance) {
+      return ActivityManager._instance;
     }
 
-    if (!this.activeSkillKeyName) {
-      return;
+    ActivityManager._instance = this;
+  }
+
+  static getInstance(): ActivityManager {
+    if (!ActivityManager._instance) {
+      throw new Error('Инстанс ActivityManager не создан!');
     }
 
-    // скорость получения опыта
-    this.currentScale += PROGRESS_SPEED;
+    return ActivityManager._instance;
+  }
 
-    if (this.currentScale >= SKILLS[this.activeSkillKeyName].timeToGetExp) {
-      SKILLS[this.activeSkillKeyName].exp += EXP_PER_CYCLE;
+  getActivityState(name: string): { progress: number; isComplete: boolean } | null {
+    const activity = this.activities.get(name);
 
-      if (SKILLS[this.activeSkillKeyName].exp >= SKILLS[this.activeSkillKeyName].expToLvl) {
-        SKILLS[this.activeSkillKeyName].lvl += 1;
-        SKILLS[this.activeSkillKeyName].exp = 0;
+    return activity
+      ? {
+          progress: activity.progress,
+          isComplete: activity.isComplete,
+        }
+      : null;
+  }
+
+  startActivity(name: string, duration: number, onComplete?: () => void) {
+    this.activities.set(name, {
+      startTime: this.currentTime,
+      duration,
+      progress: 0,
+      isComplete: false,
+      onComplete,
+    });
+  }
+
+  stopActivity(name: string) {
+    if (this.activities.has(name)) {
+      this.activities.delete(name);
+    }
+  }
+
+  update(currentTime: number) {
+    this.currentTime = currentTime;
+
+    this.activities.forEach((activity, name) => {
+      const lastTime = this.activities.get(name)?.startTime || 0;
+      const deltaTime = currentTime - lastTime;
+
+      activity.progress = Math.min(deltaTime, activity.duration);
+
+      if (deltaTime >= activity.duration) {
+        if (!activity.isComplete) {
+          activity.isComplete = true;
+          activity.onComplete?.();
+        }
       }
-
-      this.currentScale = 0;
-    }
+    });
   }
 }
