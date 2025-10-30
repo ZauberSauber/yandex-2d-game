@@ -10,7 +10,7 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import authReducer from './slices/authSlice';
 import friendsReducer from './slices/friendsSlice';
 import ssrReducer from './slices/ssrSlice';
-import userReducer from './slices/userSlice';
+import userReducer from './slices/userSlice/userSlice';
 
 declare global {
   interface Window {

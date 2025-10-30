@@ -1,15 +1,7 @@
 @use 'styles/variables.scss' as v;
 
 .text-area {
-  border-radius: 0;
-
-  &:global(.ant-input-outlined) {
-    background-color: v.$color-dark-bg;
-    border: 1px solid v.$color-blue-violet;
-  }
-
   &:global(.ant-input) {
-    color: v.$color-text;
     resize: none;
   }
 }

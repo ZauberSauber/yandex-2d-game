@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@src/store';
 
 import { authApi } from '@src/api/authApi';
+import { profileApi } from '@src/api/profileApi';
 import { extractErrorMessage } from '@src/utils/api/api';
 
 export interface AuthState {
@@ -53,7 +54,7 @@ export const signUpThunk = createAsyncThunk(
 );
 
 export const checkAuthThunk = createAsyncThunk('auth/checkAuth', async (_, { rejectWithValue }) => {
-  const result = await authApi.getUser();
+  const result = await profileApi.getUserInfo();
 
   if (result.error || !result.data) {
     return rejectWithValue('Не авторизован');

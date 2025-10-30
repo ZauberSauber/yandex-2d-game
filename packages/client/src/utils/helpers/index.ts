@@ -1,0 +1,1 @@
+export { getSrc } from './getSrc';
