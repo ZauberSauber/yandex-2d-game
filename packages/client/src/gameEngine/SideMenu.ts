@@ -40,6 +40,7 @@ export default class SideMenu {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
+    ctx.clearRect(0, 0, this.menuWidth + 40, ctx.canvas.height);
     const fontSize = 16;
 
     // Элементы меню

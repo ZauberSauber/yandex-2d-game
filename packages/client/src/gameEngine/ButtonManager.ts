@@ -1,3 +1,4 @@
+import { SCALE } from './constants';
 import type { TButton } from './types';
 
 export default class ButtonManager<T extends string> {
@@ -24,12 +25,7 @@ export default class ButtonManager<T extends string> {
     for (let i = 0; i < buttons.length; i++) {
       const button = buttons[i];
 
-      if (
-        x >= button.x &&
-        x < button.x + button.width &&
-        y >= button.y &&
-        y < button.y + button.height
-      ) {
+      if (this.compareCoords(x, y, button)) {
         return i;
       }
     }
@@ -39,12 +35,7 @@ export default class ButtonManager<T extends string> {
 
   getButtonName(x: number, y: number): string | undefined {
     for (const [buttonName, button] of this.buttons) {
-      if (
-        x >= button.x &&
-        x < button.x + button.width &&
-        y >= button.y &&
-        y < button.y + button.height
-      ) {
+      if (this.compareCoords(x, y, button)) {
         return buttonName;
       }
     }
@@ -54,5 +45,17 @@ export default class ButtonManager<T extends string> {
 
   getButtonByName(name: string): TButton<T> | undefined {
     return this.buttons.get(name);
+  }
+
+  private compareCoords(x: number, y: number, button: TButton): boolean {
+    const _x = x / SCALE;
+    const _y = y / SCALE;
+
+    return (
+      _x >= button.x &&
+      _x < button.x + button.width &&
+      _y >= button.y &&
+      _y < button.y + button.height
+    );
   }
 }

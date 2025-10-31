@@ -2,7 +2,7 @@ import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
 import ButtonManager from '../ButtonManager';
-import { MAIN_FONT } from '../constants';
+import { MAIN_FONT, PAGE_X } from '../constants';
 import { LOCATIONS } from '../constants/locations';
 import PlayerManager from '../PlayerManager';
 import { EGamePage, ELocation } from '../types';
@@ -50,11 +50,11 @@ export default class RaidsPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     // Фон
     ctx.fillStyle = StyleColors.colorDarkBg;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
     drawPageTitle(ctx, 'Рейды');
 
-    this.drawRaidCard(ctx, 240, 60);
+    this.drawRaidCard(ctx, PAGE_X, 60);
     this.drawButtons(ctx);
   }
 
@@ -102,7 +102,7 @@ export default class RaidsPage extends AbstractGamePage {
 
     ctx.fillText('Количество: 10', textX, posY + 180);
     ctx.fillText('Макс ур противников: 25', textX, posY + 205);
-    ctx.fillText(`Награда: ${this.activeLocation.bounty}`, textX, posY + 230);
+    ctx.fillText(`Награда: ${this.activeLocation.reward}`, textX, posY + 230);
 
     const raidButton = this.buttonManager.getButtonByName('raid') as TButton;
 
@@ -155,7 +155,7 @@ export default class RaidsPage extends AbstractGamePage {
 
     if (buttonName === 'raid') {
       if (this.changePage) {
-        PlayerManager.getInstance().setBattleLocation(this.activeLocationName);
+        PlayerManager.getInstance().setBattleLocation(this.activeLocation);
         this.changePage(EGamePage.battle);
       }
     }

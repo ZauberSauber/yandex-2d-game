@@ -1,13 +1,21 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
+import ButtonManager from '../ButtonManager';
 import { MAIN_FONT } from '../constants';
+import { ARMORS } from '../constants/armors';
+import { BLANKS } from '../constants/blanks';
+import { MEDKITS } from '../constants/medkits';
+import { WEAPONS } from '../constants/weapons';
 import { drawBar } from '../utils/drawBar';
 import { drawImg } from '../utils/drawImg';
 import { drawMultilineText } from '../utils/drawMultilineText';
 import { drawPageTitle } from '../utils/drawPageTitle';
+import type { TButton } from '../types';
 
 export default class FactoryPage extends AbstractGamePage {
+  private buttonManager;
+
   private posX = 240;
 
   private posY = 60;
@@ -16,9 +24,37 @@ export default class FactoryPage extends AbstractGamePage {
 
   private blockPosY = 320;
 
-  private blocks = ['Заготовки', 'Оружие', 'Броня', 'Аптечки'];
+  private tabs = new Map();
+
+  private activeTab;
 
   private currentCraftItem = 'Костюм Сингулярности "Энигма';
+
+  constructor() {
+    super();
+
+    this.tabs.set('blank', { name: 'Заготовки', content: Object.values(BLANKS) });
+    this.tabs.set('weapon', { name: 'Оружие', content: Object.values(WEAPONS) });
+    this.tabs.set('armor', { name: 'Броня', content: Object.values(ARMORS) });
+    this.tabs.set('medkit', { name: 'Аптечки', content: Object.values(MEDKITS) });
+
+    this.buttonManager = new ButtonManager();
+    let i = 0;
+    this.tabs.forEach((_, key) => {
+      const button = {
+        name: key,
+        x: this.posX + 20 + 130 * i,
+        y: this.blockPosY - 15,
+        width: 100,
+        height: 25,
+      };
+      this.buttonManager.addButton(button);
+
+      i++;
+    });
+
+    this.activeTab = this.tabs.get('blank');
+  }
 
   private drawFactoryLvl(ctx: CanvasRenderingContext2D): void {
     drawBar({
@@ -94,18 +130,20 @@ export default class FactoryPage extends AbstractGamePage {
 
     ctx.fillStyle = StyleColors.colorNeonBlue;
     ctx.font = MAIN_FONT;
-    ctx.textAlign = 'left';
+    ctx.textAlign = 'center';
 
-    for (let index = 0; index < this.blocks.length; index++) {
-      if (index === 1) {
+    this.tabs.forEach((tab, key) => {
+      if (tab.name === this.activeTab.name) {
         // Выбранная вкладка крафта
         ctx.fillStyle = StyleColors.colorNeonPink;
       } else {
         ctx.fillStyle = StyleColors.colorNeonBlue;
       }
 
-      ctx.fillText(this.blocks[index], this.posX + 30 + 130 * index, posY);
-    }
+      const button = this.buttonManager.getButtonByName(key) as TButton;
+
+      ctx.fillText(tab.name, button.x + button.width / 2, button.y + button.height / 2 + 5);
+    });
 
     // Иконки предметов
     // TODO: если уровеь крафта < уровня предмета, то иконка будет залочена
@@ -113,7 +151,7 @@ export default class FactoryPage extends AbstractGamePage {
 
     const iconShift = 52;
 
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < this.activeTab.content.length; index++) {
       drawImg({
         ctx,
         posX: this.posX + 10 + index * iconShift,
@@ -142,5 +180,17 @@ export default class FactoryPage extends AbstractGamePage {
     this.drawFactoryLvl(ctx);
     this.drawCraftItem(ctx);
     this.drawBlock(ctx);
+  }
+
+  override handleClick(x: number, y: number): void {
+    const buttonName = this.buttonManager.getButtonName(x, y);
+
+    if (!buttonName) {
+      return;
+    }
+
+    if (this.tabs.has(buttonName)) {
+      this.activeTab = this.tabs.get(buttonName);
+    }
   }
 }

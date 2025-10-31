@@ -2,7 +2,7 @@ import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
 import ButtonManager from '../ButtonManager';
-import { MAIN_FONT } from '../constants';
+import { MAIN_FONT, PAGE_X } from '../constants';
 import PlayerManager from '../PlayerManager';
 import { EGamePage, ESkillName } from '../types';
 import { drawBar } from '../utils/drawBar';
@@ -59,7 +59,7 @@ export default class BattlePage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     // Фон
     ctx.fillStyle = StyleColors.colorDarkBg;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
     drawPageTitle(ctx, 'Страница сражения');
 

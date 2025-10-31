@@ -1,5 +1,5 @@
 import ActivityManager from './ActivityManager';
-import { FRAME_INTERVAL } from './constants';
+import { FRAME_INTERVAL, SCALE } from './constants';
 import PageManager from './PageManager';
 import BattlePage from './pages/BattlePage';
 import CharacterPage from './pages/CharacterPage';
@@ -13,10 +13,8 @@ import { EGamePage } from './types';
 import styles from '@pages/game/Game.module.scss';
 
 /* todo:
- * бой: сделать выбор активного навыка и получение опыта для него
- * бой: сделать получение рессурсов
  * бой: добавить логику использования аптечек
- * страница инвентаря: отображение списка ресурсов (использовать контейнер поверх канваса)
+ * страница инвентаря: поправить отображение кол-ва ресурсов
  * страница навыков: вывод актуального состояния навыков
  * производство: реализовать логику крафта, скрафченные вещи надевать автоматом, настроить отображение на странице персонажа
  */
@@ -60,6 +58,7 @@ export default class GameEngine {
 
     this.canvas = this.createCanvas(gameContainer);
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    this.ctx.scale(SCALE, SCALE);
 
     this.activutyManager = new ActivityManager();
     this.playerManager = new PlayerManager();
@@ -71,9 +70,10 @@ export default class GameEngine {
 
   private createCanvas(gameContainer: HTMLElement): HTMLCanvasElement {
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
+    
     canvas.classList.add(styles.gameCanvas);
-    canvas.width = 800;
-    canvas.height = 600;
+    canvas.width = 800 * SCALE;
+    canvas.height = 600 * SCALE;
 
     gameContainer.innerHTML = '';
     gameContainer.appendChild(canvas);

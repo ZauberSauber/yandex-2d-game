@@ -41,8 +41,6 @@ export default class PageManager {
       return;
     }
 
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     if (this.currentPage?.onExit) {
       this.currentPage.onExit();
     }
