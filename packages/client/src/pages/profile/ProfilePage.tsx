@@ -4,7 +4,6 @@ import { notification, Typography } from 'antd';
 import cn from 'classnames';
 import type { FormEvent } from 'react';
 
-import { profileApi } from '@src/api/profileApi';
 import { Button, FormField, InputComponent } from '@src/components';
 import { CircleAvatar } from '@src/components/CircleAvatar';
 import { ModalChangeAvatar } from '@src/components/ModalChangeAvatar';
@@ -20,6 +19,7 @@ import {
   selectProfileError,
   selectProfileLoading,
   selectUser,
+  setProfileAvatarThunk,
   setUserInfoThunk,
 } from '@src/slices/userSlice';
 import { useDispatch, useSelector } from '@src/store';
@@ -125,6 +125,25 @@ export const ProfilePage = () => {
     }
   };
 
+  const handleSubmitAvatar = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!avatarFile) return;
+    const formImg = new FormData();
+    formImg.append('avatar', avatarFile);
+
+    const result = await dispatch(setProfileAvatarThunk(formImg));
+
+    if (setProfileAvatarThunk.fulfilled.match(result)) {
+      notification.success({
+        message: 'Изображение успешно сохранено',
+        duration: DURATION_NOTIFY,
+        closable: true,
+      });
+      setIsOpenChangeAvatarModal(false);
+    }
+  };
+
   const onClickLogOut = () => {
     dispatch(logoutThunk());
   };
@@ -141,6 +160,7 @@ export const ProfilePage = () => {
         biography: userInfo.biography,
       });
 
+      setAvatarPreview(userInfo.avatar);
       setSrcAvatar(userInfo.avatar);
     }
   }, [userInfo]);
@@ -433,16 +453,7 @@ export const ProfilePage = () => {
           srcAvatar={srcAvatar}
           onChangeSrcAvatar={setSrcAvatar}
           onChangeFileAvatar={setAvatarFile}
-          onClickSave={() => {
-            if (avatarFile) {
-              const formImg = new FormData();
-              formImg.append('avatar', avatarFile);
-              profileApi.uploadAvatar(formImg);
-            }
-
-            setAvatarPreview(srcAvatar);
-            setIsOpenChangeAvatarModal(false);
-          }}
+          onClickSave={handleSubmitAvatar}
           onClickCancel={() => setIsOpenChangeAvatarModal(false)}
         />
       )}

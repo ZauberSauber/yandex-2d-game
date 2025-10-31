@@ -5,5 +5,9 @@ export const getSrc = (path: string) => {
     return '';
   }
 
-  return `https:${BASE_URLS.RESOURCES}${path.replace('/', '')}`;
+  if (path.includes('base64')) {
+    return path;
+  }
+
+  return `${BASE_URLS.RESOURCES}${path}`;
 };
