@@ -1,7 +1,40 @@
 @use 'styles/variables' as v;
+@use 'styles/default.scss' as d;
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 0 20px;
+}
 
 .header {
   align-items: center;
   align-content: center;
   height: v.$header-height;
+  flex: 1;
+}
+
+.fullscreenControls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.message {
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid v.$color-neon-green;
+  background: rgb(v.$color-neon-green, 0.1);
+  color: v.$color-neon-green;
+  font-size: 14px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.toggler {
+  padding: 8px 16px;
+  font-size: 14px;
 }
