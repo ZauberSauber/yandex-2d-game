@@ -1,7 +1,6 @@
-import { LOCATIONS } from './constants/locations';
 import { ESkillName } from './types';
 import type ActivityManager from './ActivityManager';
-import type { ELocation, TBattle, TBattleEnemy, TBattlePlayer, TEnemy } from './types';
+import type { EItem, TBattle, TBattleEnemy, TBattlePlayer, TEnemy, TLocation } from './types';
 
 const BATTLE_ACTIVITIES = {
   searchEnemy: 'searchEnemy',
@@ -26,13 +25,25 @@ export default class Battle {
 
   private battle: TBattle;
 
-  private battleLocation: ELocation;
+  private battleLocation: TLocation;
 
   private enemyDefeated = 0;
 
-  constructor(battleLocation: ELocation, activityManager: ActivityManager) {
+  private addResources;
+
+  private addSkillExp;
+
+  constructor(
+    battleLocation: TLocation,
+    activityManager: ActivityManager,
+    addResources: (resources: { name: EItem; count: number }[]) => void,
+    addSkillExp: (exp: number) => void
+  ) {
     this.battleLocation = battleLocation;
     this.activityManager = activityManager;
+
+    this.addResources = addResources;
+    this.addSkillExp = addSkillExp;
 
     // стартовые значения, переопределяются при запуске битвы
     this.battle = {
@@ -78,7 +89,7 @@ export default class Battle {
     }
   }
 
-  setupBattle(playerHP: number, maxPlayerHP: number): void {
+  start(playerHP: number, maxPlayerHP: number): void {
     this.battle.state = 'idle';
     this.battle.player.health = playerHP;
     this.battle.player.maxHealth = maxPlayerHP;
@@ -90,7 +101,7 @@ export default class Battle {
     return this.battle;
   }
 
-  stopBattle(): void {
+  stop(): void {
     this.battle.state = 'idle';
     Object.values(BATTLE_ACTIVITIES).forEach((activityName) => {
       this.activityManager.stopActivity(activityName);
@@ -107,17 +118,18 @@ export default class Battle {
 
     const newPlayerHP = Math.max(playerHP - enemyAttack, 0);
     const enemyHP = Math.max(this.battle.enemy.health - playerAttack, 0);
-    let exp = 0;
 
-    if (enemyHP <= 0) {
-      exp = this.battle.enemy.exp;
+    if (enemyHP <= 0 && this.battle.state !== 'idle') {
       this.battle.state = 'idle';
       this.enemyDefeated += 1;
+      this.addSkillExp(this.battle.enemy.exp);
 
-      if (this.enemyDefeated >= LOCATIONS[this.battleLocation].enemysCount) {
-        this.stopBattle();
+      if (this.enemyDefeated >= this.battleLocation.enemysCount) {
+        this.addResources([{ name: this.battleLocation.resources[0], count: 5 }]);
+        this.stop();
         this.battle.state = 'victory';
       } else {
+        this.addResources([{ name: this.battleLocation.resources[0], count: 1 }]);
         this.searchEnemy();
       }
     }
@@ -135,7 +147,6 @@ export default class Battle {
         cooldown: enemyCooldown,
       },
       enemyDefeated: this.enemyDefeated,
-      exp,
     };
   }
 
@@ -219,7 +230,7 @@ export default class Battle {
       return null;
     }
 
-    const location = LOCATIONS[this.battleLocation];
+    const location = this.battleLocation;
 
     // Если побеждено достаточно врагов, возвращаем босса
     if (this.enemyDefeated >= location.enemysCount - 1) {

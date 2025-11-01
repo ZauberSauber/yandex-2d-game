@@ -216,8 +216,8 @@ export type TLocation = {
   enemies: TEnemy[];
   enemyBoss: TEnemy;
   enemysCount: number;
-  resources: TItem[];
-  bounty: string;
+  resources: EItem[];
+  reward: string;
   description?: string;
 };
 

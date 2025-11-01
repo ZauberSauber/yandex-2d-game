@@ -1,6 +1,7 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
+import { PAGE_X } from '../constants';
 import { drawBar } from '../utils/drawBar';
 import { drawImg } from '../utils/drawImg';
 import { drawPageTitle } from '../utils/drawPageTitle';
@@ -9,7 +10,7 @@ export default class SkillsPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     // Фон
     ctx.fillStyle = StyleColors.colorDarkBg;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
     drawPageTitle(ctx, 'Навыки');
 
@@ -17,7 +18,7 @@ export default class SkillsPage extends AbstractGamePage {
   }
 
   private drawSkillTable(ctx: CanvasRenderingContext2D) {
-    const posX = 240;
+    const posX = PAGE_X;
     const rowHeight = 60;
     const gap = 10;
     const imgSize = 30;

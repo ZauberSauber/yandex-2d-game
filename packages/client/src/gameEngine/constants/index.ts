@@ -5,9 +5,9 @@ export const MAIN_FONT = '16px Rajdhani, sans-serif';
 export const TARGET_FPS = 30;
 export const FRAME_INTERVAL = 1000 / TARGET_FPS;
 
-export const EXP_PER_CYCLE = 100;
+export const SCALE = 1.5;
 
-export const PROGRESS_SPEED = 42;
+export const PAGE_X = 240;
 
 export const GAME_PAGES: TGamePage = {
   character: {

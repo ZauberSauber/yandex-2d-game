@@ -2,7 +2,7 @@ import ActivityManager from './ActivityManager';
 import Battle from './Battle';
 import { SKILLS } from './mock/skills';
 import { ESkillName } from './types';
-import type { ELocation, TBattle } from './types';
+import type { EItem, TBattle, TLocation } from './types';
 
 export default class PlayerManager {
   private static _instance: PlayerManager | null = null;
@@ -35,7 +35,7 @@ export default class PlayerManager {
 
   private activeSkill: ESkillName = ESkillName.accuracy;
 
-  private battleLocation: ELocation | null = null;
+  private battleLocation: TLocation | null = null;
 
   private battle: Battle | null = null;
 
@@ -71,8 +71,6 @@ export default class PlayerManager {
 
       const battleState = this.battle.getBattleState();
 
-      this.udateSkill(battleState.exp);
-
       if (battleState.state === 'battle') {
         this.playerHP = battleState.player.health;
       }
@@ -91,7 +89,7 @@ export default class PlayerManager {
     this.activeSkill = skillName;
   }
 
-  udateSkill(exp: number): void {
+  addSkillExp(exp: number): void {
     if (exp === 0) {
       return;
     }
@@ -127,7 +125,7 @@ export default class PlayerManager {
   }
 
   setInventoryItem(itemName: string, count: number): void {
-    const itemCount = this.inventory.get(itemName) || 0 + count;
+    const itemCount = (this.inventory.get(itemName) || 0) + count;
 
     if (itemCount > 0) {
       this.inventory.set(itemName, itemCount);
@@ -143,8 +141,13 @@ export default class PlayerManager {
   setupBattle(): void {
     if (!this.battleLocation) return;
 
-    this.battle = new Battle(this.battleLocation, this.activityManager as ActivityManager);
-    this.battle.setupBattle(this.playerHP, this.maxPlayerHP);
+    this.battle = new Battle(
+      this.battleLocation,
+      this.activityManager as ActivityManager,
+      this.addResources.bind(this),
+      this.addSkillExp.bind(this)
+    );
+    this.battle.start(this.playerHP, this.maxPlayerHP);
   }
 
   getBattleState(): TBattle {
@@ -175,12 +178,18 @@ export default class PlayerManager {
 
   stopBattle(): void {
     if (this.battle) {
-      this.battle.stopBattle();
+      this.battle.stop();
     }
   }
 
-  setBattleLocation(location: ELocation): void {
+  setBattleLocation(location: TLocation): void {
     this.battleLocation = location;
+  }
+
+  private addResources(resources: { name: EItem; count: number }[]): void {
+    resources.forEach((resource) => {
+      this.setInventoryItem(resource.name, resource.count);
+    });
   }
 
   private onHealthRegen(): void {
