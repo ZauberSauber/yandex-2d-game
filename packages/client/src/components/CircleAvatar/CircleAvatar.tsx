@@ -1,6 +1,8 @@
-import photo from '../../../public/img/defaultAvatar.jpg';
+import { getSrc } from '@src/utils/helpers';
 
 import style from './CircleAvatar.module.scss';
+
+import photo from '/img/defaultAvatar.jpg';
 
 interface CircleAvatarProps {
   srcAvatar: string;
@@ -10,6 +12,10 @@ interface CircleAvatarProps {
 
 export const CircleAvatar = ({ srcAvatar, sizeImg, onClick }: CircleAvatarProps) => (
   <div className={style.avatar} onClick={onClick}>
-    <img src={srcAvatar || photo} style={{ width: sizeImg, height: sizeImg }} />
+    <img
+      className={style.img}
+      src={getSrc(srcAvatar) || photo}
+      style={{ width: sizeImg, height: sizeImg }}
+    />
   </div>
 );

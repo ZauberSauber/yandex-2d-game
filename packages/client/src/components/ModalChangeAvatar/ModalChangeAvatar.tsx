@@ -1,3 +1,5 @@
+import type { FormEvent } from 'react';
+
 import { Button } from '../Button';
 import { ImageInput } from '../ImageInput';
 
@@ -7,7 +9,7 @@ interface ModalChangeAvatarProps {
   srcAvatar: string;
   onChangeSrcAvatar: (value: string) => void;
   onChangeFileAvatar: (value: File) => void;
-  onClickSave: () => void;
+  onClickSave: (e: FormEvent) => void;
   onClickCancel: () => void;
 }
 
@@ -19,13 +21,13 @@ export const ModalChangeAvatar = ({
   onClickCancel,
 }: ModalChangeAvatarProps) => (
   <div className={style['modal-container']}>
-    <form className={style.modal}>
+    <form className={style.modal} onSubmit={onClickSave}>
       <ImageInput
         rawPathImg={srcAvatar}
         onChangeSrcAvatar={onChangeSrcAvatar}
         onChangeFileAvatar={onChangeFileAvatar}
       />
-      <Button onClick={onClickSave}>Сохранить</Button>
+      <Button htmlType="submit">Сохранить</Button>
       <Button onClick={onClickCancel}>Вернуться назад</Button>
     </form>
   </div>

@@ -11,15 +11,15 @@ export const userMockData = {
   statistics: [
     {
       name: 'Сообщений',
-      value: 156,
+      value: '156',
     },
     {
       name: 'Тем создано',
-      value: 24,
+      value: '24',
     },
     {
       name: 'Активность',
-      value: 89,
+      value: '89',
     },
     {
       name: 'На платформе',

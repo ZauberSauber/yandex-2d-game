@@ -2,20 +2,15 @@ import type { TRequestResult } from '@src/utils/api/api';
 
 import { API } from '@src/utils/api/api';
 
-import type { SignInRequest, SignUpRequest, User } from './types';
-
-const authConfig = { withCredentials: true } as const;
+import type { User } from '../profileApi/types';
+import type { SignInRequest, SignUpRequest } from './types';
 
 export const authApi = {
   signIn: (credentials: SignInRequest): Promise<TRequestResult<void>> =>
-    API.post<SignInRequest, void>('/auth/signin')(credentials, {}, undefined, authConfig),
+    API.post<SignInRequest, void>('/auth/signin')(credentials),
 
   signUp: (userData: SignUpRequest): Promise<TRequestResult<User>> =>
-    API.post<SignUpRequest, User>('/auth/signup')(userData, {}, undefined, authConfig),
+    API.post<SignUpRequest, User>('/auth/signup')(userData),
 
-  getUser: (): Promise<TRequestResult<User>> =>
-    API.get<never, User>('/auth/user')({}, {}, undefined, authConfig),
-
-  logout: (): Promise<TRequestResult<void>> =>
-    API.post<never, void>('/auth/logout')({}, {}, undefined, authConfig),
+  logout: (): Promise<TRequestResult<void>> => API.post<never, void>('/auth/logout')(),
 };

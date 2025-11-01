@@ -14,6 +14,19 @@ export const FORM_LABELS = {
   PHONE: 'ТЕЛЕФОН',
 } as const;
 
+export const FORM_LABELS_PROFILE_INFO = {
+  LOGIN: 'Логин',
+  FIRST_NAME: 'Имя',
+  SECOND_NAME: 'Фамилия',
+  DISPLAY_NAME: 'Никнейм',
+  EMAIL: 'Email',
+  PHONE: 'Телефон',
+  BIOGRAPHY: 'Биография',
+  OLD_PASSWORD: 'Текущий пароль',
+  NEW_PASSWORD: 'Новый пароль',
+  REPEAT_NEW_PASSWORD: 'Подтверждения пароля',
+} as const;
+
 export const FORM_PLACEHOLDERS = {
   LOGIN: '> Введите ваш логин',
   PASSWORD: '> ********',
@@ -23,4 +36,6 @@ export const FORM_PLACEHOLDERS = {
   EMAIL: 'Введите email',
   PASSWORD_SIGNUP: 'Введите пароль',
   PHONE: 'Введите телефон',
+  BIOGRAPHY: 'Введите вашу биографию',
+  DISPLAY_NAME: 'Введите никнейм',
 } as const;

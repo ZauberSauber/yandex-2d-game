@@ -7,5 +7,10 @@
   border: solid 2px v.$color-neon-light-pink;
   border-radius: 50%;
   overflow: hidden;
-  object-fit: contain;
+
+  .img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
 }

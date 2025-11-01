@@ -1,61 +1,22 @@
-import axios, { HttpStatusCode, isAxiosError } from 'axios';
-import type { TError } from '@src/utils/api/types';
+import type { TRequestResult } from '@src/utils/api/api';
 
-import { API, axiosConfig } from '@src/utils/api/api';
+import { API } from '@src/utils/api/api';
 
-import type { ChangePassword } from './types';
+import type { ChangePassword, SetUserData, User } from './types';
 
 export const profileApi = {
-  uploadAvatar: async (imgData: FormData) => {
-    try {
-      const response = await axios.put('user/profile/avatar', imgData, {
-        ...axiosConfig,
-        headers: {
-          ...axiosConfig.headers,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+  uploadAvatar: (imgData: FormData): Promise<TRequestResult<User>> =>
+    API.put<FormData, User>('user/profile/avatar')(imgData, {}, undefined, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
 
-      const { data, status } = response || {};
+  changePassword: (data: ChangePassword): Promise<TRequestResult<void>> =>
+    API.put<ChangePassword, void>('/user/password')(data),
 
-      if (status === HttpStatusCode.Ok) {
-        return { error: false, data, status };
-      }
+  getUserInfo: (): Promise<TRequestResult<User>> => API.get<never, User>('/auth/user')({}),
 
-      return { error: true, data, status };
-    } catch (error: unknown) {
-      if (!isAxiosError(error)) {
-        return { error: true, status: null };
-      }
-
-      return {
-        error: true,
-        status: error.response?.status || null,
-        data: error.response?.data,
-      };
-    }
-  },
-
-  changePassword: async (param: ChangePassword) => {
-    try {
-      const { status, data } = await API.put<ChangePassword, void | TError>('/user/password')(
-        param
-      );
-
-      if (status === HttpStatusCode.Ok && data) {
-        return;
-      }
-      return { error: true, data, status };
-    } catch (error: unknown) {
-      if (!isAxiosError(error)) {
-        return { error: true, status: null };
-      }
-
-      return {
-        error: true,
-        status: error.response?.status || null,
-        data: error.response?.data,
-      };
-    }
-  },
+  setUserInfo: (data: SetUserData): Promise<TRequestResult<User>> =>
+    API.put<never, User>('/user/profile')(data),
 };

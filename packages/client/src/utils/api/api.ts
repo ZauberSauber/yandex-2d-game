@@ -14,6 +14,7 @@ export const axiosConfig = {
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
   timeout: 10000,
   baseURL: BASE_URLS.API,
 };

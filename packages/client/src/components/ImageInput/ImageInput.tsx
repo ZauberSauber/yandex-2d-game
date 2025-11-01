@@ -3,19 +3,11 @@ import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { Flex } from 'antd';
 import cn from 'classnames';
 
+import { getSrc } from '@src/utils/helpers';
+
 import { Spinner } from '../Spinner';
 
 import style from './ImageInput.module.scss';
-
-const getSrc = (path: string) => {
-  if (!path) {
-    return '';
-  }
-
-  return path;
-  //TODO: расскоментировать после реализации авторизации и получения информации об пользователе
-  // return `https:${BASE_URLS.RESOURCES}${path.replace('/', '')}`;
-};
 
 interface ImageInputProps {
   rawPathImg: string;
