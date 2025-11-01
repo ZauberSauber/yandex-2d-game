@@ -13,6 +13,7 @@ export type TSkill = {
   maxLvl: number;
   exp: number;
   isActive: boolean;
+  img: string
 };
 
 export type TSkills = {
@@ -257,6 +258,7 @@ export type TLocation = {
   description?: string;
   achievementText?: string;
   isComplete?: boolean;
+  img?: string;
 };
 
 export type TButton<T = string> = {

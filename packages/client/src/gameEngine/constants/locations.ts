@@ -13,6 +13,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Мусорный криптор',
     achievementText: 'Покинуть свалку',
     isComplete: true,
+    img: '/public/img/raids/megaplexDumps.png',
   },
   gutterStreets: {
     key: ELocation.gutterStreets,
@@ -22,6 +23,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.waterPipes],
     reward: 'Уличный криптор',
+    img: '/public/img/raids/gutterStreets.png',
   },
   neonDistricts: {
     key: ELocation.neonDistricts,
@@ -31,6 +33,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.cheapPolymerPlastic],
     reward: 'Световой криптор',
+    img: '/public/img/raids/neonDistricts.png',
   },
   undergroundTechBars: {
     key: ELocation.undergroundTechBars,
@@ -40,6 +43,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.aluminumAlloys],
     reward: 'Техно-Барный криптор',
+    img: '/public/img/raids/undergroundTechBars.png',
   },
   corporateWarehouses: {
     key: ELocation.corporateWarehouses,
@@ -53,6 +57,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.specialPolymers],
     reward: 'Складской криптор',
+    img: '/public/img/raids/corporateWarehouses.png',
   },
   specOpsBarracks: {
     key: ELocation.specOpsBarracks,
@@ -62,6 +67,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.carbonFiber],
     reward: 'Спец криптор',
+    img: '/public/img/raids/specOpsBarracks.png',
   },
   corporateBlackBagDumps: {
     key: ELocation.corporateBlackBagDumps,
@@ -75,6 +81,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.metamaterials],
     reward: 'Складской криптор',
+    img: '/public/img/raids/corporateBlackBagDumps.png',
   },
   digitizedWorkshops: {
     key: ELocation.digitizedWorkshops,
@@ -84,6 +91,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.polishedMacrame],
     reward: 'Мастерский криптор',
+    img: '/public/img/raids/digitizedWorkshops.png',
   },
   corporateSpireCores: {
     key: ELocation.corporateSpireCores,
@@ -93,6 +101,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.nanocarbonTubes],
     reward: 'Ядерный криптор',
+    img: '/public/img/raids/corporateSpireCores.png',
   },
   netsDeadZones: {
     key: ELocation.netsDeadZones,
@@ -102,5 +111,6 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemysCount: 10,
     resources: [EItem.unidentifiedCrystallineStructures],
     reward: 'Мертвый криптор',
+    img: '/public/img/raids/netsDeadZones.png',
   },
 };

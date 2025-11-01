@@ -59,15 +59,17 @@ export default class RaidsPage extends AbstractGamePage {
     ctx.lineWidth = 1;
     ctx.strokeRect(posX, posY, 540, 285);
 
+    // Изображение локации
     drawImg({
       ctx,
       posX: posX + 10,
       posY: posY + 10,
-      width: 140,
-      height: 140,
+      width: 160,
+      height: 200,
+      src: this.activeLocation.img,
     });
 
-    const textX = posX + 160;
+    const textX = posX + 180;
 
     ctx.fillStyle = StyleColors.colorNeonBlue;
     ctx.font = MAIN_FONT;

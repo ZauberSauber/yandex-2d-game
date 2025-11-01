@@ -85,7 +85,7 @@ export default class Battle {
     accuracy: number,
     defense: number,
     power: number,
-    activeSkill: ESkillName
+    activeSkill: ESkillName,
   ): void {
     if (this.battle.state === 'battle') {
       this.battle.player = {
@@ -238,6 +238,7 @@ export default class Battle {
         health: enemy?.health || 100,
         maxHealth: enemy?.health || 100,
         name: enemy?.name || 'Enemy',
+        iconSrc: enemy?.iconSrc,
         description: enemy?.description || '',
         lvl: enemy?.lvl || 1,
         damageMultiplier: enemy?.damageMultiplier || 1,
