@@ -8,3 +8,4 @@ export * from './Sign/SignUp';
 export * from './main';
 export * from './notFound';
 export * from './game/Game';
+export * from './forum';

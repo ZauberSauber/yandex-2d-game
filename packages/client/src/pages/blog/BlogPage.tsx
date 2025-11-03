@@ -1,3 +1,3 @@
 export function BlogPage() {
-  return <>Blog Page</>;
+  return <>Форум</>;
 }

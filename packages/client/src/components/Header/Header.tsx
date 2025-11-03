@@ -16,7 +16,7 @@ export const Header = () => {
     { key: PATHS.PROFILE, label: 'Профиль' },
     { key: PATHS.SIGN_IN, label: 'Войти' },
     { key: PATHS.SIGN_UP, label: 'Регистрация' },
-    { key: PATHS.BLOG, label: 'Блог' },
+    { key: PATHS.FORUM, label: 'Форум' },
     { key: PATHS.LEADERBOARD, label: 'Лидербоард' },
   ];
 
