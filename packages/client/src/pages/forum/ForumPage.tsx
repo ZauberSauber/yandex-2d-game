@@ -3,10 +3,8 @@ import { EyeOutlined, MessageOutlined, PlusOutlined, SearchOutlined } from '@ant
 import { Button, Card, Divider, Input, Space, Tag, Typography } from 'antd';
 import type React from 'react';
 
-import { PATHS } from '@src/routes';
-
-import { ForumBreadcrumb } from '../../components/ForumBreadcrumb';
-import { ForumStats } from '../../components/ForumStats';
+import { ForumBreadcrumb, ForumStats } from '@components';
+import { PATHS } from '@src/routes/constants';
 
 import styles from './ForumPage.module.scss';
 
@@ -52,7 +50,7 @@ const ForumPage: React.FC = () => {
       messagesCount: 892,
       lastTopic: 'Новый алгоритм шифрования',
       lastTopicAuthor: 'Cyber_Samurai',
-      lastTopicTime: '2 часа назад'
+      lastTopicTime: '2 часа назад',
     },
     {
       id: '2',
@@ -62,7 +60,7 @@ const ForumPage: React.FC = () => {
       messagesCount: 567,
       lastTopic: 'GPT-5: революция в NLP',
       lastTopicAuthor: 'AI_Researcher',
-      lastTopicTime: '4 часа назад'
+      lastTopicTime: '4 часа назад',
     },
     {
       id: '3',
@@ -72,7 +70,7 @@ const ForumPage: React.FC = () => {
       messagesCount: 423,
       lastTopic: 'Новые нейроинтерфейсы',
       lastTopicAuthor: 'Neural_Link',
-      lastTopicTime: '1 день назад'
+      lastTopicTime: '1 день назад',
     },
     {
       id: '4',
@@ -82,8 +80,8 @@ const ForumPage: React.FC = () => {
       messagesCount: 1203,
       lastTopic: 'Метавселенная 2.0',
       lastTopicAuthor: 'VR_Pioneer',
-      lastTopicTime: '3 часа назад'
-    }
+      lastTopicTime: '3 часа назад',
+    },
   ];
 
   const topics: Topic[] = [
@@ -98,7 +96,7 @@ const ForumPage: React.FC = () => {
       replies: 24,
       views: 156,
       tags: ['NEW'],
-      isNew: true
+      isNew: true,
     },
     {
       id: '2',
@@ -111,7 +109,7 @@ const ForumPage: React.FC = () => {
       replies: 18,
       views: 234,
       tags: ['HOT'],
-      isHot: true
+      isHot: true,
     },
     {
       id: '3',
@@ -124,7 +122,7 @@ const ForumPage: React.FC = () => {
       replies: 31,
       views: 189,
       tags: ['PINNED'],
-      isPinned: true
+      isPinned: true,
     },
     {
       id: '4',
@@ -136,8 +134,8 @@ const ForumPage: React.FC = () => {
       lastMessageTime: '3 часа назад',
       replies: 42,
       views: 312,
-      tags: []
-    }
+      tags: [],
+    },
   ];
 
   const handleTopicClick = (topicId: string) => {
@@ -150,52 +148,50 @@ const ForumPage: React.FC = () => {
 
   const getTagColor = (tag: string) => {
     switch (tag) {
-      case 'NEW': return 'pink';
-      case 'HOT': return 'orange';
-      case 'PINNED': return 'green';
-      default: return 'blue';
+      case 'NEW':
+        return 'pink';
+      case 'HOT':
+        return 'orange';
+      case 'PINNED':
+        return 'green';
+      default:
+        return 'blue';
     }
   };
 
   return (
     <div className={styles['forum-page']}>
       <ForumBreadcrumb />
-      
+
       <div className={styles.header}>
         <Title level={1} className={styles.title}>
           Форум Neo-Tokyo
         </Title>
-        
+
         <div className={styles['search-section']}>
           <Input
             placeholder="Поиск по форуму..."
             prefix={<SearchOutlined />}
             className={styles['search-input']}
           />
-          <Button 
-            type="primary" 
+          <Button
+            type="primary"
             icon={<PlusOutlined />}
             onClick={handleCreateTopic}
-            className={styles['create-button']}
-          >
+            className={styles['create-button']}>
             НОВАЯ ТЕМА
           </Button>
         </div>
       </div>
 
       <div className={styles.content}>
-        <ForumStats 
-          totalTopics={436}
-          totalMessages={3085}
-          totalUsers={1247}
-          totalViews={15689}
-        />
-        
+        <ForumStats totalTopics={436} totalMessages={3085} totalUsers={1247} totalViews={15689} />
+
         <section className={styles['categories-section']}>
           <Title level={2} className={styles['section-title']}>
             Категории
           </Title>
-          
+
           <div className={styles['categories-list']}>
             {categories.map((category) => (
               <Card key={category.id} className={styles['category-card']}>
@@ -207,14 +203,15 @@ const ForumPage: React.FC = () => {
                     Тем: {category.topicsCount} | Сообщений: {category.messagesCount}
                   </TextComponent>
                 </div>
-                
+
                 <TextComponent className={styles['category-description']}>
                   {category.description}
                 </TextComponent>
-                
+
                 <div className={styles['category-footer']}>
                   <TextComponent className={styles['last-post']}>
-                    Последнее: {category.lastTopic} от {category.lastTopicAuthor} ({category.lastTopicTime})
+                    Последнее: {category.lastTopic} от {category.lastTopicAuthor} (
+                    {category.lastTopicTime})
                   </TextComponent>
                 </div>
               </Card>
@@ -228,14 +225,13 @@ const ForumPage: React.FC = () => {
           <Title level={2} className={styles['section-title']}>
             Последние темы
           </Title>
-          
+
           <div className={styles['topics-list']}>
             {topics.map((topic) => (
-              <Card 
-                key={topic.id} 
+              <Card
+                key={topic.id}
                 className={styles['topic-card']}
-                onClick={() => handleTopicClick(topic.id)}
-              >
+                onClick={() => handleTopicClick(topic.id)}>
                 <div className={styles['topic-header']}>
                   <div className={styles['topic-title']}>
                     {topic.tags.map((tag) => (
@@ -258,13 +254,14 @@ const ForumPage: React.FC = () => {
                     </Space>
                   </div>
                 </div>
-                
+
                 <div className={styles['topic-meta']}>
                   <TextComponent className={styles['topic-meta-text']}>
-                    Автор: {topic.author} | Раздел: {topic.category} | Последнее сообщение: {topic.lastMessageTime}
+                    Автор: {topic.author} | Раздел: {topic.category} | Последнее сообщение:{' '}
+                    {topic.lastMessageTime}
                   </TextComponent>
                 </div>
-                
+
                 <div className={styles['topic-excerpt']}>
                   <TextComponent className={styles['topic-excerpt-text']}>
                     {topic.lastMessage}

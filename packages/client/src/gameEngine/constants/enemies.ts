@@ -11,6 +11,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 3,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 1,
   },
   gibberingHorde: {
     name: 'Бомжи-Мутанты',
@@ -22,6 +23,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 4,
     attackSpeed: 1500,
     exp: 20,
+    lvl: 1,
   },
   scrapjackers: {
     name: 'Ловчие-Таксидермисты',
@@ -33,6 +35,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 5,
     attackSpeed: 1500,
     exp: 30,
+    lvl: 1,
   },
   ratKing: {
     name: 'Крысиный Король',
@@ -44,6 +47,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 1000,
     exp: 100,
+    lvl: 2,
+    damageMultiplier: 1.1,
   },
 
   // Группа 2
@@ -57,6 +62,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 2,
   },
   shadyBackAlleyDealer: {
     name: 'Торговец-Обманщик',
@@ -68,6 +74,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 2,
   },
   roadRashRider: {
     name: 'Гонщик-Наездник',
@@ -79,6 +86,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 2,
   },
   gangLeaderSledgehammer: {
     name: 'Главарь Банды "Штурмовой Молот"',
@@ -90,6 +98,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 3,
+    damageMultiplier: 1.1,
   },
 
   // Группа 3
@@ -103,6 +113,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 3,
   },
   adDroneAggressor: {
     name: 'Рекламный Дрон-Провокатор',
@@ -114,6 +125,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 3,
   },
   mallMaulers: {
     name: 'Банда "Шопоголиков"',
@@ -125,6 +137,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 3,
   },
   securityAiSphinx: {
     name: 'Охранный ИИ "Сфинкс"',
@@ -136,6 +149,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 4,
+    damageMultiplier: 1.2,
   },
 
   // Группа 4
@@ -149,6 +164,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 4,
   },
   ghostInTheSystem: {
     name: 'Хакер-Призрак',
@@ -160,6 +176,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 4,
   },
   graftedBrute: {
     name: 'Модифицированный "Зверь"',
@@ -171,6 +188,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 4,
   },
   legendaryMechanic: {
     name: 'Легендарный Механик "Док"',
@@ -182,6 +200,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 5,
+    damageMultiplier: 1.2,
   },
 
   // Группа 5
@@ -195,6 +215,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 5,
   },
   surveillanceDroneVulture: {
     name: 'Следящий Дрон "Стервятник"',
@@ -206,6 +227,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 5,
   },
   combatCustodianAndroid: {
     name: 'Боевой Андроид-Уборщик',
@@ -217,6 +239,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 5,
   },
   assaultLeaderGreyHornet: {
     name: 'Тактический Штурмовой Лидер "Серая Шершень"',
@@ -228,6 +251,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 6,
+    damageMultiplier: 1.2,
   },
 
   // Группа 6
@@ -241,6 +266,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 6,
   },
   phantomSniper: {
     name: 'Снайпер-Призрак',
@@ -252,6 +278,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 6,
   },
   combatEngineer: {
     name: 'Сапёр-Инженер',
@@ -263,6 +290,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 6,
   },
   squadCommanderValkyrie: {
     name: 'Командир Отряда "Валькирия"',
@@ -274,6 +302,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 7,
+    damageMultiplier: 1.2,
   },
 
   // Группа 7
@@ -287,6 +317,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 7,
   },
   unstableSecurityDronePrototype: {
     name: 'Нестабильный Прототип Охранного Дрона',
@@ -298,6 +329,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 7,
   },
   bioEngineeredHorror: {
     name: 'Био-Инженерный Ужас',
@@ -309,6 +341,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 7,
   },
   leadScientistCuratorDrArkadyVolf: {
     name: 'Главный Учёный-Куратор Доктор Аркадий Вольф',
@@ -320,6 +353,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 8,
+    damageMultiplier: 1.3,
   },
 
   // Группа 8
@@ -333,6 +368,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 8,
   },
   smartHomeSystem: {
     name: 'Система "Умный Дом"',
@@ -344,6 +380,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 8,
   },
   automatedCombatButler: {
     name: 'Автоматизированный Боевой Дворецкий',
@@ -355,6 +392,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 8,
   },
   legendaryArtisan: {
     name: 'Сам Легендарный Оружейник',
@@ -366,6 +404,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 10,
+    damageMultiplier: 1.3,
   },
 
   // Группа 9
@@ -379,6 +419,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 9,
   },
   realitySuppressor: {
     name: 'Подавитель Реальности',
@@ -390,6 +431,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 9,
   },
   aiAspect: {
     name: 'Аспект ИИ',
@@ -401,6 +443,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 9,
   },
   directorOfNewTechnologies: {
     name: 'Директор по Новым Технологиям',
@@ -412,6 +455,8 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 10,
+    damageMultiplier: 1.3,
   },
 
   // Группа 10
@@ -425,6 +470,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 10,
+    lvl: 10,
   },
   thresholdGuardian: {
     name: 'Страж Порога',
@@ -436,6 +482,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 20,
+    lvl: 10,
   },
   echoOfTheFirstAI: {
     name: 'Отголосок Первого ИИ',
@@ -447,6 +494,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 30,
+    lvl: 10,
   },
   abyss: {
     name: 'Бездна',
@@ -458,5 +506,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 2000,
     exp: 100,
+    lvl: 12,
+    damageMultiplier: 1.4,
   },
 };

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { selectPageHasBeenInitializedOnServer, setPageHasBeenInitializedOnServer } from '@slices';
 
 import { useDispatch, useSelector, useStore } from '../store';
-import type { PageInitArgs, PageInitContext } from '../routes';
+import type { PageInitArgs, PageInitContext } from '../routes/types';
 
 const getCookie = (name: string) => {
   const matches = document.cookie.match(

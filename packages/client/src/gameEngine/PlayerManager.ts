@@ -2,7 +2,8 @@ import ActivityManager from './ActivityManager';
 import Battle from './Battle';
 import { SKILLS } from './mock/skills';
 import { ESkillName } from './types';
-import type { EItem, TBattle, TLocation } from './types';
+import { getExpToNextLvl } from './utils/expToNextLvl';
+import type { EItem, IPlayerState, TBattle, TLocation } from './types';
 
 export default class PlayerManager {
   private static _instance: PlayerManager | null = null;
@@ -25,13 +26,13 @@ export default class PlayerManager {
 
   private maxAttack = 10;
 
+  private damageMultiplier = 1;
+
+  private criticalHitChance = 0.05;
+
   private attackSpeed = 1000;
 
-  private accuracy = 1;
-
-  private defense = 1;
-
-  private power = 1;
+  private skills = SKILLS;
 
   private activeSkill: ESkillName = ESkillName.accuracy;
 
@@ -39,16 +40,14 @@ export default class PlayerManager {
 
   private battle: Battle | null = null;
 
-  constructor() {
+  constructor(initStats?: IPlayerState) {
     if (PlayerManager._instance) {
       return PlayerManager._instance;
     }
 
     this.activityManager = ActivityManager.getInstance();
 
-    this.accuracy = SKILLS.accuracy.lvl;
-    this.defense = SKILLS.defense.lvl;
-    this.power = SKILLS.power.lvl;
+    if (initStats) this.setInitPlayerState(initStats);
 
     this.startRegenHealth();
 
@@ -67,7 +66,13 @@ export default class PlayerManager {
     this.lastTimeStamps.set('update', currentTime);
 
     if (this.battle) {
-      this.battle.update(this.playerHP, this.accuracy, this.defense, this.power, this.activeSkill);
+      this.battle.update(
+        this.playerHP,
+        this.skills.accuracy.lvl,
+        this.skills.defense.lvl,
+        this.skills.power.lvl,
+        this.activeSkill
+      );
 
       const battleState = this.battle.getBattleState();
 
@@ -94,34 +99,68 @@ export default class PlayerManager {
       return;
     }
 
-    const skill = SKILLS[this.activeSkill];
+    const skill = this.skills[this.activeSkill];
 
     skill.exp += exp;
 
     while (true) {
       // Опыт_для_уровня = A * (Уровень ^ B) + C; A=50, B=2, C=100
-      const expToNextLevel = 50 * Math.pow(skill.lvl, 2) + 100;
+      const { expToNextLvl } = getExpToNextLvl(skill);
 
-      if (skill.exp < expToNextLevel) {
+      if (skill.exp < expToNextLvl) {
         break;
       }
 
       skill.lvl += 1;
-      skill.exp -= expToNextLevel;
+      skill.exp -= expToNextLvl;
     }
 
-    this.accuracy = SKILLS.accuracy.lvl;
-    this.defense = SKILLS.defense.lvl;
-    this.power = SKILLS.power.lvl;
+    this.skills.accuracy.lvl = SKILLS.accuracy.lvl;
+    this.skills.defense.lvl = SKILLS.defense.lvl;
+    this.skills.power.lvl = SKILLS.power.lvl;
   }
 
-  getPlayerState(): { health: number; accuracy: number; defense: number; power: number } {
+  get playerState(): IPlayerState {
     return {
-      accuracy: this.accuracy,
-      defense: this.defense,
-      power: this.power,
-      health: this.playerHP,
+      skills: {
+        accuracy: this.skills.accuracy,
+        defense: this.skills.defense,
+        power: this.skills.power,
+        production: this.skills.production,
+      },
+      inventory: this.inventory,
+      playerHP: this.playerHP,
+      maxPlayerHP: this.maxPlayerHP,
+      healthRegenInterval: this.healthRegenInterval,
+      healthRegenValue: this.healthRegenValue,
+      minAttack: this.minAttack,
+      maxAttack: this.maxAttack,
+      attackSpeed: this.attackSpeed,
+      battleLocation: this.battleLocation,
+      criticalHitChance: this.criticalHitChance,
+      damageMultiplier: this.damageMultiplier,
     };
+  }
+
+  private setInitPlayerState(initStats: IPlayerState): void {
+    this.skills = {
+      accuracy: initStats.skills.accuracy,
+      defense: initStats.skills.defense,
+      power: initStats.skills.power,
+      production: initStats.skills.production,
+    };
+    this.inventory = new Map<string, number>([]);
+    this.lastTimeStamps = new Map<string, number>([]);
+    this.playerHP = initStats.playerHP;
+    this.maxPlayerHP = initStats.maxPlayerHP;
+    this.healthRegenInterval = initStats.healthRegenInterval;
+    this.healthRegenValue = initStats.healthRegenValue;
+    this.minAttack = initStats.minAttack;
+    this.maxAttack = initStats.maxAttack;
+    this.attackSpeed = initStats.attackSpeed;
+    this.battleLocation = initStats.battleLocation;
+    this.criticalHitChance = initStats.criticalHitChance;
+    this.damageMultiplier = initStats.damageMultiplier;
   }
 
   setInventoryItem(itemName: string, count: number): void {
@@ -147,7 +186,16 @@ export default class PlayerManager {
       this.addResources.bind(this),
       this.addSkillExp.bind(this)
     );
-    this.battle.start(this.playerHP, this.maxPlayerHP);
+
+    this.battle.start({
+      playerHP: this.playerHP,
+      maxPlayerHP: this.maxPlayerHP,
+      criticalHitChance: this.criticalHitChance,
+      maxAttack: this.maxAttack,
+      minAttack: this.minAttack,
+      attackSpeed: this.attackSpeed,
+      damageMultiplier: this.damageMultiplier,
+    });
   }
 
   getBattleState(): TBattle {
@@ -159,15 +207,17 @@ export default class PlayerManager {
       state: 'idle',
       enemy: null,
       player: {
-        accuracy: this.accuracy,
-        defense: this.defense,
-        power: this.power,
+        accuracy: this.skills.accuracy.lvl,
+        defense: this.skills.defense.lvl,
+        power: this.skills.power.lvl,
         minAttack: this.minAttack,
         maxAttack: this.maxAttack,
         attackSpeed: this.attackSpeed,
         cooldown: 0,
         health: this.playerHP,
         maxHealth: this.maxPlayerHP,
+        criticalHitChance: this.criticalHitChance,
+        damageMultiplier: this.damageMultiplier,
         name: 'Player',
       },
       enemyDefeated: 0,

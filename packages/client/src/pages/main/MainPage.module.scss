@@ -21,7 +21,7 @@
     .main-title {
       margin-bottom: 20px;
 
-      @include d.neonTitle();
+      @include d.neonTitle;
     }
 
     .sub-title {
@@ -55,7 +55,7 @@
         margin: 0 0 30px;
         text-align: center;
 
-        @include d.neonTitle();
+        @include d.neonTitle;
       }
 
       .paragraph {

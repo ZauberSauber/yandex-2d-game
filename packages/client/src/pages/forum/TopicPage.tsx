@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate,useParams } from 'react-router-dom';
-import { ArrowLeftOutlined, DislikeOutlined, LikeOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Divider, Input, message,Space, Typography } from 'antd';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  ArrowLeftOutlined,
+  DislikeOutlined,
+  LikeOutlined,
+  SendOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { Avatar, Button, Card, Divider, Input, message, Space, Typography } from 'antd';
+import type { FC } from 'react';
 
-import { PATHS } from '@src/routes';
-
-import { ForumBreadcrumb } from '../../components/ForumBreadcrumb';
+import { ForumBreadcrumb } from '@components/ForumBreadcrumb';
+import { PATHS } from '@src/routes/constants';
 
 import styles from './TopicPage.module.scss';
 
@@ -35,7 +41,7 @@ interface Topic {
   comments: ForumComment[];
 }
 
-const TopicPage: React.FC = () => {
+const TopicPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [newComment, setNewComment] = useState('');
@@ -65,7 +71,8 @@ const TopicPage: React.FC = () => {
       {
         id: '1',
         author: 'Quantum_Expert',
-        content: 'Интересный подход! Как вы планируете решать проблему декогеренции в реальных условиях?',
+        content:
+          'Интересный подход! Как вы планируете решать проблему декогеренции в реальных условиях?',
         timestamp: '1 час назад',
         likes: 5,
         dislikes: 0,
@@ -73,23 +80,25 @@ const TopicPage: React.FC = () => {
           {
             id: '1-1',
             author: 'Cyber_Samurai',
-            content: 'Мы используем специальные квантовые корректоры ошибок и изоляцию от внешних воздействий.',
+            content:
+              'Мы используем специальные квантовые корректоры ошибок и изоляцию от внешних воздействий.',
             timestamp: '45 минут назад',
             likes: 3,
-            dislikes: 0
-          }
-        ]
+            dislikes: 0,
+          },
+        ],
       },
       {
         id: '2',
         author: 'Crypto_Analyst',
-        content: 'А как насчет совместимости с существующими системами? Это может стать серьезным препятствием для внедрения.',
+        content:
+          'А как насчет совместимости с существующими системами? Это может стать серьезным препятствием для внедрения.',
         timestamp: '30 минут назад',
         likes: 2,
         dislikes: 1,
-        replies: []
-      }
-    ]
+        replies: [],
+      },
+    ],
   };
 
   const handleBack = () => {
@@ -106,10 +115,10 @@ const TopicPage: React.FC = () => {
     try {
       // Здесь будет логика отправки комментария на сервер
       // console.log('Adding comment:', newComment);
-      
+
       // Имитация задержки
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+
       message.success('Комментарий добавлен!');
       setNewComment('');
     } catch (error) {
@@ -130,7 +139,9 @@ const TopicPage: React.FC = () => {
   };
 
   const renderComment = (comment: ForumComment, isReply = false) => (
-    <Card key={comment.id} className={`${styles['comment-card']} ${isReply ? styles['reply-card'] : ''}`}>
+    <Card
+      key={comment.id}
+      className={`${styles['comment-card']} ${isReply ? styles['reply-card'] : ''}`}>
       <div className={styles['comment-header']}>
         <div className={styles['comment-author']}>
           <Avatar icon={<UserOutlined />} className={styles.avatar} />
@@ -144,25 +155,21 @@ const TopicPage: React.FC = () => {
             type="text"
             icon={<LikeOutlined />}
             onClick={() => handleLike(comment.id)}
-            className={styles['action-button']}
-          >
+            className={styles['action-button']}>
             {comment.likes}
           </Button>
           <Button
             type="text"
             icon={<DislikeOutlined />}
             onClick={() => handleDislike(comment.id)}
-            className={styles['action-button']}
-          >
+            className={styles['action-button']}>
             {comment.dislikes}
           </Button>
         </div>
       </div>
-      
+
       <div className={styles['comment-content']}>
-        <Paragraph className={styles['comment-text']}>
-          {comment.content}
-        </Paragraph>
+        <Paragraph className={styles['comment-text']}>{comment.content}</Paragraph>
       </div>
 
       {comment.replies && comment.replies.length > 0 && (
@@ -176,13 +183,9 @@ const TopicPage: React.FC = () => {
   return (
     <div className={styles['topic-page']}>
       <ForumBreadcrumb />
-      
+
       <div className={styles.header}>
-        <Button 
-          icon={<ArrowLeftOutlined />} 
-          onClick={handleBack}
-          className={styles['back-button']}
-        >
+        <Button icon={<ArrowLeftOutlined />} onClick={handleBack} className={styles['back-button']}>
           Назад к форуму
         </Button>
       </div>
@@ -194,8 +197,12 @@ const TopicPage: React.FC = () => {
               {topic.title}
             </Title>
             <div className={styles['topic-info']}>
-              <TextComponent className={styles['topic-author']}>Автор: {topic.author}</TextComponent>
-              <TextComponent className={styles['topic-category']}>Категория: {topic.category}</TextComponent>
+              <TextComponent className={styles['topic-author']}>
+                Автор: {topic.author}
+              </TextComponent>
+              <TextComponent className={styles['topic-category']}>
+                Категория: {topic.category}
+              </TextComponent>
               <TextComponent className={styles['topic-time']}>{topic.timestamp}</TextComponent>
             </div>
           </div>
@@ -207,9 +214,7 @@ const TopicPage: React.FC = () => {
               <TextComponent className={styles.stat}>
                 <DislikeOutlined /> {topic.dislikes}
               </TextComponent>
-              <TextComponent className={styles.stat}>
-                Просмотров: {topic.views}
-              </TextComponent>
+              <TextComponent className={styles.stat}>Просмотров: {topic.views}</TextComponent>
             </Space>
           </div>
         </div>
@@ -217,9 +222,7 @@ const TopicPage: React.FC = () => {
         <Divider className={styles.divider} />
 
         <div className={styles['topic-content']}>
-          <Paragraph className={styles['content-text']}>
-            {topic.content}
-          </Paragraph>
+          <Paragraph className={styles['content-text']}>{topic.content}</Paragraph>
         </div>
       </Card>
 
@@ -242,8 +245,7 @@ const TopicPage: React.FC = () => {
               icon={<SendOutlined />}
               onClick={handleAddComment}
               loading={loading}
-              className={styles['submit-comment-button']}
-            >
+              className={styles['submit-comment-button']}>
               Отправить
             </Button>
           </div>

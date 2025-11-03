@@ -9,6 +9,7 @@ import RaidsPage from './pages/RaidsPage';
 import SkillsPage from './pages/SkillsPage';
 import PlayerManager from './PlayerManager';
 import { EGamePage } from './types';
+import type { IPlayerState } from './types';
 
 import styles from '@pages/game/Game.module.scss';
 
@@ -23,6 +24,7 @@ type TGameEngine = {
   containerId: string;
   onResourceUpdate: () => void;
   onGameOver: () => void;
+  playerStatsInit?: IPlayerState;
 };
 
 export default class GameEngine {
@@ -46,7 +48,12 @@ export default class GameEngine {
 
   private onResourceUpdate: () => void;
 
-  constructor({ containerId = 'game', onGameOver, onResourceUpdate }: TGameEngine) {
+  constructor({
+    containerId = 'game',
+    onGameOver,
+    onResourceUpdate,
+    playerStatsInit,
+  }: TGameEngine) {
     const gameContainer = document.getElementById(containerId);
 
     if (!gameContainer) {
@@ -61,7 +68,7 @@ export default class GameEngine {
     this.ctx.scale(SCALE, SCALE);
 
     this.activutyManager = new ActivityManager();
-    this.playerManager = new PlayerManager();
+    this.playerManager = new PlayerManager(playerStatsInit);
     this.pageManager = new PageManager(this.canvas, this.ctx);
     this.setupPages();
 
@@ -70,7 +77,7 @@ export default class GameEngine {
 
   private createCanvas(gameContainer: HTMLElement): HTMLCanvasElement {
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
-    
+
     canvas.classList.add(styles.gameCanvas);
     canvas.width = 800 * SCALE;
     canvas.height = 600 * SCALE;

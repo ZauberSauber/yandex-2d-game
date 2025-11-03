@@ -88,8 +88,11 @@ export default class SideMenu {
   }
 
   private drawHUD(ctx: CanvasRenderingContext2D): void {
-    const { health, accuracy, defense, power } = PlayerManager.getInstance().getPlayerState();
-    const props = [accuracy, defense, power, health];
+    const {
+      playerHP,
+      skills: { accuracy, defense, power },
+    } = PlayerManager.getInstance().playerState;
+    const props: number[] = [accuracy.lvl, defense.lvl, power.lvl, playerHP];
 
     // Показатели персонажа: точность, сила, защита, здоровье
     for (let index = 0; index < 4; index++) {

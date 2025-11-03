@@ -7,10 +7,12 @@ import { ARMORS } from '../constants/armors';
 import { BLANKS } from '../constants/blanks';
 import { MEDKITS } from '../constants/medkits';
 import { WEAPONS } from '../constants/weapons';
+import PlayerManager from '../PlayerManager';
 import { drawBar } from '../utils/drawBar';
 import { drawImg } from '../utils/drawImg';
 import { drawMultilineText } from '../utils/drawMultilineText';
 import { drawPageTitle } from '../utils/drawPageTitle';
+import { getExpToNextLvl } from '../utils/expToNextLvl';
 import type { TButton } from '../types';
 
 export default class FactoryPage extends AbstractGamePage {
@@ -57,22 +59,30 @@ export default class FactoryPage extends AbstractGamePage {
   }
 
   private drawFactoryLvl(ctx: CanvasRenderingContext2D): void {
+    const {
+      skills: {
+        production,
+        production: { lvl, exp, maxLvl },
+      },
+    } = PlayerManager.getInstance().playerState;
+    const { expToNextLvl, expToPercentages } = getExpToNextLvl(production);
+
     drawBar({
       ctx,
       posX: this.posX,
       posY: this.posY,
       width: 530,
       height: 5,
-      value: 10,
+      value: expToPercentages,
       maxValue: 100,
     });
 
     ctx.fillStyle = StyleColors.colorNeonBlue;
     ctx.font = MAIN_FONT;
     ctx.textAlign = 'left';
-    ctx.fillText('Ур. 5 / 100', 240, this.posY + 25);
+    ctx.fillText(`Ур. ${lvl} / ${maxLvl}`, 240, this.posY + 25);
     ctx.textAlign = 'right';
-    ctx.fillText('опыт: 30 / 200', 770, this.posY + 25);
+    ctx.fillText(`опыт: ${exp} / ${expToNextLvl}`, 770, this.posY + 25);
   }
 
   private drawCraftItem(ctx: CanvasRenderingContext2D): void {

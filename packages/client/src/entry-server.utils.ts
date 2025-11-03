@@ -1,6 +1,6 @@
 import type { Request as ExpressRequest } from 'express';
 
-import type { PageInitContext } from './routes';
+import type { PageInitContext } from './routes/types';
 
 export const createContext = (req: ExpressRequest): PageInitContext => ({
   clientToken: req.cookies.token,

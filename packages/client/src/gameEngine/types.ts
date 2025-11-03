@@ -10,6 +10,7 @@ export enum ESkillName {
 export type TSkill = {
   name: string;
   lvl: number;
+  maxLvl: number;
   exp: number;
   isActive: boolean;
 };
@@ -17,6 +18,12 @@ export type TSkill = {
 export type TSkills = {
   [skill in ESkillName]: TSkill;
 };
+
+export interface IExpMathConfig {
+  multiplier: number;
+  pow: number;
+  sum: number;
+}
 
 export type TRGB = {
   r: number;
@@ -50,30 +57,58 @@ export type TActivity = {
   onComplete?: () => void;
 };
 
-export type TPerson = {
+export interface IPerson extends Omit<TSetupBattleProps, 'playerHP' | 'maxPlayerHP'> {
   name: string;
   accuracy: number;
   defense: number;
   power: number;
   health: number;
+}
+
+export interface IPlayerStats {
+  playerHP: number;
+  maxPlayerHP: number;
+  healthRegenInterval: number;
+  healthRegenValue: number;
   minAttack: number;
   maxAttack: number;
   attackSpeed: number;
-};
+  criticalHitChance: number;
+  damageMultiplier: number;
+}
+
+export type TSetupBattleProps = Pick<
+  IPlayerStats,
+  | 'playerHP'
+  | 'maxPlayerHP'
+  | 'minAttack'
+  | 'maxAttack'
+  | 'attackSpeed'
+  | 'criticalHitChance'
+  | 'damageMultiplier'
+>;
+
+export interface IPlayerState extends IPlayerStats {
+  inventory: Map<string, number>;
+  skills: TSkills;
+  battleLocation: TLocation | null;
+}
 
 type TBattleProps = {
   maxHealth: number;
   cooldown: number;
 };
 
-export type TPlayer = TPerson;
+export type TPlayer = IPerson;
 
 export type TBattlePlayer = TPlayer & TBattleProps;
 
-export type TEnemy = TPerson & {
+export type TEnemy = Omit<IPerson, 'damageMultiplier' | 'criticalHitChance'> & {
   exp: number;
   description?: string;
   iconSrc?: string;
+  lvl: number;
+  damageMultiplier?: number;
 };
 
 export type TBattleEnemy = TEnemy & TBattleProps;
@@ -212,6 +247,7 @@ export enum ELocation {
 export type TItem = { name: string };
 
 export type TLocation = {
+  key: ELocation;
   name: string;
   enemies: TEnemy[];
   enemyBoss: TEnemy;
@@ -219,6 +255,8 @@ export type TLocation = {
   resources: EItem[];
   reward: string;
   description?: string;
+  achievementText?: string;
+  isComplete?: boolean;
 };
 
 export type TButton<T = string> = {

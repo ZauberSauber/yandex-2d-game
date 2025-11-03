@@ -1,6 +1,6 @@
 @use '../../styles/variables' as v;
 
-.auth-container {
+%auth-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +22,7 @@
 }
 
 /* Page Container */
-.page-container {
+%page-container {
   position: relative;
   width: 100%;
   padding: 2.5rem;
@@ -33,7 +33,7 @@
     inset 0 0 15px rgb(15 240 252 / 10%);
 }
 
-.page-container--signup {
+%page-container--signup {
   position: relative;
   z-index: 10;
   width: 100%;
@@ -47,7 +47,7 @@
   overflow: hidden;
 }
 
-.page-container--signin {
+%page-container--signin {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -61,7 +61,7 @@
   overflow: hidden;
 }
 
-.auth-button-base {
+%auth-button-base {
   position: relative !important;
   width: 100%;
   height: v.$input-height;
@@ -77,19 +77,19 @@
   overflow: hidden !important;
 }
 
-.neon-button--signup {
+%neon-button--signup {
   animation: auth-color-shift 5s linear infinite, auth-pulse 5s ease-in-out infinite !important;
 
-  @extend .auth-button-base;
+  @extend %auth-button-base;
 }
 
-.neon-button--signin {
+%neon-button--signin {
   animation: auth-color-shift 4s linear infinite, auth-pulse 4s ease-in-out infinite !important;
 
-  @extend .auth-button-base;
+  @extend %auth-button-base;
 }
 
-.input-group {
+%input-group {
   position: relative;
   margin-bottom: 1.5rem;
   width: 100%;
@@ -105,41 +105,41 @@
   text-transform: uppercase;
 }
 
-.input-label--pink {
+%input-label--pink {
   color: v.$color-neon-pink;
 }
 
-.input-label--blue {
+%input-label--blue {
   color: rgb(15 240 252 / 70%);
 }
 
-.input-label--blue-heading {
+%input-label--blue-heading {
   color: rgb(15 240 252 / 70%);
   font-family: v.$font-heading;
 }
 
-.auth-header {
+%auth-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.auth-title {
+%auth-title {
   color: v.$color-neon-blue;
   font-family: v.$font-heading;
   font-size: 1.8rem;
   letter-spacing: 3px;
   margin-bottom: 0.5rem;
-  text-shadow: 0 0 8px rgb(15 240 252 / v.$glow-intensity);
+  text-shadow: 0 0 8px rgb(15 240 252 / calc(252 / #{v.$glow-intensity}));
 }
 
-.auth-subtitle {
+%auth-subtitle {
   color: rgb(15 240 252 / 70%);
   font-size: 0.9rem;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
-.form-actions {
+%form-actions {
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
@@ -149,7 +149,7 @@
   }
 }
 
-.terms {
+%terms {
   margin-top: 1.5rem;
   color: rgb(255 255 255 / 60%);
   font-size: 0.8rem;
@@ -168,7 +168,7 @@
 }
 
 
-.auth-button-common {
+%auth-button-common {
   position: relative !important;
   width: 100%;
   height: v.$input-height;
@@ -188,7 +188,7 @@
   }
 }
 
-.error-message {
+%error-message {
   padding: 0.75rem 1rem;
   border: 1px solid v.$color-neon-pink;
   border-radius: v.$border-radius;

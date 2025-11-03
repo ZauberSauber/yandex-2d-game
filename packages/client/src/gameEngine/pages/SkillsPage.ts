@@ -1,3 +1,4 @@
+import PlayerManager from '@src/gameEngine/PlayerManager';
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
@@ -5,6 +6,8 @@ import { PAGE_X } from '../constants';
 import { drawBar } from '../utils/drawBar';
 import { drawImg } from '../utils/drawImg';
 import { drawPageTitle } from '../utils/drawPageTitle';
+import { getExpToNextLvl } from '../utils/expToNextLvl';
+import type { ESkillName } from '../types';
 
 export default class SkillsPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
@@ -23,7 +26,11 @@ export default class SkillsPage extends AbstractGamePage {
     const gap = 10;
     const imgSize = 30;
 
-    for (let i = 0; i < 3; i++) {
+    const { skills } = PlayerManager.getInstance().playerState;
+
+    const skillsKeysNames = Object.keys(skills) as ESkillName[];
+
+    for (let i = 0; i < skillsKeysNames.length; i++) {
       const shiftY = (rowHeight + gap) * i;
 
       drawImg({
@@ -39,20 +46,25 @@ export default class SkillsPage extends AbstractGamePage {
 
       const textYpos = rowHeight + rowHeight / 2 + shiftY + 5;
 
+      const skill = skills[skillsKeysNames[i]];
+      const { name, lvl, exp, maxLvl } = skill;
+
+      const { expToNextLvl, expToPercentages } = getExpToNextLvl(skill);
+
       // Уровень
-      ctx.fillText('1/100', posX + 50, textYpos);
-      // Пргресс в процентах
-      ctx.fillText('25%', posX + 120, textYpos);
-      // Пргресс в количестве
-      ctx.fillText('250/1000', posX + 180, textYpos);
+      ctx.fillText(`${name} ${lvl}/${maxLvl}`, posX + 50, textYpos);
+      // Прогресс в процентах
+      ctx.fillText(`${expToPercentages}%`, posX + 195, textYpos);
+      // Прогресс в количестве
+      ctx.fillText(`${exp}/${expToNextLvl}`, posX + 250, textYpos);
 
       drawBar({
         ctx,
-        posX: posX + 280,
+        posX: posX + 330,
         posY: textYpos - 10,
-        width: 220,
+        width: 170,
         height: 10,
-        value: 25,
+        value: expToPercentages < 100 ? expToPercentages : 100,
         maxValue: 100,
       });
 

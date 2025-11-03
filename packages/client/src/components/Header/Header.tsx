@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import type { TabsProps } from 'antd';
 
 import { Tabs } from '@src/components/Tabs';
-import { PATHS } from '@src/routes';
+import { PATHS } from '@src/routes/constants';
 
 import styles from './Header.module.scss';
 

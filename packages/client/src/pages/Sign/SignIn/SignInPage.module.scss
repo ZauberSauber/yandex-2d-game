@@ -4,17 +4,16 @@
 @use '../../../styles/animations' as *;
 
 .login-page {
-  @extend .auth-container;
+  @extend %auth-container;
 }
 
 .login-container {
   @include auth-container-shine;
-
-  @extend .page-container--signin;
+  @extend %page-container--signin;
 }
 
 .login-header {
-  @extend .auth-header;
+  @extend %auth-header;
 }
 
 .login-title {
@@ -24,12 +23,11 @@
     auth-glitch-anim-1,
     auth-glitch-anim-2
   );
-
-  @extend .auth-title;
+  @extend %auth-title;
 }
 
 .login-subtitle {
-  @extend .auth-subtitle;
+  @extend %auth-subtitle;
 }
 
 .login-form {
@@ -39,19 +37,19 @@
 }
 
 .login-input-group {
-  @extend .input-group;
+  @extend %input-group;
 }
 
 .login-input-label {
-  @extend .input-label--blue-heading;
+  @extend %input-label--blue-heading;
 }
 
 .form-actions {
-  @extend .form-actions;
+  @extend %form-actions;
 }
 
 .error-message {
-  @extend .error-message;
+  @extend %error-message;
 }
 
 .login-links {
@@ -73,7 +71,7 @@
     animation: border-gradient-shift 8s ease-in-out infinite;
     content: '';
     inset: -2px;
-    border-radius: calc(v.$border-radius + 2px);
+    border-radius: calc(#{v.$border-radius} + 2px);
     background-size: 300% 300%;
     pointer-events: none;
     filter: blur(0.5px);
@@ -98,15 +96,13 @@
     pointer-events: none;
   }
 
-  @extend .auth-button-common;
-
+  @extend %auth-button-common;
   @include auth-button-ant-overrides(
     linear-gradient(135deg, v.$color-neon-purple, v.$color-neon-pink),
     linear-gradient(135deg, v.$color-neon-pink, v.$color-neon-purple),
     v.$color-neon-purple
   );
   @include auth-button-loading-effect;
-
-  @extend .neon-button--signin;
+  @extend %neon-button--signin;
 }
 

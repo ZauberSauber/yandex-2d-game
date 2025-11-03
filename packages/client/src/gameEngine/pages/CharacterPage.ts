@@ -1,3 +1,4 @@
+import PlayerManager from '@src/gameEngine/PlayerManager';
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
@@ -17,6 +18,17 @@ export default class CharacterPage extends AbstractGamePage {
   }
 
   private drawEquipment(ctx: CanvasRenderingContext2D) {
+    const {
+      minAttack,
+      maxAttack,
+      attackSpeed,
+      maxPlayerHP,
+      healthRegenValue,
+      healthRegenInterval,
+      criticalHitChance,
+      damageMultiplier,
+    } = PlayerManager.getInstance().playerState;
+
     drawImg({
       ctx,
       posX: 260,
@@ -49,19 +61,19 @@ export default class CharacterPage extends AbstractGamePage {
 
     ctx.fillText('Характеристики', 520, 100);
     ctx.fillText('Мин. урон', 520, 130);
-    ctx.fillText('1', 680, 130);
+    ctx.fillText(String(minAttack), 680, 130);
     ctx.fillText('Макс. урон', 520, 155);
-    ctx.fillText('10', 680, 155);
+    ctx.fillText(String(maxAttack), 680, 155);
     ctx.fillText('Шанс крит. удара', 520, 180);
-    ctx.fillText('10%', 680, 180);
-    ctx.fillText('Множитель крита', 520, 205);
-    ctx.fillText('1.5', 680, 205);
+    ctx.fillText(`${criticalHitChance * 100}%`, 680, 180);
+    ctx.fillText('Множитель урона', 520, 205);
+    ctx.fillText(`${Math.round(damageMultiplier - 1) * 100}%`, 680, 205);
     ctx.fillText('Скорость атаки', 520, 230);
-    ctx.fillText('2c', 680, 230);
+    ctx.fillText(`${Math.round(attackSpeed / 1000)}c`, 680, 230);
     ctx.fillText('Макс. здоровье', 520, 255);
-    ctx.fillText('100', 680, 255);
+    ctx.fillText(String(maxPlayerHP), 680, 255);
     ctx.fillText('Скорость регена', 520, 280);
-    ctx.fillText('1/30c', 680, 280);
+    ctx.fillText(`${healthRegenValue}/${Math.round(healthRegenInterval / 1000)}c`, 680, 280);
 
     ctx.strokeStyle = StyleColors.colorNeonPurple;
     ctx.lineWidth = 2;

@@ -1,0 +1,15 @@
+export enum PATHS {
+  HOME = '/',
+  START = '/start',
+  END = '/end',
+  GAME = '/game',
+  FRIENDS = '/friends',
+  PROFILE = '/profile',
+  SIGN_IN = '/sign-in',
+  SIGN_UP = '/sign-up',
+  BLOG = '/blog',
+  LEADERBOARD = '/leaderboard',
+  FORUM = '/forum',
+  FORUM_CREATE_TOPIC = '/forum/create-topic',
+  FORUM_TOPIC = '/forum/topic',
+}
