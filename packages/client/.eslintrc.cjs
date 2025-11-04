@@ -63,5 +63,5 @@ module.exports = {
     'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
   },
   plugins: ['react', 'react-hooks', 'jsx-a11y', 'react-refresh'],
-  ignorePatterns: ['server/**', 'node_modules/**', 'dist/**', '.eslintrc.cjs', 'vite.config.ts'],
+  ignorePatterns: ['server/**', 'node_modules/**', 'dist/**', '.eslintrc.cjs', 'vite.config.ts', 'public/sw.js'],
 };
