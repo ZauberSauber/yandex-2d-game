@@ -1,15 +1,12 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
-import ButtonManager from '../ButtonManager';
-import { MAIN_FONT, PAGE_X, SCALE } from '../constants';
+import { HEAD_FONT, MAIN_FONT, PAGE_X, SCALE } from '../constants';
 import PlayerManager from '../PlayerManager';
 import { drawPageTitle } from '../utils/drawPageTitle';
 import type { TButton } from '../types';
 
 export default class InventoryPage extends AbstractGamePage {
-  private buttonManager;
-
   private isAnimating: boolean = true;
 
   private visibleRows: number = 17;
@@ -23,7 +20,6 @@ export default class InventoryPage extends AbstractGamePage {
   constructor() {
     super();
 
-    this.buttonManager = new ButtonManager();
     this.buttonManager.addButton([
       {
         name: 'up',
@@ -131,7 +127,7 @@ export default class InventoryPage extends AbstractGamePage {
 
     ctx.strokeStyle = StyleColors.colorNeonBlue;
     ctx.textAlign = 'center';
-    ctx.font = '32px Rajdhani, sans-serif';
+    ctx.font = HEAD_FONT;
 
     if (
       this.items.length > this.visibleRows &&

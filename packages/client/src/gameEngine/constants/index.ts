@@ -1,5 +1,6 @@
 import type { TGamePage } from '../types';
 
+export const HEAD_FONT = '32px Rajdhani, sans-serif';
 export const MAIN_FONT = '16px Rajdhani, sans-serif';
 
 export const TARGET_FPS = 30;
