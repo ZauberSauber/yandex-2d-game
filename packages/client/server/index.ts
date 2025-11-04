@@ -18,6 +18,7 @@ async function createServer() {
   const app = express();
 
   app.use(cookieParser());
+
   let vite: ViteDevServer | undefined;
   if (isDev) {
     vite = await createViteServer({
@@ -33,6 +34,14 @@ async function createServer() {
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl;
+
+    if (
+      url.startsWith('/sw.js') ||
+      url.startsWith('/manifest.webmanifest') ||
+      url.startsWith('/workbox-')
+    ) {
+      return next();
+    }
 
     try {
       // Получаем файл client/index.html который мы правили ранее
