@@ -12,7 +12,9 @@ export const getExpToNextLvl: IGetExpToNextLvl = ({
   pow = 2,
   sum = 100,
 }) => {
+  // Опыт_для_уровня = A * (Уровень ^ B) + C; A=50, B=2, C=100
   const expToNextLvl = multiplier * Math.pow(lvl, pow) + sum;
   const expToPercentages = Math.round((exp / expToNextLvl) * 100);
+
   return { expToNextLvl, expToPercentages };
 };

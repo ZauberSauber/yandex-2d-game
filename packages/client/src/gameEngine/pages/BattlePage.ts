@@ -1,7 +1,6 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
-import ButtonManager from '../ButtonManager';
 import { MAIN_FONT, PAGE_X } from '../constants';
 import PlayerManager from '../PlayerManager';
 import { EGamePage, ESkillName } from '../types';
@@ -11,12 +10,9 @@ import { drawPageTitle } from '../utils/drawPageTitle';
 import type { TButton } from '../types';
 
 export default class BattlePage extends AbstractGamePage {
-  private buttonManager;
-
   constructor() {
     super();
 
-    this.buttonManager = new ButtonManager();
     this.buttonManager.addButton([
       {
         name: 'heal',

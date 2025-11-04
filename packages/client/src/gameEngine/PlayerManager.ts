@@ -104,7 +104,6 @@ export default class PlayerManager {
     skill.exp += exp;
 
     while (true) {
-      // Опыт_для_уровня = A * (Уровень ^ B) + C; A=50, B=2, C=100
       const { expToNextLvl } = getExpToNextLvl(skill);
 
       if (skill.exp < expToNextLvl) {

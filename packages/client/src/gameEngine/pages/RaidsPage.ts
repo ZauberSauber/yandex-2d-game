@@ -1,7 +1,6 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
-import ButtonManager from '../ButtonManager';
 import { MAIN_FONT, PAGE_X } from '../constants';
 import { LOCATIONS } from '../constants/locations';
 import PlayerManager from '../PlayerManager';
@@ -9,19 +8,15 @@ import { EGamePage, ELocation } from '../types';
 import { drawImg } from '../utils/drawImg';
 import { drawMultilineText } from '../utils/drawMultilineText';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { TButton, TLocation } from '../types';
+import type { TButton } from '../types';
 
 export default class RaidsPage extends AbstractGamePage {
-  private buttonManager;
-
-  private activeLocationName = ELocation.megaplexDumps;
+  private locationNames = Object.keys(LOCATIONS) as ELocation[];
 
   private activeLocation = LOCATIONS[ELocation.megaplexDumps];
 
   constructor() {
     super();
-
-    this.buttonManager = new ButtonManager();
     this.buttonManager.addButton([
       {
         name: 'next',
@@ -47,11 +42,6 @@ export default class RaidsPage extends AbstractGamePage {
     ]);
   }
 
-  setActiveRaid(location: TLocation) {
-    this.activeLocationName = location.key;
-    this.activeLocation = LOCATIONS[location.key];
-  }
-
   render(ctx: CanvasRenderingContext2D) {
     // Фон
     ctx.fillStyle = StyleColors.colorDarkBg;
@@ -64,9 +54,6 @@ export default class RaidsPage extends AbstractGamePage {
   }
 
   private drawRaidCard(ctx: CanvasRenderingContext2D, posX: number, posY: number) {
-    const { battleLocation } = PlayerManager.getInstance().playerState;
-    this.setActiveRaid(battleLocation ?? LOCATIONS[ELocation.megaplexDumps]);
-
     // Рамка
     ctx.strokeStyle = StyleColors.colorNeonBlue;
     ctx.lineWidth = 1;
@@ -141,6 +128,14 @@ export default class RaidsPage extends AbstractGamePage {
     ctx.fillText('вперёд >', nextButton.x + 10, nextButton.y + 25);
   }
 
+  override onEnter(): void {
+    const { battleLocation } = PlayerManager.getInstance().playerState;
+
+    if (battleLocation) {
+      this.activeLocation = battleLocation;
+    }
+  }
+
   override handleClick(x: number, y: number): void {
     const buttonName = this.buttonManager.getButtonName(x, y);
 
@@ -148,20 +143,19 @@ export default class RaidsPage extends AbstractGamePage {
       return;
     }
 
-    const locationNames = Object.keys(LOCATIONS) as ELocation[];
-    const currentLocationIndex = locationNames.indexOf(this.activeLocationName);
+    const currentLocationIndex = this.locationNames.indexOf(this.activeLocation.key);
 
     if (buttonName === 'back') {
       if (currentLocationIndex > 0) {
-        this.activeLocationName = locationNames[currentLocationIndex - 1];
-        this.activeLocation = LOCATIONS[this.activeLocationName];
+        const activeLocationName = this.locationNames[currentLocationIndex - 1];
+        this.activeLocation = LOCATIONS[activeLocationName];
       }
     }
 
     if (buttonName === 'next') {
-      if (currentLocationIndex < locationNames.length - 1) {
-        this.activeLocationName = locationNames[currentLocationIndex + 1];
-        this.activeLocation = LOCATIONS[this.activeLocationName];
+      if (currentLocationIndex < this.locationNames.length - 1) {
+        const activeLocationName = this.locationNames[currentLocationIndex + 1];
+        this.activeLocation = LOCATIONS[activeLocationName];
       }
     }
 

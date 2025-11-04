@@ -1,10 +1,8 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
-import ButtonManager from '../ButtonManager';
 import { MAIN_FONT } from '../constants';
 import { ARMORS } from '../constants/armors';
-import { BLANKS } from '../constants/blanks';
 import { MEDKITS } from '../constants/medkits';
 import { WEAPONS } from '../constants/weapons';
 import PlayerManager from '../PlayerManager';
@@ -16,8 +14,6 @@ import { getExpToNextLvl } from '../utils/expToNextLvl';
 import type { TButton } from '../types';
 
 export default class FactoryPage extends AbstractGamePage {
-  private buttonManager;
-
   private posX = 240;
 
   private posY = 60;
@@ -35,17 +31,15 @@ export default class FactoryPage extends AbstractGamePage {
   constructor() {
     super();
 
-    this.tabs.set('blank', { name: 'Заготовки', content: Object.values(BLANKS) });
     this.tabs.set('weapon', { name: 'Оружие', content: Object.values(WEAPONS) });
     this.tabs.set('armor', { name: 'Броня', content: Object.values(ARMORS) });
     this.tabs.set('medkit', { name: 'Аптечки', content: Object.values(MEDKITS) });
 
-    this.buttonManager = new ButtonManager();
     let i = 0;
     this.tabs.forEach((_, key) => {
       const button = {
         name: key,
-        x: this.posX + 20 + 130 * i,
+        x: this.posX + 20 + 185 * i,
         y: this.blockPosY - 15,
         width: 100,
         height: 25,
@@ -55,7 +49,7 @@ export default class FactoryPage extends AbstractGamePage {
       i++;
     });
 
-    this.activeTab = this.tabs.get('blank');
+    this.activeTab = this.tabs.get('weapon');
   }
 
   private drawFactoryLvl(ctx: CanvasRenderingContext2D): void {
@@ -151,7 +145,6 @@ export default class FactoryPage extends AbstractGamePage {
       }
 
       const button = this.buttonManager.getButtonByName(key) as TButton;
-
       ctx.fillText(tab.name, button.x + button.width / 2, button.y + button.height / 2 + 5);
     });
 
