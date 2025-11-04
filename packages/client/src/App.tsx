@@ -5,7 +5,9 @@ import { ProtectedRoute } from '@components/ProtectedRoute';
 import { Layout } from '@layout';
 import {
   BlogPage,
+  CreateTopicPage,
   EndGame,
+  ForumPage,
   Game,
   LeaderboardPage,
   MainPage,
@@ -14,7 +16,10 @@ import {
   ProfilePage,
   SignInPage,
   SignUpPage,
+  TopicPage,
 } from '@pages';
+
+import { PATHS } from './routes/constants';
 
 export const App = () => (
   <ConfigProvider wave={{ disabled: true }}>
@@ -85,6 +90,30 @@ export const App = () => (
             element={
               <ProtectedRoute>
                 <LeaderboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={PATHS.FORUM}
+            element={
+              <ProtectedRoute>
+                <ForumPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={PATHS.FORUM_CREATE_TOPIC}
+            element={
+              <ProtectedRoute>
+                <CreateTopicPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={PATHS.FORUM_TOPIC}
+            element={
+              <ProtectedRoute>
+                <TopicPage />
               </ProtectedRoute>
             }
           />
