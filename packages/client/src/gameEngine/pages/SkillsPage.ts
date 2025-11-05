@@ -31,6 +31,8 @@ export default class SkillsPage extends AbstractGamePage {
     const skillsKeysNames = Object.keys(skills) as ESkillName[];
 
     for (let i = 0; i < skillsKeysNames.length; i++) {
+      const skill = skills[skillsKeysNames[i]];
+      const { name, lvl, exp, maxLvl, img } = skill;
       const shiftY = (rowHeight + gap) * i;
 
       drawImg({
@@ -39,15 +41,13 @@ export default class SkillsPage extends AbstractGamePage {
         posY: rowHeight + shiftY + imgSize / 2,
         height: imgSize,
         width: imgSize,
+        src: img,
       });
 
       ctx.fillStyle = StyleColors.colorNeonBlue;
       ctx.textAlign = 'left';
 
       const textYpos = rowHeight + rowHeight / 2 + shiftY + 5;
-
-      const skill = skills[skillsKeysNames[i]];
-      const { name, lvl, exp, maxLvl } = skill;
 
       const { expToNextLvl, expToPercentages } = getExpToNextLvl(skill);
 
@@ -71,5 +71,7 @@ export default class SkillsPage extends AbstractGamePage {
       ctx.fillStyle = StyleColors.colorNeonPurple;
       ctx.fillRect(posX, rowHeight * 2 + shiftY, 500, 1);
     }
+    ;
+
   }
 }

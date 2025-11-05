@@ -1,3 +1,4 @@
+import { HUD } from '@src/gameEngine/constants/HUD';
 import { StyleColors } from '@src/styles/colors';
 
 import ButtonManager from './ButtonManager';
@@ -78,7 +79,7 @@ export default class SideMenu {
       ctx.fillText(
         GAME_PAGES[button.name || EGamePage.raids].title,
         button.x + 20,
-        button.y + this.itemHeight / 2 + fontSize / 2
+        button.y + this.itemHeight / 2 + fontSize / 2,
       );
     });
 
@@ -95,11 +96,12 @@ export default class SideMenu {
     const props: number[] = [accuracy.lvl, defense.lvl, power.lvl, playerHP];
 
     // Показатели персонажа: точность, сила, защита, здоровье
-    for (let index = 0; index < 4; index++) {
+    HUD.map((img, index) => {
       drawImg({
         ctx,
         posX: 10,
         posY: 60 + 50 * index,
+        src: img,
       });
 
       const text = `- ${props[index]}`;
@@ -107,7 +109,7 @@ export default class SideMenu {
       ctx.textAlign = 'left';
       ctx.fillStyle = StyleColors.colorNeonCyan;
       ctx.fillText(text, 60, 60 + 50 * index + 25);
-    }
+    });
   }
 
   handleClick(x: number, y: number): void {
