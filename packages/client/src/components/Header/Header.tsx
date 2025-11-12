@@ -3,87 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import type { TabsProps } from 'antd';
 
 import { Button } from '@components/Button';
+import {
+  fullscreenApi,
+} from '@src/api/fullscreenApi';
+import { notificationsApi } from '@src/api/notificationsApi';
 import { Tabs } from '@src/components/Tabs';
 import { PATHS } from '@src/routes/constants';
 
 import styles from './Header.module.scss';
 
-interface DocumentWithFullscreen extends Document {
-  webkitFullscreenElement?: Element | null;
-  mozFullScreenElement?: Element | null;
-  msFullscreenElement?: Element | null;
-  webkitExitFullscreen?: () => Promise<void>;
-  mozCancelFullScreen?: () => Promise<void>;
-  msExitFullscreen?: () => Promise<void>;
-}
-
-interface HTMLElementWithFullscreen extends HTMLElement {
-  webkitRequestFullscreen?: () => Promise<void>;
-  mozRequestFullScreen?: () => Promise<void>;
-  msRequestFullscreen?: () => Promise<void>;
-}
-
-const getFullscreenElement = (): Element | null =>
-  (document.fullscreenElement ||
-    (document as DocumentWithFullscreen).webkitFullscreenElement ||
-    (document as DocumentWithFullscreen).mozFullScreenElement ||
-    (document as DocumentWithFullscreen).msFullscreenElement) || null;
-
-const requestFullscreen = (element: HTMLElement): Promise<void> => {
-  if (element.requestFullscreen) {
-    return element.requestFullscreen();
-  }
-  const fullscreenElement = element as HTMLElementWithFullscreen;
-  if (fullscreenElement.webkitRequestFullscreen) {
-    return fullscreenElement.webkitRequestFullscreen();
-  }
-  if (fullscreenElement.mozRequestFullScreen) {
-    return fullscreenElement.mozRequestFullScreen();
-  }
-  if (fullscreenElement.msRequestFullscreen) {
-    return fullscreenElement.msRequestFullscreen();
-  }
-  return Promise.reject(new Error('Fullscreen API не поддерживается'));
-};
-
-const exitFullscreen = (): Promise<void> => {
-  if (document.exitFullscreen) {
-    return document.exitFullscreen();
-  }
-  const fullscreenDocument = document as DocumentWithFullscreen;
-  if (fullscreenDocument.webkitExitFullscreen) {
-    return fullscreenDocument.webkitExitFullscreen();
-  }
-  if (fullscreenDocument.mozCancelFullScreen) {
-    return fullscreenDocument.mozCancelFullScreen();
-  }
-  if (fullscreenDocument.msExitFullscreen) {
-    return fullscreenDocument.msExitFullscreen();
-  }
-  return Promise.reject(new Error('Fullscreen API не поддерживается'));
-};
-
-const getFullscreenChangeEvent = (): string => {
-  if (document.fullscreenElement !== undefined) {
-    return 'fullscreenchange';
-  }
-  const fullscreenDocument = document as DocumentWithFullscreen;
-  if (fullscreenDocument.webkitFullscreenElement !== undefined) {
-    return 'webkitfullscreenchange';
-  }
-  if (fullscreenDocument.mozFullScreenElement !== undefined) {
-    return 'mozfullscreenchange';
-  }
-  if (fullscreenDocument.msFullscreenElement !== undefined) {
-    return 'MSFullscreenChange';
-  }
-  return 'fullscreenchange';
-};
 
 export const Header = () => {
   const navigate = useNavigate();
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const messageRef = useRef<HTMLParagraphElement>(null);
+  const [isNotifiesEnabled, setIsNotifiesEnabled] = useState(false);
+  const fullScreenBtnRef = useRef<HTMLParagraphElement>(null);
 
   const tabsItems: TabsProps['items'] = [
     { key: PATHS.HOME, label: 'Главная' },
@@ -98,22 +32,22 @@ export const Header = () => {
 
   const onTabClick = (key: string) => navigate(key);
 
-  const handleToggle = () => {
-    const fullscreenElement = getFullscreenElement();
+  const handleFullscreenToggle = () => {
+    const fullscreenElement = fullscreenApi.getFullscreenElement();
 
     if (!fullscreenElement) {
-      requestFullscreen(document.documentElement)
+      fullscreenApi.requestFullscreen(document.documentElement)
         .then(() => {
           setIsFullscreen(true);
-          if (messageRef.current) {
-            messageRef.current.style.display = 'block';
+          if (fullScreenBtnRef.current) {
+            fullScreenBtnRef.current.style.display = 'block';
           }
         })
         .catch((err) => {
           console.error('Ошибка при включении полноэкранного режима:', err);
         });
     } else {
-      exitFullscreen()
+      fullscreenApi.exitFullscreen()
         .then(() => {
           setIsFullscreen(false);
         })
@@ -123,12 +57,27 @@ export const Header = () => {
     }
   };
 
+  const handleNotifiesEnable = async () => {
+    if (!notificationsApi.isSupported()) {
+      alert('Браузер не поддерживает уведомления');
+      return;
+    }
+
+    const granted = await notificationsApi.requestPermission();
+
+    if (granted) {
+      setIsNotifiesEnabled(true);
+
+      await notificationsApi.show('Уведомления включены');
+    }
+  };
+
   useEffect(() => {
-    setIsFullscreen(getFullscreenElement() !== null);
+    setIsFullscreen(fullscreenApi.getFullscreenElement() !== null);
 
     const handleFullscreenChange = () => {
-      const message = messageRef.current;
-      const fullscreenElement = getFullscreenElement();
+      const message = fullScreenBtnRef.current;
+      const fullscreenElement = fullscreenApi.getFullscreenElement();
 
       if (!fullscreenElement) {
         setIsFullscreen(false);
@@ -143,7 +92,7 @@ export const Header = () => {
       }
     };
 
-    const eventName = getFullscreenChangeEvent();
+    const eventName = fullscreenApi.getFullscreenChangeEvent();
     document.addEventListener(eventName, handleFullscreenChange);
 
     return () => {
@@ -153,7 +102,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (isFullscreen) {
-      const message = messageRef.current;
+      const message = fullScreenBtnRef.current;
       const timer = setTimeout(() => {
         if (message) {
           message.style.display = 'none';
@@ -169,12 +118,15 @@ export const Header = () => {
 
   return (
     <div className={styles.headerContainer}>
+      <Button onClick={handleNotifiesEnable}>
+        Уведомления: {isNotifiesEnabled ? 'включены' : 'включить'}
+      </Button>
       <Tabs onTabClick={onTabClick} hideBottomLine className={styles.header} items={tabsItems} />
       <div className={styles.fullscreenControls}>
-        <p ref={messageRef} className={styles.message} style={{ display: 'none' }}>
+        <p ref={fullScreenBtnRef} className={styles.message} style={{ display: 'none' }}>
           Полноэкранный режим включен
         </p>
-        <Button onClick={handleToggle} className={styles.toggler}>
+        <Button onClick={handleFullscreenToggle} className={styles.toggler}>
           Fullscreen: {isFullscreen ? 'OFF' : 'ON'}
         </Button>
       </div>

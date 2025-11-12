@@ -1,3 +1,5 @@
+import { notificationsApi } from '@src/api/notificationsApi';
+
 import { ESkillName } from './types';
 import type ActivityManager from './ActivityManager';
 import type {
@@ -48,7 +50,7 @@ export default class Battle {
     battleLocation: TLocation,
     activityManager: ActivityManager,
     addResources: (resources: { name: EItem; count: number }[]) => void,
-    addSkillExp: (exp: number) => void
+    addSkillExp: (exp: number) => void,
   ) {
     this.battleLocation = battleLocation;
     this.activityManager = activityManager;
@@ -142,10 +144,14 @@ export default class Battle {
       this.enemyDefeated += 1;
       this.addSkillExp(this.battle.enemy.exp);
 
+      void notificationsApi.show(`Вы одержали победу над ${this.battle.enemy.name}!`);
+
       if (this.enemyDefeated >= this.battleLocation.enemysCount) {
         this.addResources([{ name: this.battleLocation.resources[0], count: 5 }]);
         this.stop();
         this.battle.state = 'victory';
+
+        void notificationsApi.show('Победа!', `Победжено ${this.enemyDefeated} врагов`);
       } else {
         this.addResources([{ name: this.battleLocation.resources[0], count: 1 }]);
         this.searchEnemy();
@@ -209,7 +215,7 @@ export default class Battle {
           Math.random() < (isPerson ? this.battle.player.criticalHitChance : this.critChance);
 
         finalDamage = Math.floor(
-          potentialDamage * finalDamageMultiplier * (isCritical ? this.critMultiplier : 1)
+          potentialDamage * finalDamageMultiplier * (isCritical ? this.critMultiplier : 1),
         );
       }
 
