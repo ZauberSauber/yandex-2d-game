@@ -1,5 +1,3 @@
-import './index.css';
-
 import ReactDOMServer from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
@@ -9,7 +7,6 @@ import {
   createStaticRouter,
   StaticRouterProvider,
 } from 'react-router-dom/server';
-import { configureStore } from '@reduxjs/toolkit';
 import { ServerStyleSheet } from 'styled-components';
 import type { Request as ExpressRequest } from 'express';
 import type { HelmetServerState } from 'react-helmet-async';
@@ -18,7 +15,9 @@ import { setPageHasBeenInitializedOnServer } from '@slices';
 
 import { createContext, createFetchRequest, createUrl } from './entry-server.utils';
 import { routes } from './routes';
-import { reducer } from './store';
+import { createStore } from './store';
+
+import './styles/index.scss';
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes);
@@ -30,7 +29,15 @@ export const render = async (req: ExpressRequest) => {
     throw context;
   }
 
-  const store = configureStore({ reducer });
+  let store;
+  try {
+    console.info('[SSR] creating store...');
+    store = createStore();
+    console.info('[SSR] store created');
+  } catch (e) {
+    console.error('[SSR] ERROR in createStore():', e);
+    throw e;
+  }
 
   const url = createUrl(req);
   const foundRoutes = matchRoutes(routes, url);
@@ -53,8 +60,7 @@ export const render = async (req: ExpressRequest) => {
       });
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log('Инициализация страницы произошла с ошибкой', e);
+    console.error('Инициализация страницы произошла с ошибкой', e);
   }
 
   store.dispatch(setPageHasBeenInitializedOnServer(true));
@@ -95,6 +101,7 @@ export const render = async (req: ExpressRequest) => {
       head,
       styleTags,
       initialState: store.getState(),
+      helmet,
     };
   } finally {
     sheet.seal();

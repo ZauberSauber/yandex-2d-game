@@ -3,10 +3,13 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
 import { App } from './App';
-import { store } from './store';
+import { createStore } from './store';
 import { registerServiceWorker } from './utils/serviceWorker';
 
 registerServiceWorker();
+
+const preloadedState = window.APP_INITIAL_STATE;
+const store = createStore(preloadedState);
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,

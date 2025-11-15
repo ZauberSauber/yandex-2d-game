@@ -5,6 +5,7 @@ import {
 } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
+import type { PreloadedState } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 
 import authReducer from './slices/authSlice';
@@ -14,7 +15,7 @@ import userReducer from './slices/userSlice/userSlice';
 
 declare global {
   interface Window {
-    APP_INITIAL_STATE: RootState;
+    APP_INITIAL_STATE?: RootState;
   }
 }
 
@@ -25,14 +26,22 @@ export const reducer = combineReducers({
   user: userReducer,
 });
 
-export const store = configureStore({
-  reducer,
-  preloadedState: typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
-});
-
 export type RootState = ReturnType<typeof reducer>;
-export type AppDispatch = typeof store.dispatch;
+
+const isServer = typeof window === 'undefined';
+
+export const createStore = (preloadedState?: PreloadedState<RootState>) =>
+  configureStore({
+    reducer,
+    preloadedState,
+    middleware: (getDefaultMiddleware) => {
+      const defaultMiddleware = getDefaultMiddleware();
+      return (isServer ? [] : defaultMiddleware) as typeof defaultMiddleware;
+    },
+  });
+export type AppStore = ReturnType<typeof createStore>;
+export type AppDispatch = AppStore['dispatch'];
 
 export const useDispatch: () => AppDispatch = useDispatchBase;
 export const useSelector: TypedUseSelectorHook<RootState> = useSelectorBase;
-export const useStore: () => typeof store = useStoreBase;
+export const useStore: () => AppStore = useStoreBase;
