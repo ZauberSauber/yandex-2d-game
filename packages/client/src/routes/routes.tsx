@@ -1,4 +1,4 @@
-import { EndGame, Game, PreGame, SignInPage, SignUpPage } from '@pages';
+import { EndGame, Game, MainPage, PreGame, SignInPage, SignUpPage } from '@pages';
 
 import { PATHS } from './constants';
 import type { PageInitArgs } from './types';
@@ -16,7 +16,7 @@ export const routes = [
   },
   {
     path: PATHS.HOME,
-    Component: () => <div>Main Page</div>,
+    Component: MainPage,
     fetchData: (props: PageInitArgs) => {
       void props;
     },
@@ -48,7 +48,7 @@ export const routes = [
   },
   {
     path: '*',
-    Component: () => <div>Main Page</div>,
+    Component: MainPage,
     fetchData: (props: PageInitArgs) => {
       void props;
     },

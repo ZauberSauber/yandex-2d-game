@@ -1,16 +1,19 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
-import { HelmetData } from 'react-helmet';
+import { fileURLToPath } from 'url';
 import express, { Request as ExpressRequest } from 'express';
 import path from 'path';
-
 import fs from 'fs/promises';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 import serialize from 'serialize-javascript';
 import cookieParser from 'cookie-parser';
+import type { HelmetServerState } from 'react-helmet-async';
 
-const port = process.env.PORT || 80;
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const port = process.env.CLIENT_PORT || 3000;
 const clientPath = path.join(__dirname, '..');
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -46,10 +49,14 @@ async function createServer() {
     try {
       // Получаем файл client/index.html который мы правили ранее
       // Создаём переменные
-      let render: (
-        req: ExpressRequest
-      ) => Promise<{ html: string; initialState: unknown; helmet: HelmetData; styleTags: string }>;
+      let render: (req: ExpressRequest) => Promise<{
+        html: string;
+        initialState: unknown;
+        helmet: HelmetServerState;
+        styleTags: string;
+      }>;
       let template: string;
+
       if (vite) {
         template = await fs.readFile(path.resolve(clientPath, 'index.html'), 'utf-8');
 

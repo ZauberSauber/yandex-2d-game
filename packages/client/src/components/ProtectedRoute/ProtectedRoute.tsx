@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import type { ReactElement } from 'react';
 
 import { Spinner } from '@components/Spinner';
 import { checkAuthThunk, selectAuth } from '@src/slices/authSlice';
@@ -8,7 +9,7 @@ import { useDispatch, useSelector } from '@src/store';
 import styles from './ProtectedRoute.module.scss';
 
 interface ProtectedRouteProps {
-  children?: JSX.Element;
+  children?: ReactElement;
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
