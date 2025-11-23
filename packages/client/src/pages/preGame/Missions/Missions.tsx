@@ -1,14 +1,17 @@
 import { Fragment } from 'react';
 import { Flex } from 'antd';
 
-import { LOCATIONS } from '@src/gameEngine/constants/locations';
+import { selectLocation } from '@slices';
+import { useSelector } from '@src/store';
 
 import { Mission } from './Mission';
 
 import styles from './Mission.module.scss';
 
 export const Missions = () => {
-  const values = Object.values(LOCATIONS);
+  const locations = useSelector(selectLocation);
+
+  const values = Object.values(locations);
 
   let firstUncompleted = 0;
 
@@ -19,13 +22,14 @@ export const Missions = () => {
       break;
     }
   }
-  const displayMissions = values.slice(0, firstUncompleted + 1);
 
-  const missions = displayMissions.map(({ name, isComplete, achievementText, reward }) => (
+  const displayMissions = !firstUncompleted ? values : values.slice(0, firstUncompleted + 1);
+
+  const missions = displayMissions.map(({ name, isComplete, achievementText, reward }, idx) => (
     <Fragment key={name}>
       <Mission
         award={reward}
-        title={`1. ${name}`}
+        title={`${idx + 1}. ${name}`}
         description={achievementText ?? ''}
         complete={isComplete}
       />

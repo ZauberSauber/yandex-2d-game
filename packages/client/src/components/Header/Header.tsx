@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import type { TabsProps } from 'antd';
 
 import { Button } from '@components/Button';
@@ -13,22 +13,30 @@ import { PATHS } from '@src/routes/constants';
 import styles from './Header.module.scss';
 
 
+
+const tabsItems: TabsProps['items'] = [
+  { key: PATHS.HOME, label: 'Главная' },
+  { key: PATHS.END, label: 'Последний экран' },
+  { key: PATHS.GAME, label: 'Игра' },
+  { key: PATHS.PROFILE, label: 'Профиль' },
+  { key: PATHS.SIGN_IN, label: 'Войти' },
+  { key: PATHS.SIGN_UP, label: 'Регистрация' },
+  { key: PATHS.FORUM, label: 'Форум' },
+  { key: PATHS.LEADERBOARD, label: 'Лидербоард' },
+];
+
 export const Header = () => {
   const navigate = useNavigate();
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isNotifiesEnabled, setIsNotifiesEnabled] = useState(false);
   const fullScreenBtnRef = useRef<HTMLParagraphElement>(null);
+  const [activeKey, setActiveKey] = useState<string>(PATHS.HOME);
 
-  const tabsItems: TabsProps['items'] = [
-    { key: PATHS.HOME, label: 'Главная' },
-    { key: PATHS.END, label: 'Последний экран' },
-    { key: PATHS.GAME, label: 'Игра' },
-    { key: PATHS.PROFILE, label: 'Профиль' },
-    { key: PATHS.SIGN_IN, label: 'Войти' },
-    { key: PATHS.SIGN_UP, label: 'Регистрация' },
-    { key: PATHS.FORUM, label: 'Форум' },
-    { key: PATHS.LEADERBOARD, label: 'Лидербоард' },
-  ];
+  const location = useLocation();
+
+  useEffect(() => {
+    setActiveKey(location.pathname);
+  }, [location, location.pathname]);
 
   const onTabClick = (key: string) => navigate(key);
 
@@ -121,7 +129,7 @@ export const Header = () => {
       <Button onClick={handleNotifiesEnable}>
         Уведомления: {isNotifiesEnabled ? 'включены' : 'включить'}
       </Button>
-      <Tabs onTabClick={onTabClick} hideBottomLine className={styles.header} items={tabsItems} />
+      <Tabs activeKey={activeKey} onTabClick={onTabClick} hideBottomLine className={styles.header} items={tabsItems} />
       <div className={styles.fullscreenControls}>
         <p ref={fullScreenBtnRef} className={styles.message} style={{ display: 'none' }}>
           Полноэкранный режим включен

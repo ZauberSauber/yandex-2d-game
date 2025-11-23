@@ -1,9 +1,26 @@
-import { EndGame, Game, MainPage, PreGame, SignInPage, SignUpPage } from '@pages';
+import { ProtectedRoute } from '@components';
+import { Layout } from '@layout';
+import {
+  BlogPage,
+  CreateTopicPage,
+  EndGame,
+  ForumPage,
+  Game,
+  initPreGamePage,
+  LeaderboardPage,
+  MainPage,
+  NotFoundPage,
+  PreGame,
+  ProfilePage,
+  SignInPage,
+  SignUpPage,
+  TopicPage,
+} from '@pages';
 
 import { PATHS } from './constants';
-import type { PageInitArgs } from './types';
+import type { AppRouteObject } from './types';
 
-export const routes = [
+export const routes: AppRouteObject[] = [
   {
     path: PATHS.SIGN_IN,
     Component: SignInPage,
@@ -15,42 +32,128 @@ export const routes = [
     fetchData: () => Promise.resolve(),
   },
   {
-    path: PATHS.HOME,
-    Component: MainPage,
-    fetchData: (props: PageInitArgs) => {
-      void props;
-    },
-  },
-  {
-    path: PATHS.START,
-    Component: PreGame,
-    fetchData: (props: PageInitArgs) => {
-      void props;
-    },
-  },
-  {
-    path: PATHS.END,
-    Component: EndGame,
-    fetchData: (props: PageInitArgs) => {
-      void props;
-    },
-  },
-  {
-    path: PATHS.FRIENDS,
-    Component: () => <div>Main Page</div>,
-    fetchData: (props: PageInitArgs) => {
-      void props;
-    },
-  },
-  {
-    path: PATHS.GAME,
-    Component: Game,
-  },
-  {
-    path: '*',
-    Component: MainPage,
-    fetchData: (props: PageInitArgs) => {
-      void props;
-    },
+    Component: Layout,
+    children: [
+      {
+        index: true,
+        Component: () => (
+          <ProtectedRoute>
+            <MainPage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.START,
+        Component: () => (
+          <ProtectedRoute>
+            <PreGame />
+          </ProtectedRoute>
+        ),
+        fetchData: initPreGamePage,
+      },
+      {
+        path: PATHS.GAME,
+        Component: () => (
+          <ProtectedRoute>
+            <Game />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.END,
+        Component: () => (
+          <ProtectedRoute>
+            <EndGame />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.PROFILE,
+        Component: () => (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.LEADERBOARD,
+        Component: () => (
+          <ProtectedRoute>
+            <LeaderboardPage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.BLOG,
+        Component: () => (
+          <ProtectedRoute>
+            <BlogPage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.BLOG_TOPIC,
+        Component: () => (
+          <ProtectedRoute>
+            <TopicPage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.FORUM,
+        Component: () => (
+          <ProtectedRoute>
+            <ForumPage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.FORUM_CREATE_TOPIC,
+        Component: () => (
+          <ProtectedRoute>
+            <CreateTopicPage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      {
+        path: PATHS.FORUM_TOPIC,
+        Component: () => (
+          <ProtectedRoute>
+            <TopicPage />
+          </ProtectedRoute>
+        ),
+        fetchData: (props) => {
+          void props;
+        },
+      },
+      { path: '*', Component: NotFoundPage },
+    ],
   },
 ];

@@ -1,13 +1,15 @@
 import ReactDOMServer from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { matchRoutes } from 'react-router-dom';
 import {
   createStaticHandler,
   createStaticRouter,
+  matchRoutes,
   StaticRouterProvider,
-} from 'react-router-dom/server';
+} from 'react-router';
+import { ConfigProvider } from 'antd';
 import { ServerStyleSheet } from 'styled-components';
+import type { AppRouteObject } from '@src/routes/types';
 import type { Request as ExpressRequest } from 'express';
 import type { HelmetServerState } from 'react-helmet-async';
 
@@ -45,11 +47,8 @@ export const render = async (req: ExpressRequest) => {
     throw new Error('Страница не найдена!');
   }
 
-  const [
-    {
-      route: { fetchData },
-    },
-  ] = foundRoutes;
+  const leafMatch = foundRoutes[foundRoutes.length - 1];
+  const fetchData = (leafMatch.route as AppRouteObject).fetchData;
 
   try {
     if (typeof fetchData === 'function') {
@@ -58,6 +57,7 @@ export const render = async (req: ExpressRequest) => {
         state: store.getState(),
         ctx: createContext(req),
       });
+      console.info('[SSR] store filled');
     }
   } catch (e) {
     console.error('Инициализация страницы произошла с ошибкой', e);
@@ -74,9 +74,11 @@ export const render = async (req: ExpressRequest) => {
     const html = ReactDOMServer.renderToString(
       sheet.collectStyles(
         <HelmetProvider context={helmetContext}>
-          <Provider store={store}>
-            <StaticRouterProvider router={router} context={context} />
-          </Provider>
+          <ConfigProvider wave={{ disabled: true }}>
+            <Provider store={store}>
+              <StaticRouterProvider router={router} context={context} />
+            </Provider>
+          </ConfigProvider>
         </HelmetProvider>
       )
     );

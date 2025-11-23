@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Card, Col, Divider, Flex, Layout, List, Row, Space, Typography } from 'antd';
 
 import { Button } from '@components/Button';

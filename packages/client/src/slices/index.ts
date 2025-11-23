@@ -1,2 +1,2 @@
 export * from './ssrSlice';
-export * from './friendsSlice';
+export * from './preGameSlice';

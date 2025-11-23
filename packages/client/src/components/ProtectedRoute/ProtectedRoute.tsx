@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router';
 import type { ReactElement } from 'react';
 
 import { Spinner } from '@components/Spinner';
@@ -31,6 +31,10 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
         <Spinner />
       </div>
     );
+  }
+
+  if (typeof window === 'undefined') {
+    return null; // SSR
   }
 
   if (!isAuthenticated) {

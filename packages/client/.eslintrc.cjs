@@ -32,7 +32,7 @@ module.exports = {
           [
             '^vite',
             '^react',
-            '^react-router-dom',
+            '^react-router',
             '^react+',
             '^@?(?!(src|components|slices|pages|types|layout|utils)\\b)\\w',
             '^@?(?!(common|components|slices|pages|types|layout|utils)\\b)\\w(.+)?\\u0000$',
@@ -63,5 +63,12 @@ module.exports = {
     'jsx-a11y/label-has-for': ['error', { required: { some: ['nesting', 'id'] } }],
   },
   plugins: ['react', 'react-hooks', 'jsx-a11y', 'react-refresh'],
-  ignorePatterns: ['server/**', 'node_modules/**', 'dist/**', '.eslintrc.cjs', 'vite.config.ts', 'public/sw.js'],
+  ignorePatterns: [
+    'server/**',
+    'node_modules/**',
+    'dist/**',
+    '.eslintrc.cjs',
+    'vite.config.ts',
+    'public/sw.js',
+  ],
 };

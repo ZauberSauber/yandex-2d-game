@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { EyeOutlined, MessageOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Card, Divider, Input, Space, Tag, Typography } from 'antd';
 import type React from 'react';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ArrowLeftOutlined, SendOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message, Select, Typography } from 'antd';
 import type { FC } from 'react';

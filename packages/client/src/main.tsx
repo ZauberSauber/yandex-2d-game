@@ -2,9 +2,10 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
+import { registerServiceWorker } from '@utils';
+
 import { App } from './App';
 import { createStore } from './store';
-import { registerServiceWorker } from './utils/serviceWorker';
 
 registerServiceWorker();
 
