@@ -67,7 +67,8 @@ const cacheFirst = async (request: Request): Promise<Response> => {
 
 self.addEventListener('install', (event: ExtendableEvent) => {
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => cache.addAll(STATIC_FILES).catch(() => {}))
+    caches.open(STATIC_CACHE).then((cache) => cache.addAll(STATIC_FILES).catch(() => {
+    })),
   );
 
   self.skipWaiting();
@@ -81,9 +82,9 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
         Promise.all(
           cacheNames
             .filter((name) => name !== STATIC_CACHE && name !== API_CACHE)
-            .map((name) => caches.delete(name))
-        )
-      )
+            .map((name) => caches.delete(name)),
+        ),
+      ),
   );
 
   self.clients.claim();

@@ -105,6 +105,7 @@ export type TPlayer = IPerson;
 export type TBattlePlayer = TPlayer & TBattleProps;
 
 export type TEnemy = Omit<IPerson, 'damageMultiplier' | 'criticalHitChance'> & {
+  name: string;
   exp: number;
   description?: string;
   iconSrc?: string;
