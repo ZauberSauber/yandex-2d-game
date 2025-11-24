@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "tsc --p ./tsconfig.prod.json",
+    "build": "rimraf dist && tsc --p tsconfig.prod.json",
     "preview": "node ./dist/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.ts",
+    "preDev": "rimraf dist && tsc -p tsconfig.json",
+    "dev": "npm run preDev && concurrently --kill-others \"tsc -w -p tsconfig.json\" \"cross-env NODE_ENV=development nodemon\"",
     "lint": "eslint \"**/*.{js,ts}\" --max-warnings=0",
     "tsc": "tsc --noEmit --p ./tsconfig.json",
     "format": "prettier --write .",

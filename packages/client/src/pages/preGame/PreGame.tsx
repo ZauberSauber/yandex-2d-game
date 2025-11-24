@@ -1,8 +1,10 @@
+import { usePage } from '@hooks';
 import type { TabsProps } from 'antd';
 
 import { Tabs } from '@components/Tabs';
 
 import { GameProfile } from './GameProfile';
+import { initPreGamePage } from './initPreGamePage';
 import { Inventory } from './Inventory';
 import { Missions } from './Missions';
 
@@ -13,6 +15,8 @@ export const PreGame = () => {
     { key: 'missions', label: 'Миссии', children: <Missions /> },
     { key: 'inventory', label: 'Снаряжение', children: <Inventory /> },
   ];
+
+  usePage({ initPage: initPreGamePage });
 
   return (
     <>

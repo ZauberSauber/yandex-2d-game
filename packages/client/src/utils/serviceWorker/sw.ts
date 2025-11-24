@@ -1,5 +1,7 @@
 /// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
+import { clientsClaim } from 'workbox-core';
+import { precacheAndRoute } from 'workbox-precaching';
 
 declare const self: ServiceWorkerGlobalScope & {
   __WB_MANIFEST: Array<{ url: string; revision: string | null }>;
@@ -11,6 +13,10 @@ const STATIC_FILES = ['/', '/index.html', OFFLINE_PAGE];
 
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
+
+precacheAndRoute(self.__WB_MANIFEST);
+self.skipWaiting();
+clientsClaim();
 
 const isValidResponse = (response: Response): boolean =>
   response.status === 200 && response.ok && response.type === 'basic';

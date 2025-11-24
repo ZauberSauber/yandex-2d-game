@@ -9,11 +9,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// https://vitejs.dev/config/
 export default defineConfig({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
-    open: true,
+    open: false,
   },
   define: {
     __EXTERNAL_SERVER_URL__: JSON.stringify(process.env.EXTERNAL_SERVER_URL),
@@ -41,8 +40,8 @@ export default defineConfig({
     viteTsconfigPaths(),
     VitePWA({
       strategies: 'injectManifest',
-      srcDir: 'src',
-      filename: 'utils/serviceWorker/sw.ts',
+      srcDir: 'src/utils/serviceWorker',
+      filename: 'sw.ts',
       injectRegister: null,
       manifest: {
         name: 'Neo-Tokyo Network',
@@ -51,21 +50,13 @@ export default defineConfig({
         theme_color: '#000000',
         background_color: '#000000',
         display: 'standalone',
-        icons: [
-          {
-            src: '/vite.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
-          },
-        ],
+        icons: [{ src: '/vite.svg', sizes: 'any', type: 'image/svg+xml' }],
       },
       injectManifest: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       },
-      devOptions: {
-        enabled: false,
-        type: 'module',
-      },
+      devOptions: { enabled: false, type: 'module' },
     }),
     pluginChecker({
       typescript: { tsconfigPath: path.resolve(__dirname, './tsconfig.json') },

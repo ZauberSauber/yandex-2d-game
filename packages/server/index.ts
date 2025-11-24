@@ -3,7 +3,8 @@ import cors from 'cors';
 dotenv.config();
 
 import express from 'express';
-import { createClientAndConnect } from './db';
+import { createClientAndConnect } from './db.js';
+import { LOCATIONS } from './mock.js';
 
 const app = express();
 app.use(cors());
@@ -25,6 +26,10 @@ app.get('/user', (_, res) => {
 
 app.get('/', (_, res) => {
   res.json('👋 Howdy from the server :)');
+});
+
+app.get('/locations', (_, res) => {
+  res.json(LOCATIONS);
 });
 
 app.listen(port, () => {

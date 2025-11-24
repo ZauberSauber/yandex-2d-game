@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { LoginOutlined } from '@ant-design/icons';
 import type { LoginFormData } from '@src/types/forms';
 import type { FormEvent } from 'react';
-import type { Location } from 'react-router-dom';
+import type { Location } from 'react-router';
 
 import { ButtonComponent } from '@components/Button/Button';
 import { FormField } from '@components/FormField';
