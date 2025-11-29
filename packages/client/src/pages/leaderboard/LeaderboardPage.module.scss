@@ -1,0 +1,15 @@
+@use 'styles/variables.scss' as v;
+@use 'styles/default.scss' as d;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 50px 25px;
+
+  .title {
+    @include d.neonTitle;
+  }
+}

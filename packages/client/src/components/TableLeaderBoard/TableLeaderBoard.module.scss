@@ -1,0 +1,28 @@
+@use 'styles/variables.scss' as v;
+
+.table {
+  display: flex;
+
+  &:global(.ant-table-wrapper .ant-table) {
+    padding: 51px 31px 31px;
+    border: 1px solid v.$color-neon-blue;
+    background-color: v.$color-dark-bg;
+  }
+
+  &:global(.ant-table-wrapper .ant-table .ant-table-container .ant-table-tbody) {
+    background-color: v.$color-darker-bg;
+    color: v.$color-neon-blue;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid v.$color-blue-violet;
+  }
+
+  .button-pagination {
+    &:global(.ant-btn) {
+      padding: 16px 25px;
+      border-color: v.$color-neon-light-pink;
+      background: transparent;
+      color: v.$color-neon-light-pink;
+    }
+  }
+}
