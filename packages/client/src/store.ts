@@ -7,6 +7,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 
 import authReducer from './slices/authSlice';
+import leaderboardReducer from './slices/leaderboardSlice/leaderboardSlice';
 import preGameReducer from './slices/preGameSlice';
 import ssrReducer from './slices/ssrSlice';
 import userReducer from './slices/userSlice/userSlice';
@@ -21,6 +22,7 @@ export const reducer = combineReducers({
   auth: authReducer,
   ssr: ssrReducer,
   user: userReducer,
+  leaderboard: leaderboardReducer,
   preGame: preGameReducer,
 });
 
