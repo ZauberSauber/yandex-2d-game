@@ -8,6 +8,9 @@
 
 * В данный моент запуск проекта осуществляется через папку `client` командой `yarn start`
 
+ssr сборка:
+1. в клиенте `yarn build:ssr`, прлинковать клиент `yarn link`
+2. в сервере `yarn link "client"` => `yarn build` => `node ./dist/index.js`
 
 ### Как добавить зависимости?
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)

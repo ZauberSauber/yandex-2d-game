@@ -114,7 +114,7 @@ export default class GameEngine {
         this.lastFrameTime = currenetTime;
 
         this.activutyManager.update(currenetTime);
-        this.playerManager.update(currenetTime);
+        this.playerManager.update();
 
         if (this.playerManager.getHP() <= 0) {
           this.endGame();
@@ -139,7 +139,6 @@ export default class GameEngine {
     this.onGameOver();
   }
 
-  // @ts-expect-error использовать для сохранения в бд
   private updateResource(): void {
     this.onResourceUpdate();
   }

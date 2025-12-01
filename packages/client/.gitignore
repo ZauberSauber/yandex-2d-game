@@ -25,3 +25,5 @@ tsconfig.server.tsbuildinfo
 *.njsproj
 *.sln
 *.sw?
+
+ssr-dist
