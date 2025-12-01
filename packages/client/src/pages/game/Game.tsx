@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { Variants } from '@pages/endGame/constants';
@@ -9,7 +9,6 @@ import GameEngine from '../../gameEngine/GameEngine';
 import styles from './Game.module.scss';
 
 export const Game = () => {
-  const [gameEngine, setGameEngine] = useState<GameEngine | null>(null);
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -30,10 +29,8 @@ export const Game = () => {
       playerStatsInit: state,
     });
 
-    setGameEngine(engine);
-
     return () => {
-      gameEngine?.destroy();
+      engine.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
