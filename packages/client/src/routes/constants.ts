@@ -7,6 +7,7 @@ export enum PATHS {
   PROFILE = '/profile',
   SIGN_IN = '/sign-in',
   SIGN_UP = '/sign-up',
+  OAUTH = '/oauth',
   BLOG = '/blog',
   BLOG_TOPIC = '/blog/:id',
   LEADERBOARD = '/leaderboard',

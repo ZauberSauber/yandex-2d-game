@@ -10,6 +10,7 @@ import {
   LeaderboardPage,
   MainPage,
   NotFoundPage,
+  OAuthCallbackPage,
   PreGame,
   ProfilePage,
   SignInPage,
@@ -29,6 +30,11 @@ export const routes: AppRouteObject[] = [
   {
     path: PATHS.SIGN_UP,
     Component: SignUpPage,
+    fetchData: () => Promise.resolve(),
+  },
+  {
+    path: PATHS.OAUTH,
+    Component: OAuthCallbackPage,
     fetchData: () => Promise.resolve(),
   },
   {
