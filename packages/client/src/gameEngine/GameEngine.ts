@@ -150,4 +150,10 @@ export default class GameEngine {
       this.animationId = null;
     }
   }
+
+  //TODO: В будущем можно поменять способ подсчёта уровня игрока
+  public getTotalLvlPlayer() {
+    const { accuracy, defense, power, production } = this.playerManager.playerState.skills;
+    return accuracy.lvl + defense.lvl + power.lvl + production.lvl;
+  }
 }

@@ -10,6 +10,7 @@ import { ModalChangeAvatar } from '@src/components/ModalChangeAvatar';
 import { Overlay } from '@src/components/Overlay';
 import { Spinner } from '@src/components/Spinner';
 import { TextAreaComponent } from '@src/components/TextArea';
+import { DURATION_NOTIFY } from '@src/constants/common';
 import { FORM_LABELS_PROFILE_INFO, FORM_PLACEHOLDERS } from '@src/constants/forms';
 import { logoutThunk } from '@src/slices/authSlice';
 import {
@@ -25,8 +26,6 @@ import {
 import { useDispatch, useSelector } from '@src/store';
 
 import style from './ProfilePage.module.scss';
-
-const DURATION_NOTIFY = 3;
 
 export const ProfilePage = () => {
   const { Title, Text } = Typography;

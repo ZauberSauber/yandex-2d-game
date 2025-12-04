@@ -1,14 +1,16 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
+import type { DataTypeTable } from '@src/api/leaderboardApi/types';
 import type { TableProps } from 'antd';
 
+import { ConstantsLeaderboard } from '@src/api/leaderboardApi/types';
+import { PAGE_SIZE_TABLE } from '@src/constants/common';
+
 import { Button } from '../Button';
-import { MOCK_DATA } from './MockData';
-import type { DataType } from './MockData';
 
 import style from './TableLeaderBoard.module.scss';
 
-const COLUMNS: TableProps<DataType>['columns'] = [
+const COLUMNS: TableProps<DataTypeTable>['columns'] = [
   {
     title: '#',
     dataIndex: 'key',
@@ -16,21 +18,25 @@ const COLUMNS: TableProps<DataType>['columns'] = [
   },
   {
     title: 'НИКНЕЙМ ИГРОКА',
-    dataIndex: 'display_Name',
-    key: 'display_Name',
+    dataIndex: 'displayName',
+    key: 'displayName',
   },
   {
     title: 'УРОВЕНЬ',
-    dataIndex: 'level',
-    key: 'level',
+    dataIndex: ConstantsLeaderboard.raitingFieldName,
+    key: ConstantsLeaderboard.raitingFieldName,
   },
 ];
 
-export const TableLeaderBoard = () => (
-  <Table<DataType>
+type TableLeaderBoardProps = {
+  tableData: DataTypeTable[];
+};
+
+export const TableLeaderBoard = ({ tableData }: TableLeaderBoardProps) => (
+  <Table<DataTypeTable>
     className={style.table}
     pagination={{
-      pageSize: 10,
+      pageSize: PAGE_SIZE_TABLE,
       position: ['bottomCenter'],
       itemRender: (_, type, originalElement) => {
         if (type === 'prev') {
@@ -49,6 +55,7 @@ export const TableLeaderBoard = () => (
         }
         return originalElement;
       },
+      hideOnSinglePage: true,
     }}
     components={{
       header: {
@@ -67,7 +74,7 @@ export const TableLeaderBoard = () => (
       },
     }}
     columns={COLUMNS}
-    dataSource={MOCK_DATA}
+    dataSource={tableData}
     loading={false}
   />
 );
