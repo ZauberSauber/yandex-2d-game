@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   server: {
     port: Number(process.env.CLIENT_PORT) || 3000,
     open: false,
@@ -22,7 +22,7 @@ export default defineConfig({
     emptyOutDir: true,
     chunkSizeWarningLimit: 5000,
     outDir: path.join(__dirname, 'dist/client'),
-    copyPublicDir: true,
+    copyPublicDir: !isSsrBuild,
   },
   publicDir: 'public',
   resolve: {
@@ -75,4 +75,4 @@ export default defineConfig({
     }),
   ],
   ssr: { noExternal: ['react-helmet-async', '@reduxjs/toolkit'] },
-});
+}));
