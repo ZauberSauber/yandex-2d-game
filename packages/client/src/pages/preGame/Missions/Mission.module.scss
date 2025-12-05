@@ -26,6 +26,6 @@ $gap: 20px;
   .helper-text {
     margin-top: 10px;
 
-    @include d.neonTitle(rgba(v.$color-neon-pink,0.75));
+    @include d.neonTitle(rgba(v.$color-neon-pink, 0.75));
   }
 }

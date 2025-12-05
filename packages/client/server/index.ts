@@ -1,8 +1,7 @@
 import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import path from 'path';
 import fs from 'fs/promises';
-import open from 'open';
 
 import express, { Request as ExpressRequest } from 'express';
 import cookieParser from 'cookie-parser';
@@ -75,11 +74,15 @@ async function createServer() {
       } else {
         template = await fs.readFile(path.join(clientPath, 'dist/client/index.html'), 'utf-8');
 
-        // Получаем путь до сбилдженого модуля клиента, чтобы не тащить средства сборки клиента на сервер
+        // Абсолютный путь до server-бандла
         const pathToServer = path.join(clientPath, 'dist/server/entry-server.js');
 
-        // Импортируем этот модуль и вызываем с инишл стейтом
-        render = (await import(pathToServer)).render;
+        // Преобразуем в file:// URL для ESM-импорта
+        const serverModuleUrl = pathToFileURL(pathToServer).href;
+
+        // Импортируем модуль и берём render
+        const serverModule = await import(serverModuleUrl);
+        render = serverModule.render;
       }
 
       // Получаем HTML-строку из JSX
@@ -111,7 +114,12 @@ async function createServer() {
   httpServer.listen(port, () => {
     console.log(`Client is listening on port: ${port}`);
 
-    if (isDev) open(`http://localhost:${port}`);
+    if (isDev) {
+      (async () => {
+        const { default: open } = await import('open');
+        open(`http://localhost:${port}`);
+      })();
+    }
   });
 }
 
