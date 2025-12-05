@@ -44,7 +44,7 @@ services:
       - net
 
   base:
-    image: postgres:14
+    image: postgres:17
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     environment:
