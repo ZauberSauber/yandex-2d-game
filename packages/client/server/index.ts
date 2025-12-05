@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import { fileURLToPath, pathToFileURL } from 'url';
 import path from 'path';
 import fs from 'fs/promises';
-import open from 'open';
 
 import express, { Request as ExpressRequest } from 'express';
 import cookieParser from 'cookie-parser';
@@ -115,7 +114,12 @@ async function createServer() {
   httpServer.listen(port, () => {
     console.log(`Client is listening on port: ${port}`);
 
-    if (isDev) open(`http://localhost:${port}`);
+    if (isDev) {
+      (async () => {
+        const { default: open } = await import('open');
+        open(`http://localhost:${port}`);
+      })();
+    }
   });
 }
 
