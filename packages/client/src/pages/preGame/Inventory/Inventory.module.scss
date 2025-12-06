@@ -1,6 +1,6 @@
 @use 'styles/variables' as v;
 @use 'styles/default' as d;
-@use '../../../components/tabs/variables' as tabs;
+@use 'src/components/Tabs/variables' as tabs;
 
 $space: 10px;
 $height-title: 23px;

@@ -5,9 +5,9 @@
   "scripts": {
     "start": "vite",
     "preDevBuild": "rimraf ./tsconfig.server.tsbuildinfo && tsc -p tsconfig.server.json",
-    "dev": "npm run preDev && concurrently --kill-others \"tsc -w -p tsconfig.server.json\" \"cross-env NODE_ENV=development EXTERNAL_SERVER_URL=http://localhost:3001 INTERNAL_SERVER_URL=http://localhost:3001 nodemon\"",
+    "dev": "npm run preDevBuild && concurrently --kill-others \"tsc -w -p tsconfig.server.json\" \"cross-env NODE_ENV=development EXTERNAL_SERVER_URL=http://localhost:3001 INTERNAL_SERVER_URL=http://localhost:3001 nodemon\"",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist/server",
-    "build": "npm run check-errors && preDevBuild && vite build && npm rum build:ssr",
+    "build": "npm run check-errors && npm run preDevBuild && vite build && npm rum build:ssr",
     "preview": "node server/index.js",
     "tsc": "tsc --noEmit --p ./tsconfig.json",
     "check-errors": "npm run tsc && npm run lint && npm run stylelint",
