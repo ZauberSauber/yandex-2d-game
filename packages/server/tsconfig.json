@@ -3,17 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "composite": true,
-    "target": "ES2020",
-    "module": "commonjs",
+    "target": "ES2019",
+    "module": "ES6",
     "moduleResolution": "node",
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
-    "lib": ["es2020", "esnext.asynciterable"],
+    "lib": ["ES2019", "esnext.asynciterable"],
     "types": ["node", "jest"],
     "paths": {
       "*": ["types/*"]
-    },
+    }
   },
-  "include": ["db.ts", "index.ts", "__tests__"]
+  "exclude": ["node_modules", "**.config.**", "**.json", "dist"]
 }

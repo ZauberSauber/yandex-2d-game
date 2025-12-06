@@ -89,7 +89,16 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  if (!url.protocol.startsWith('http')) {
+    return;
+  }
+
   if (request.method !== 'GET') {
+    return;
+  }
+
+  // в деве не трогаем, иначе ломается hmr
+  if (url.pathname.startsWith('/@vite') || url.pathname.startsWith('/src/')) {
     return;
   }
 
@@ -97,8 +106,6 @@ self.addEventListener('fetch', (event) => {
 
   if (isApiRequest) {
     event.respondWith(networkFirst(request));
-  } else if (url.origin === location.origin) {
-    event.respondWith(cacheFirst(request));
   } else {
     event.respondWith(cacheFirst(request));
   }

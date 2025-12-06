@@ -7,6 +7,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "noEmit": false,
     "lib": ["es2020", "DOM"]
   },
   "include": ["server/index.ts"]
