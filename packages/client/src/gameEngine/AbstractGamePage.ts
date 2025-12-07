@@ -4,6 +4,12 @@ import type { EGamePage } from './types';
 export default abstract class AbstractGamePage {
   protected buttonManager = new ButtonManager();
 
+  protected isDarkTheme: boolean = true;
+
+  setTheme(isDark: boolean): void {
+    this.isDarkTheme = isDark;
+  }
+
   abstract render(ctx: CanvasRenderingContext2D): void;
 
   onEnter?(): void;

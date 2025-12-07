@@ -10,6 +10,11 @@
     border: 1px solid v.$color-neon-blue;
     background: transparent;
     color: v.$color-neon-blue;
+
+    @at-root [data-theme='light'] & {
+      border: 1px solid v.$color-neon-purple;
+      color: v.$color-neon-purple;
+    }
   }
 
   &:global(.ant-btn):not(:disabled):hover {
@@ -17,5 +22,14 @@
     color: v.$color-neon-pink;
     box-shadow: 0 0 15px rgba(v.$color-neon-pink, v.$glow-intensity);
     transform: translateY(-2px);
+
+    @at-root [data-theme='light'] & {
+      border-color: v.$color-neon-pink;
+      color: v.$color-neon-pink;
+      box-shadow: 0 0 15px rgba(v.$color-neon-pink, v.$glow-intensity);
+
+      // border: 1px solid v.$color-neon-purple;
+      // color: v.$color-neon-purple;
+    }
   }
 }

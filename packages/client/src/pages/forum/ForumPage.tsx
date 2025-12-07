@@ -138,10 +138,6 @@ const ForumPage: React.FC = () => {
     },
   ];
 
-  const handleTopicClick = (topicId: string) => {
-    navigate(`${PATHS.FORUM_TOPIC}/${topicId}`);
-  };
-
   const handleCreateTopic = () => {
     navigate(PATHS.FORUM_CREATE_TOPIC);
   };
@@ -231,7 +227,7 @@ const ForumPage: React.FC = () => {
               <Card
                 key={topic.id}
                 className={styles['topic-card']}
-                onClick={() => handleTopicClick(topic.id)}>
+                onClick={() => navigate(topic.id)}>
                 <div className={styles['topic-header']}>
                   <div className={styles['topic-title']}>
                     {topic.tags.map((tag) => (

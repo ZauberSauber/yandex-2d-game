@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { notification } from 'antd';
 
 import { Variants } from '@pages/endGame/constants';
 import { DURATION_NOTIFY } from '@src/constants/common';
+import { ThemeContext } from '@src/context';
 import { PATHS } from '@src/routes/constants';
 import { setLeaderboardThunk } from '@src/slices/leaderboardSlice';
 import { getUserInfoThunk, selectUser } from '@src/slices/userSlice';
@@ -17,6 +18,8 @@ export const Game = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [gameEngine, setGameEngine] = useState<GameEngine | null>(null);
+  const { isDarkTheme } = useContext(ThemeContext);
   const userInfo = useSelector(selectUser);
 
   const onGameOver = async () => {
@@ -27,7 +30,7 @@ export const Game = () => {
         setLeaderboardThunk({
           displayName: userInfo.display_name,
           DisplayFlexersLevel: 1,
-        })
+        }),
       );
 
       if (setLeaderboardThunk.fulfilled.match(result)) {
@@ -61,7 +64,10 @@ export const Game = () => {
       onGameOver,
       onResourceUpdate,
       playerStatsInit: state,
+      isDarkTheme,
     });
+
+    setGameEngine(engine);
 
     return () => {
       engine.destroy();
@@ -72,6 +78,12 @@ export const Game = () => {
   useEffect(() => {
     dispatch(getUserInfoThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (gameEngine) {
+      gameEngine.updateTheme(isDarkTheme);
+    }
+  }, [isDarkTheme, gameEngine]);
 
   return (
     <div id="container">

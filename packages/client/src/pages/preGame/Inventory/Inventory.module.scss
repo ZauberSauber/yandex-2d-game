@@ -16,6 +16,10 @@ $height-title: 23px;
     margin-bottom: $space;
 
     @include d.neonTitle;
+
+    @at-root [data-theme='light'] & {
+      @include d.neonTitle(v.$color-neon-purple);
+    }
   }
 
   .cells {
@@ -27,5 +31,13 @@ $height-title: 23px;
     width: 100px;
     height: 100px;
     border: 1px solid v.$color-neon-blue;
+
+    @at-root [data-theme='light'] & {
+      border: 1px solid v.$color-neon-purple;
+    }
+  }
+
+  @at-root [data-theme='light'] & {
+    border: 1px solid v.$color-neon-purple;
   }
 }

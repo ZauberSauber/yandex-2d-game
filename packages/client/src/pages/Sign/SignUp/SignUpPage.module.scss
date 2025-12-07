@@ -14,18 +14,26 @@
 
 .signup-header {
   @extend %auth-header;
+
+  @at-root [data-theme='light'] & {
+    animation: none;
+  }
 }
 
 .signup-title {
   animation: auth-simple-flicker 3s infinite;
 
   @include auth-title-glitch(
-    v.$color-neon-pink,
-    v.$color-neon-purple,
-    auth-glitch-move-1,
-    auth-glitch-move-2
+                  v.$color-neon-pink,
+                  v.$color-neon-purple,
+                  auth-glitch-move-1,
+                  auth-glitch-move-2
   );
   @extend %auth-title;
+
+  @at-root [data-theme='light'] & {
+    animation: none;
+  }
 }
 
 .signup-subtitle {
@@ -66,9 +74,9 @@
 
   @extend %auth-button-common;
   @include auth-button-ant-overrides(
-    linear-gradient(135deg, #4a9eff, #00d4aa),
-    linear-gradient(135deg, #00d4aa, #ffa726),
-    #4a9eff
+                  linear-gradient(135deg, #4a9eff, #00d4aa),
+                  linear-gradient(135deg, #00d4aa, #ffa726),
+                  #4a9eff
   );
   @include auth-button-loading-effect;
   @extend %neon-button--signup;

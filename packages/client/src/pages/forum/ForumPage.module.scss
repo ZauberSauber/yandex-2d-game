@@ -5,7 +5,7 @@
   margin: 20px auto;
   padding: 20px;
   border: 1px solid v.$color-neon-blue;
-  background: v.$color-dark-bg;
+  background: transparent;
   min-height: 100vh;
 
   .header {
@@ -17,6 +17,10 @@
       text-shadow: 0 0 10px v.$color-neon-blue, 0 0 20px v.$color-neon-blue;
       margin-bottom: 30px;
       font-family: v.$font-heading;
+
+      @at-root [data-theme='light'] & {
+        color: 1px solid v.$color-neon-purple;
+      }
     }
 
     .search-section {
@@ -32,7 +36,7 @@
         border: 1px solid v.$color-neon-purple;
         background: transparent;
         color: v.$color-text;
-        
+
         &:focus {
           border-color: v.$color-neon-blue;
           box-shadow: 0 0 10px rgb(v.$color-neon-blue, v.$glow-intensity);
@@ -42,10 +46,18 @@
           border: none;
           background: transparent;
           color: v.$color-text;
-          
+
           &::placeholder {
             color: v.$color-text-secondary;
           }
+
+          @at-root [data-theme='light'] & {
+            color: v.$color-neon-purple;
+          }
+        }
+
+        @at-root [data-theme='light'] & {
+          color: v.$color-neon-purple;
         }
       }
 
@@ -62,6 +74,10 @@
           box-shadow: 0 0 15px rgb(v.$color-neon-pink, v.$glow-intensity);
           transform: translateY(-2px);
         }
+
+        @at-root [data-theme='light'] & {
+          background: v.$color-neon-purple;
+        }
       }
     }
   }
@@ -71,11 +87,19 @@
       color: v.$color-neon-purple;
       margin-bottom: 20px;
       font-family: v.$font-heading;
+
+      @at-root [data-theme='light'] & {
+        color: v.$color-neon-purple;
+      }
     }
 
     .divider {
       border-color: v.$color-neon-blue;
       margin: 40px 0;
+
+      @at-root [data-theme='light'] & {
+        border-color: 1px solid v.$color-neon-purple;
+      }
     }
 
     .categories-section {
@@ -88,7 +112,7 @@
 
       .category-card {
         border: 1px solid v.$color-neon-blue;
-        background: rgb(0 0 0 / 70%);
+        background: transparent;
         border-radius: 8px;
         transition: all v.$transition-duration v.$transition-easing;
         cursor: pointer;
@@ -109,11 +133,19 @@
             margin: 0;
             color: v.$color-neon-blue;
             font-family: v.$font-heading;
+
+            @at-root [data-theme='light'] & {
+              color: v.$color-neon-purple;
+            }
           }
 
           .category-stats {
             color: v.$color-text-secondary;
             font-size: 14px;
+
+            @at-root [data-theme='light'] & {
+              color: v.$color-neon-purple;
+            }
           }
         }
 
@@ -121,13 +153,25 @@
           display: block;
           color: v.$color-text-secondary;
           margin-bottom: 15px;
+
+          @at-root [data-theme='light'] & {
+            color: v.$color-neon-purple;
+          }
         }
 
         .category-footer {
           .last-post {
             color: v.$color-text-secondary;
             font-size: 14px;
+
+            @at-root [data-theme='light'] & {
+              color: v.$color-neon-purple;
+            }
           }
+        }
+
+        @at-root [data-theme='light'] & {
+          border-color: v.$color-neon-purple;
         }
       }
     }
@@ -140,7 +184,7 @@
 
       .topic-card {
         border: 1px solid v.$color-neon-blue;
-        background: rgb(0 0 0 / 70%);
+        background: transparent;
         border-radius: 8px;
         transition: all v.$transition-duration v.$transition-easing;
         cursor: pointer;
@@ -174,13 +218,22 @@
               color: v.$color-neon-blue;
               font-family: v.$font-heading;
               flex: 1;
+
+              @at-root [data-theme='light'] & {
+                color: v.$color-neon-purple;
+              }
             }
+
           }
 
           .topic-stats {
             .stat {
               color: v.$color-text-secondary;
               font-size: 14px;
+
+              @at-root [data-theme='light'] & {
+                color: v.$color-neon-purple;
+              }
             }
           }
         }
@@ -191,6 +244,10 @@
           .topic-meta-text {
             color: v.$color-text-secondary;
             font-size: 14px;
+
+            @at-root [data-theme='light'] & {
+              color: v.$color-neon-purple;
+            }
           }
         }
 
@@ -199,7 +256,15 @@
             color: v.$color-text-secondary;
             font-size: 14px;
             line-height: 1.4;
+
+            @at-root [data-theme='light'] & {
+              color: v.$color-neon-purple;
+            }
           }
+        }
+
+        @at-root [data-theme='light'] & {
+          border: 1px solid v.$color-neon-purple;
         }
       }
     }

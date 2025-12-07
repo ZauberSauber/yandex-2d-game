@@ -9,10 +9,10 @@ import { drawPageTitle } from '../utils/drawPageTitle';
 export default class CharacterPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Страница персонажа');
+    drawPageTitle(ctx, this.isDarkTheme, 'Страница персонажа');
 
     this.drawEquipment(ctx);
   }
@@ -57,7 +57,7 @@ export default class CharacterPage extends AbstractGamePage {
     });
 
     ctx.font = MAIN_FONT;
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorDarkBg;
     ctx.fillText('- Оружие', 340, 135);
     ctx.fillText('- Броня', 340, 235);
     ctx.fillText('- Аптечка', 340, 335);

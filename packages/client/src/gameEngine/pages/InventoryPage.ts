@@ -41,8 +41,9 @@ export default class InventoryPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     if (this.isAnimating) {
       this.isAnimating = false;
-      this.drawInventory(ctx, PAGE_X, 80);
     }
+    
+    this.drawInventory(ctx, PAGE_X, 80);
   }
 
   override onEnter(): void {
@@ -89,20 +90,20 @@ export default class InventoryPage extends AbstractGamePage {
   }
 
   private drawInventory(ctx: CanvasRenderingContext2D, posX: number, posY: number) {
-    // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(posX, 0, ctx.canvas.width - posX, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Инвентарь');
+    drawPageTitle(ctx, this.isDarkTheme, 'Инвевнтарь');
 
     if (this.items.length === 0) {
-      ctx.fillStyle = StyleColors.colorNeonBlue;
+      ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorDarkBg;
       ctx.font = MAIN_FONT;
       ctx.textAlign = 'center';
       ctx.fillText(
         'Сейчас инвентарь пуст',
         ctx.canvas.width / (2 * SCALE) + 100,
-        ctx.canvas.height / (2 * SCALE)
+        ctx.canvas.height / (2 * SCALE),
       );
 
       return;
@@ -137,7 +138,7 @@ export default class InventoryPage extends AbstractGamePage {
       ctx.fillText(
         '\u2193',
         downButton.x + downButton.width / 2,
-        downButton.y + downButton.height / 2 + 5
+        downButton.y + downButton.height / 2 + 5,
       );
     }
 
