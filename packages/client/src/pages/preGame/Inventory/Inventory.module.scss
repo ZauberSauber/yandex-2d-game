@@ -1,12 +1,11 @@
 @use 'styles/variables' as v;
 @use 'styles/default' as d;
-@use 'src/components/Tabs/variables' as tabs;
 
 $space: 10px;
 $height-title: 23px;
 
 .wrapper {
-  height: calc(100% - #{tabs.$tabsBottomMargin});
+  height: calc(100% - v.$tabsBottomMargin);
   margin-right: 15px;
   padding: $space;
   border: 1px solid v.$color-neon-blue;

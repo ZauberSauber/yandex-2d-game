@@ -40,7 +40,7 @@ export default defineConfig(({ isSsrBuild }) => ({
     viteTsconfigPaths(),
     VitePWA({
       strategies: 'injectManifest',
-      srcDir: 'src/utils/serviceWorker',
+      srcDir: path.resolve(__dirname, 'src', 'utils', 'serviceWorker'),
       filename: 'sw.ts',
       injectRegister: null,
       manifest: {
