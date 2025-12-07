@@ -106,3 +106,247 @@
   @extend %neon-button--signin;
 }
 
+.oauth-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.oauth-divider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(15 240 252 / 30%),
+      rgb(15 240 252 / 30%),
+      transparent
+    );
+    content: '';
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+}
+
+.oauth-divider-text {
+  position: relative;
+  z-index: 1;
+  padding: 0 1rem;
+  color: rgb(15 240 252 / 60%);
+  font-family: v.$font-main;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.oauth-button {
+  position: relative !important;
+  width: 100%;
+  height: v.$input-height;
+  border: 1px solid rgb(255 255 255 / 15%) !important;
+  background: v.$color-dark-bg !important;
+  color: #fff !important;
+  font-family: v.$font-main !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  transition: all v.$transition-duration ease !important;
+  border-radius: v.$border-radius !important;
+  letter-spacing: 0.5px !important;
+  overflow: hidden !important;
+  animation: oauth-flicker 3s infinite;
+
+  &::before {
+    position: absolute;
+    z-index: -1;
+    inset: -2px;
+    background: linear-gradient(45deg, v.$color-yandex-red, v.$color-yandex-red-light, v.$color-yandex-red-lighter, v.$color-yandex-red);
+    background-size: 300% 300%;
+    border-radius: calc(#{v.$border-radius} + 2px);
+    opacity: 0.5;
+    filter: blur(0.8px);
+    animation: border-gradient-shift 4s ease-in-out infinite, oauth-border-flicker 2s infinite;
+    content: '';
+    pointer-events: none;
+  }
+
+  &:not(:disabled):hover {
+    border-color: rgb(252 63 29 / 70%) !important;
+    background: v.$color-hover-bg !important;
+    transform: translateY(-2px) !important;
+    box-shadow:
+      0 0 20px rgba(v.$color-yandex-red, 0.5),
+      0 0 40px rgba(v.$color-yandex-red, 0.3),
+      0 0 8px rgba(#fff, 15%) inset,
+      0 0 2px rgba(v.$color-yandex-red, 0.8) inset !important;
+    animation: oauth-flicker 1.5s infinite;
+
+    &::before {
+      opacity: 0.8;
+      filter: blur(1.5px);
+      animation-duration: 2s, 1s;
+    }
+  }
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 48%,
+      rgba(v.$color-yandex-red, 0.1) 49%,
+      rgba(v.$color-yandex-red, 0.1) 51%,
+      transparent 52%,
+      transparent 100%
+    );
+    border-radius: v.$border-radius;
+    box-shadow: 0 0 0 0 rgba(v.$color-yandex-red, 50%);
+    animation: auth-pulse-ring 3s infinite, oauth-scan-line 2s linear infinite !important;
+    content: '';
+    pointer-events: none;
+  }
+
+  &:global(.ant-btn) {
+    border: 1px solid rgb(255 255 255 / 15%) !important;
+    background: v.$color-dark-bg !important;
+    color: #fff !important;
+  }
+
+  &:global(.ant-btn-default) {
+    border: 1px solid rgb(255 255 255 / 15%) !important;
+    background: v.$color-dark-bg !important;
+    color: #fff !important;
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(0) !important;
+    animation: oauth-flicker 0.5s infinite;
+  }
+
+  &:focus {
+    border-color: rgb(252 63 29 / 70%) !important;
+    box-shadow:
+      0 0 20px rgba(v.$color-yandex-red, 0.5),
+      0 0 8px rgba(#fff, 15%) inset !important;
+  }
+
+  &:global(.ant-btn-loading) {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgb(0 0 0 / 0%), rgb(255 255 255 / 20%), rgb(0 0 0 / 0%));
+      animation: auth-shine 1.5s infinite;
+    }
+  }
+}
+
+.oauth-button-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.oauth-logo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background: v.$color-yandex-red;
+  color: #fff;
+  border-radius: 3px;
+  font-family: v.$font-main;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow:
+    0 0 8px rgba(v.$color-yandex-red, 0.8),
+    0 0 16px rgba(v.$color-yandex-red, 0.4),
+    inset 0 0 4px rgba(#fff, 0.2);
+  animation: oauth-logo-pulse 2s ease-in-out infinite, oauth-logo-glitch 4s infinite;
+  flex-shrink: 0;
+
+  &::before {
+    position: absolute;
+    z-index: -1;
+    inset: -2px;
+    background: linear-gradient(45deg, v.$color-yandex-red, v.$color-yandex-red-light, v.$color-yandex-red);
+    border-radius: 3px;
+    opacity: 0.6;
+    filter: blur(2px);
+    animation: border-gradient-shift 3s ease-in-out infinite;
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(#fff, 0.3) 0%,
+      transparent 50%,
+      rgba(#fff, 0.1) 100%
+    );
+    border-radius: 3px;
+    animation: oauth-logo-shine 2s linear infinite;
+    content: '';
+    pointer-events: none;
+  }
+}
+
+.oauth-text {
+  position: relative;
+  font-family: v.$font-main;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-shadow:
+    0 0 4px rgba(v.$color-yandex-red, 0.5),
+    0 0 8px rgba(v.$color-yandex-red, 0.3);
+  animation: oauth-text-flicker 4s infinite;
+
+  &::before {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -2px;
+    color: rgba(v.$color-yandex-red, 0.5);
+    content: attr(data-text);
+    animation: oauth-text-glitch-1 3s infinite;
+    pointer-events: none;
+  }
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 2px;
+    color: rgba(v.$color-yandex-red-light, 0.5);
+    content: attr(data-text);
+    animation: oauth-text-glitch-2 3.5s infinite;
+    pointer-events: none;
+  }
+}
+
