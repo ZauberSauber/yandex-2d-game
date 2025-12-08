@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import type { Optional } from 'sequelize';
-import sequelize from '../config/database.js';
 import Topic from './Topic.js';
+import { sequelize } from '../../db';
 
 interface CommentAttributes {
   id: number;
@@ -14,9 +14,13 @@ interface CommentAttributes {
   updatedAt?: Date;
 }
 
-interface CommentCreationAttributes extends Optional<CommentAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+interface CommentCreationAttributes
+  extends Optional<CommentAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
 
-class Comment extends Model<CommentAttributes, CommentCreationAttributes> implements CommentAttributes {
+class Comment
+  extends Model<CommentAttributes, CommentCreationAttributes>
+  implements CommentAttributes
+{
   public id!: number;
 
   public content!: string;
@@ -89,4 +93,3 @@ Comment.belongsTo(Topic, { foreignKey: 'topicId' });
 Comment.belongsTo(Comment, { foreignKey: 'parentCommentId', as: 'parent' });
 
 export default Comment;
-

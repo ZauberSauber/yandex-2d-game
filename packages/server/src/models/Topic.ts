@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import type { Optional } from 'sequelize';
-import sequelize from '../config/database.js';
+import { sequelize } from '../../db';
 
 interface TopicAttributes {
   id: number;
@@ -14,7 +14,8 @@ interface TopicAttributes {
   updatedAt?: Date;
 }
 
-interface TopicCreationAttributes extends Optional<TopicAttributes, 'id' | 'views' | 'createdAt' | 'updatedAt'> {}
+interface TopicCreationAttributes
+  extends Optional<TopicAttributes, 'id' | 'views' | 'createdAt' | 'updatedAt'> {}
 
 class Topic extends Model<TopicAttributes, TopicCreationAttributes> implements TopicAttributes {
   public id!: number;
@@ -86,4 +87,3 @@ Topic.init(
 );
 
 export default Topic;
-

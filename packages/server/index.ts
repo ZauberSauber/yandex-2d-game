@@ -4,9 +4,8 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 
 import express from 'express';
-import { createClientAndConnect } from './db.js';
+import { createClientAndConnect, initSequelize } from './db';
 import { LOCATIONS } from './mock.js';
-import sequelize from './src/config/database.js';
 import reactionRoutes from './src/routes/reactionRoutes.js';
 
 const app = express();
@@ -16,24 +15,7 @@ app.use(express.json());
 const port = Number(process.env.SERVER_PORT) || 3001;
 
 createClientAndConnect();
-
-sequelize
-  .authenticate()
-  .then(() => {
-    // eslint-disable-next-line no-console
-    console.log('  ➜ 🎸 Sequelize connection established');
-    return sequelize.sync({ alter: false });
-  })
-  .then(() => {
-    // eslint-disable-next-line no-console
-    console.log('  ➜ 🎸 Database synchronized');
-  })
-  .catch((err) => {
-    // eslint-disable-next-line no-console
-    console.error('  ➜ ❌ Database connection error:', err.message);
-    // eslint-disable-next-line no-console
-    console.error('  ➜ ⚠️  Make sure PostgreSQL is running. Start it with: docker-compose up postgres -d');
-  });
+initSequelize();
 
 app.get('/friends', (_, res) => {
   res.json([
