@@ -10,10 +10,8 @@
     "declaration": true,
     "declarationMap": true,
     "lib": ["ES2019", "esnext.asynciterable"],
-    "types": ["node", "jest"],
-    "paths": {
-      "*": ["types/*"]
-    }
+    "types": ["node", "jest"]
   },
   "exclude": ["node_modules", "**.config.**", "**.json", "dist"]
 }
+
