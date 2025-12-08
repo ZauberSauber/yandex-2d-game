@@ -19,7 +19,11 @@ const initialState: PreGameState = {
 
 export const fetchLocationsThunk = createAsyncThunk('preGame/fetchLocations', async () => {
   const url = `${SERVER_HOST}/locations`;
-  return fetch(url).then((res) => res.json());
+  const response = await fetch(url, { credentials: 'include' });
+  if (!response.ok) {
+    throw new Error(`Ошибка: ${response.status}`);
+  }
+  return response.json();
 });
 
 export const preGameSlice = createSlice({
