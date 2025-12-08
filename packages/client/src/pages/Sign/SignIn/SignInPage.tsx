@@ -10,12 +10,14 @@ import { FormField } from '@components/FormField';
 import { InputComponent } from '@components/Input';
 import {
   clearError,
+  getOAuthServiceIdThunk,
   selectAuthError,
   selectAuthLoading,
   selectIsAuthenticated,
   signInThunk,
 } from '@slices/authSlice';
 import { FORM_IDS, FORM_LABELS, FORM_PLACEHOLDERS } from '@src/constants/forms';
+import { getOAuthUrl, REDIRECT_URI } from '@src/constants/oauth';
 import { useDispatch, useSelector } from '@src/store';
 
 import styles from './SignInPage.module.scss';
@@ -60,6 +62,18 @@ export const SignInPage = () => {
       navigate(from?.pathname || '/');
     }
   };
+
+  const handleOAuthClick = useCallback(async () => {
+    dispatch(clearError());
+
+    const result = await dispatch(getOAuthServiceIdThunk(REDIRECT_URI));
+
+    if (getOAuthServiceIdThunk.fulfilled.match(result)) {
+      const serviceId = result.payload;
+      const oauthUrl = getOAuthUrl(serviceId);
+      window.location.href = oauthUrl;
+    }
+  }, [dispatch]);
 
   return (
     <main className={styles['login-page']}>
@@ -120,6 +134,25 @@ export const SignInPage = () => {
               className={styles['login-button']}
               aria-label="Войти в систему">
               ВОЙТИ
+            </ButtonComponent>
+          </div>
+
+          <div className={styles['oauth-section']}>
+            <div className={styles['oauth-divider']}>
+              <span className={styles['oauth-divider-text']}>или</span>
+            </div>
+            <ButtonComponent
+              type="default"
+              size="large"
+              onClick={handleOAuthClick}
+              className={styles['oauth-button']}
+              aria-label="Войти через Яндекс">
+              <span className={styles['oauth-button-content']}>
+                <span className={styles['oauth-logo']}>Я</span>
+                <span className={styles['oauth-text']} data-text="Яндекс ID">
+                  Яндекс ID
+                </span>
+              </span>
             </ButtonComponent>
           </div>
 

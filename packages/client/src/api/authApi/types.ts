@@ -11,3 +11,12 @@ export interface SignUpRequest {
   password: string;
   phone: string;
 }
+
+export interface OAuthServiceIdResponse {
+  service_id: string;
+}
+
+export interface OAuthCodeRequest {
+  code: string;
+  redirect_uri: string;
+}

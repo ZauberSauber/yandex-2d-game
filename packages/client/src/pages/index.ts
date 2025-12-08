@@ -9,3 +9,4 @@ export * from './main';
 export * from './notFound';
 export * from './game/Game';
 export * from './forum';
+export * from './OAuth';

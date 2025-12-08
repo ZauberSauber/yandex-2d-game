@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { OAuthCodeRequest } from '@src/api/authApi/types';
 import type { RootState } from '@src/store';
 
 import { authApi } from '@src/api/authApi';
@@ -47,6 +48,32 @@ export const signUpThunk = createAsyncThunk(
 
     if (result.error || !result.data) {
       return rejectWithValue(extractErrorMessage(result.data) || 'Ошибка регистрации');
+    }
+
+    return true;
+  }
+);
+
+export const getOAuthServiceIdThunk = createAsyncThunk(
+  'auth/getOAuthServiceId',
+  async (redirectUri: string, { rejectWithValue }) => {
+    const result = await authApi.getOAuthServiceId(redirectUri);
+
+    if (result.error || !result.data) {
+      return rejectWithValue(extractErrorMessage(result.data) || 'Ошибка получения service_id');
+    }
+
+    return result.data.service_id;
+  }
+);
+
+export const signInWithOAuthThunk = createAsyncThunk(
+  'auth/signInWithOAuth',
+  async (data: OAuthCodeRequest, { rejectWithValue }) => {
+    const result = await authApi.signInWithOAuth(data);
+
+    if (result.error) {
+      return rejectWithValue(extractErrorMessage(result.data) || 'Ошибка авторизации');
     }
 
     return true;
@@ -133,6 +160,20 @@ export const authSlice = createSlice({
       })
       .addCase(logoutThunk.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(signInWithOAuthThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(signInWithOAuthThunk.fulfilled, (state) => {
+        state.isAuthenticated = true;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(signInWithOAuthThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as string) || 'Ошибка авторизации через OAuth';
+        state.isAuthenticated = false;
       });
   },
 });
