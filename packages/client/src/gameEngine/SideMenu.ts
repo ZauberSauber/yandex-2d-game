@@ -59,8 +59,8 @@ export default class SideMenu {
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
       } else {
-        ctx.strokeStyle = StyleColors.colorNeonBlue;
-        ctx.fillStyle = StyleColors.colorNeonBlue;
+        ctx.strokeStyle = this.pageManager.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+        ctx.fillStyle = this.pageManager.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
 
         ctx.shadowColor = 'transparent';
       }
@@ -107,7 +107,7 @@ export default class SideMenu {
       const text = `- ${props[index]}`;
       ctx.font = MAIN_FONT;
       ctx.textAlign = 'left';
-      ctx.fillStyle = StyleColors.colorNeonCyan;
+      ctx.fillStyle = this.pageManager.isDarkTheme ? StyleColors.colorNeonCyan : StyleColors.colorNeonPurple;
       ctx.fillText(text, 60, 60 + 50 * index + 25);
     });
   }

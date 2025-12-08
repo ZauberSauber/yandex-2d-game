@@ -12,10 +12,11 @@ import type { ESkillName } from '../types';
 export default class SkillsPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
+    ;
     ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Навыки');
+    drawPageTitle(ctx, this.isDarkTheme, 'Навыки');
 
     this.drawSkillTable(ctx);
   }
@@ -44,7 +45,8 @@ export default class SkillsPage extends AbstractGamePage {
         src: img,
       });
 
-      ctx.fillStyle = StyleColors.colorNeonBlue;
+      ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+
       ctx.textAlign = 'left';
 
       const textYpos = rowHeight + rowHeight / 2 + shiftY + 5;

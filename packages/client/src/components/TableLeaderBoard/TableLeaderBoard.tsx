@@ -65,7 +65,7 @@ export const TableLeaderBoard = ({ tableData }: TableLeaderBoardProps) => (
             style={{
               borderRadius: 0,
               color: '#8a2be2',
-              background: '#0a0a12',
+              background: 'transparent',
               fontSize: 18,
               fontWeight: 'bold',
             }}

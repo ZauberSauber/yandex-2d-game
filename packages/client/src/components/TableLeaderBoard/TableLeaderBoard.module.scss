@@ -6,15 +6,24 @@
   &:global(.ant-table-wrapper .ant-table) {
     padding: 51px 31px 31px;
     border: 1px solid v.$color-neon-blue;
-    background-color: v.$color-dark-bg;
+    background-color: transparent;
+
+    @at-root [data-theme='light'] & {
+      border: 1px solid v.$color-neon-purple;
+    }
   }
 
   &:global(.ant-table-wrapper .ant-table .ant-table-container .ant-table-tbody) {
-    background-color: v.$color-darker-bg;
+    background-color: transparent;
     color: v.$color-neon-blue;
     font-size: 16px;
     font-weight: bold;
     border-bottom: 1px solid v.$color-blue-violet;
+
+    @at-root [data-theme='light'] & {
+      color: v.$color-neon-purple;
+      border-bottom: 1px solid v.$color-neon-purple;
+    }
   }
 
   .button-pagination {

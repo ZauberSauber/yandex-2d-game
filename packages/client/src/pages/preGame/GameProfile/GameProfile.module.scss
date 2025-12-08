@@ -31,6 +31,15 @@ $gap: 20px;
       border: 1px solid v.$color-neon-purple;
       background: rgba(v.$color-neon-purple, 0.1);
       color: v.$color-neon-blue;
+
+      @at-root [data-theme='light'] & {
+        color: v.$color-neon-purple;
+      }
+
     }
+  }
+
+  @at-root [data-theme='light'] & {
+    border: 1px solid v.$color-neon-purple;
   }
 }

@@ -71,7 +71,7 @@ export default class FactoryPage extends AbstractGamePage {
       maxValue: 100,
     });
 
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorDarkBg;
     ctx.font = MAIN_FONT;
     ctx.textAlign = 'left';
     ctx.fillText(`Ур. ${lvl} / ${maxLvl}`, 240, this.posY + 25);
@@ -96,7 +96,7 @@ export default class FactoryPage extends AbstractGamePage {
     });
 
     // Название предмета
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
     ctx.font = MAIN_FONT;
     ctx.textAlign = 'left';
     ctx.fillText(craftItemName, posX + 100, posY + 35);
@@ -133,7 +133,7 @@ export default class FactoryPage extends AbstractGamePage {
   private drawBlock(ctx: CanvasRenderingContext2D): void {
     const posY = this.blockPosY;
 
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
     ctx.font = MAIN_FONT;
     ctx.textAlign = 'center';
 
@@ -142,7 +142,7 @@ export default class FactoryPage extends AbstractGamePage {
         // Выбранная вкладка крафта
         ctx.fillStyle = StyleColors.colorNeonPink;
       } else {
-        ctx.fillStyle = StyleColors.colorNeonBlue;
+        ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
       }
 
       const button = this.buttonManager.getButtonByName(key) as TButton;
@@ -151,7 +151,7 @@ export default class FactoryPage extends AbstractGamePage {
 
     // Иконки предметов
     // TODO: если уровеь крафта < уровня предмета, то иконка будет залочена
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
 
     const iconShift = 52;
 
@@ -170,17 +170,17 @@ export default class FactoryPage extends AbstractGamePage {
       }
     }
 
-    ctx.strokeStyle = StyleColors.colorNeonBlue;
+    ctx.strokeStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
     ctx.lineWidth = 1;
     ctx.strokeRect(this.posX, posY - 20, 530, this.blockHeight);
   }
 
   render(ctx: CanvasRenderingContext2D) {
     // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Производство');
+    drawPageTitle(ctx, this.isDarkTheme, 'Производство');
 
     this.drawFactoryLvl(ctx);
     this.drawCraftItem(ctx);

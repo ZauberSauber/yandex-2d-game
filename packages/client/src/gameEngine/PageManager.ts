@@ -10,15 +10,21 @@ export default class PageManager {
 
   public sideMenu: SideMenu | null = null;
 
+  public isDarkTheme: boolean;
+
   constructor(
     public canvas: HTMLCanvasElement,
-    private ctx: CanvasRenderingContext2D
+    private ctx: CanvasRenderingContext2D,
+    isDarkTheme: boolean,
   ) {
     this.sideMenu = new SideMenu(this);
     this.setupEventListeners();
+    this.isDarkTheme = isDarkTheme;
   }
 
   registerPage(name: EGamePage, page: AbstractGamePage): void {
+    page?.setTheme(this.isDarkTheme);
+
     page.changePage = (pageName) => {
       this.setPage(pageName);
     };
@@ -60,12 +66,28 @@ export default class PageManager {
     if (!this.currentPage) {
       return;
     }
+    const bgColor = this.isDarkTheme ? '#00000' : '#f5f5f7';
+
+    this.ctx.fillStyle = bgColor;
 
     // Рендер текущей страницы
     this.currentPage.render(this.ctx);
 
     // Рендер меню поверх страницы
     this.sideMenu?.render(this.ctx);
+  }
+
+  setTheme(isDark: boolean): void {
+    if (this.isDarkTheme !== isDark) {
+      this.isDarkTheme = isDark;
+
+      // Обновляем тему для всех зарегистрированных страниц
+      this.pages.forEach((page) => {
+        if (page.setTheme) {
+          page.setTheme(isDark);
+        }
+      });
+    }
   }
 
   private setupEventListeners(): void {

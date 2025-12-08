@@ -2,7 +2,7 @@
 
 .stats-card {
   border: 1px solid v.$color-neon-blue;
-  background: rgb(0 0 0 / 70%);
+  background: transparent;
   border-radius: 8px;
   margin-bottom: 20px;
   animation: glitch-border 3s infinite alternate;
@@ -14,6 +14,10 @@
       color: v.$color-text-secondary;
       font-size: 14px;
       margin-bottom: 8px;
+
+      @at-root [data-theme='light'] & {
+        color: v.$color-neon-purple;
+      }
     }
 
     .ant-statistic-content {
@@ -25,13 +29,26 @@
 
       .ant-statistic-content-value {
         color: v.$color-neon-blue;
+
+        @at-root [data-theme='light'] & {
+          color: v.$color-neon-purple;
+          text-shadow: 0 0 10px v.$color-neon-purple, 0 0 20px v.$color-neon-purple;
+        }
       }
 
       .ant-statistic-content-prefix {
         color: v.$color-neon-pink;
         margin-right: 8px;
       }
+
+      @at-root [data-theme='light'] & {
+        color: v.$color-neon-purple;
+      }
     }
+  }
+
+  @at-root [data-theme='light'] & {
+    border: 1px solid v.$color-neon-purple;
   }
 }
 
@@ -43,19 +60,19 @@
 
   25% {
     box-shadow: 0 0 20px rgb(v.$color-neon-pink, 0.7),
-      0 0 30px rgb(v.$color-neon-blue, 0.5);
+    0 0 30px rgb(v.$color-neon-blue, 0.5);
     border-color: v.$color-neon-pink;
   }
 
   50% {
     box-shadow: 0 0 25px rgb(v.$color-neon-blue, 0.8),
-      0 0 40px rgb(v.$color-neon-pink, 0.6);
+    0 0 40px rgb(v.$color-neon-pink, 0.6);
     border-color: v.$color-neon-blue;
   }
 
   75% {
     box-shadow: 0 0 15px rgb(v.$color-neon-pink, 0.9),
-      0 0 25px rgb(v.$color-neon-blue, 0.7);
+    0 0 25px rgb(v.$color-neon-blue, 0.7);
     border-color: v.$color-neon-pink;
   }
 

@@ -54,10 +54,10 @@ export default class BattlePage extends AbstractGamePage {
 
   render(ctx: CanvasRenderingContext2D) {
     // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Страница сражения');
+    drawPageTitle(ctx, this.isDarkTheme, 'Страница сражения');
 
     this.drawBattle(ctx);
   }
@@ -100,7 +100,7 @@ export default class BattlePage extends AbstractGamePage {
       height: 5,
       value: battle.player.cooldown,
       maxValue: battle.player.attackSpeed,
-      startHexColor: StyleColors.colorNeonBlue,
+      startHexColor: this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple,
     });
 
     // хп врага
@@ -128,7 +128,8 @@ export default class BattlePage extends AbstractGamePage {
     });
 
     ctx.font = MAIN_FONT;
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+    ;
     ctx.textAlign = 'left';
     ctx.fillText('Вы', 240, 120);
     ctx.fillText('Враг', 640, 120);
@@ -198,7 +199,8 @@ export default class BattlePage extends AbstractGamePage {
       src: 'public/img/fightStyle/power.png',
     });
 
-    ctx.strokeStyle = StyleColors.colorNeonBlue;
+    ctx.strokeStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+    ;
     ctx.lineWidth = 2;
     ctx.strokeRect(activeButton.x, activeButton.y, activeButton.width, activeButton.height);
 
@@ -215,7 +217,7 @@ export default class BattlePage extends AbstractGamePage {
     });
 
     // Количество аптечек
-    ctx.fillStyle = StyleColors.colorNeonCyan;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonCyan : StyleColors.colorNeonPink;
     ctx.textAlign = 'center';
     ctx.fillText('10', healButton.x + healButton.width / 2, healButton.y - 10);
 

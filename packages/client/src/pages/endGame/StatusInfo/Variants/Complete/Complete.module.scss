@@ -2,7 +2,11 @@
 @use 'styles/default' as d;
 
 .title {
-  @include d.neonTitle(v.$color-neon-cyan)
+  @include d.neonTitle(v.$color-neon-cyan);
+
+  @at-root [data-theme='light'] & {
+    @include d.neonTitle(v.$color-neon-purple);
+  }
 }
 
 .info {
@@ -10,11 +14,19 @@
   gap: 5px;
 
   .label {
-    @include d.neonTitle(v.$color-neon-cyan)
+    @include d.neonTitle(v.$color-neon-cyan);
+
+    @at-root [data-theme='light'] & {
+      @include d.neonTitle(v.$color-neon-purple);
+    }
   }
 
   .text {
-    @include d.neonTitle(v.$color-neon-purple)
+    @include d.neonTitle(v.$color-neon-cyan);
+
+    @at-root [data-theme='light'] & {
+      @include d.neonTitle(v.$color-neon-purple);
+    }
   }
 }
 

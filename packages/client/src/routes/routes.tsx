@@ -1,7 +1,6 @@
 import { ProtectedRoute } from '@components';
 import { Layout } from '@layout';
 import {
-  BlogPage,
   CreateTopicPage,
   EndGame,
   ForumPage,
@@ -98,28 +97,6 @@ export const routes: AppRouteObject[] = [
         Component: () => (
           <ProtectedRoute>
             <LeaderboardPage />
-          </ProtectedRoute>
-        ),
-        fetchData: (props) => {
-          void props;
-        },
-      },
-      {
-        path: PATHS.BLOG,
-        Component: () => (
-          <ProtectedRoute>
-            <BlogPage />
-          </ProtectedRoute>
-        ),
-        fetchData: (props) => {
-          void props;
-        },
-      },
-      {
-        path: PATHS.BLOG_TOPIC,
-        Component: () => (
-          <ProtectedRoute>
-            <TopicPage />
           </ProtectedRoute>
         ),
         fetchData: (props) => {

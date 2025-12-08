@@ -39,6 +39,10 @@ body {
   font-family: v.$font-main;
   line-height: 1.6;
   overflow-x: hidden;
+
+  @at-root [data-theme='light'] & {
+    background: v.$color-neon-blue;
+  }
 }
 
 h1,

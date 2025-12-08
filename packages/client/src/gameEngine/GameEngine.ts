@@ -25,6 +25,7 @@ type TGameEngine = {
   onResourceUpdate: () => void;
   onGameOver: () => void;
   playerStatsInit?: IPlayerState;
+  isDarkTheme?: boolean
 };
 
 export default class GameEngine {
@@ -48,13 +49,17 @@ export default class GameEngine {
 
   private onResourceUpdate: () => void;
 
+  private isDarkTheme: boolean;
+
   constructor({
-    containerId = 'game',
-    onGameOver,
-    onResourceUpdate,
-    playerStatsInit,
-  }: TGameEngine) {
+                containerId = 'game',
+                onGameOver,
+                onResourceUpdate,
+                playerStatsInit,
+                isDarkTheme = true,
+              }: TGameEngine) {
     const gameContainer = document.getElementById(containerId);
+    this.isDarkTheme = isDarkTheme;
 
     if (!gameContainer) {
       throw new Error(`Не найден контейнер с id: ${containerId}`);
@@ -69,7 +74,7 @@ export default class GameEngine {
 
     this.activutyManager = new ActivityManager();
     this.playerManager = new PlayerManager(playerStatsInit);
-    this.pageManager = new PageManager(this.canvas, this.ctx);
+    this.pageManager = new PageManager(this.canvas, this.ctx, this.isDarkTheme);
     this.setupPages();
 
     this.startRendering();
@@ -95,6 +100,8 @@ export default class GameEngine {
     this.pageManager.registerPage(EGamePage.raids, new RaidsPage());
     this.pageManager.registerPage(EGamePage.skills, new SkillsPage());
     this.pageManager.registerPage(EGamePage.battle, new BattlePage());
+
+    this.pageManager.setTheme(this.isDarkTheme);
 
     // Стартовая страница
     this.pageManager.setPage(EGamePage.raids);
@@ -155,5 +162,14 @@ export default class GameEngine {
   public getTotalLvlPlayer() {
     const { accuracy, defense, power, production } = this.playerManager.playerState.skills;
     return accuracy.lvl + defense.lvl + power.lvl + production.lvl;
+  }
+
+  public updateTheme(isDark: boolean): void {
+    if (this.isDarkTheme !== isDark) {
+      this.isDarkTheme = isDark;
+      this.pageManager.setTheme(isDark);
+
+      this.pageManager.render();
+    }
   }
 }

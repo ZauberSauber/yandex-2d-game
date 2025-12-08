@@ -13,7 +13,11 @@ $title-margin-top: 10px;
   height: calc(20px + #{$title-vertical-padding} * 2);
   padding: $title-vertical-padding 0 $title-vertical-padding 15px;
 
-  @include d.neonTitle
+  @include d.neonTitle;
+
+  @at-root [data-theme='light'] & {
+    @include d.neonTitle(v.$color-neon-purple);
+  }
 }
 
 .wrapper {
@@ -26,6 +30,10 @@ $title-margin-top: 10px;
   :global(.ant-tabs) {
     overflow: hidden;
   }
+
+  @at-root [data-theme='light'] & {
+    border-bottom: 1px solid v.$color-neon-purple;
+  }
 }
 
 .antTabsNav {
@@ -34,6 +42,10 @@ $title-margin-top: 10px;
       &::before {
         margin-right: 15px;
         border-color: v.$color-neon-blue;
+
+        @at-root [data-theme='light'] & {
+          border-color: 1px solid v.$color-neon-purple;
+        }
       }
     }
   }
