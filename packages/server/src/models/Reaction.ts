@@ -1,8 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import type { Optional } from 'sequelize';
-import Topic from './Topic.js';
+
+import sequelize from '../config/database.js';
 import Comment from './Comment.js';
-import { sequelize } from '../../db';
+import Topic from './Topic.js';
 
 interface ReactionAttributes {
   id: number;

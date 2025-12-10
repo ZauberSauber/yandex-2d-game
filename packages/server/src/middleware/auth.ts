@@ -1,12 +1,11 @@
-import type { Request, Response, NextFunction } from 'express';
-import axios from 'axios';
+import type { NextFunction, Request, Response } from 'express';
+
+import { fetchPraktikumUser } from '../common/index.js';
 
 interface AuthRequest extends Request {
   userId?: number;
   userLogin?: string;
 }
-
-const AUTH_API_URL = 'https://ya-praktikum.tech/api/v2/auth/user';
 
 export const authMiddleware = async (
   req: AuthRequest,
@@ -21,14 +20,9 @@ export const authMiddleware = async (
       return;
     }
 
-    const response = await axios.get(AUTH_API_URL, {
-      headers: {
-        Cookie: cookies,
-      },
-      withCredentials: true,
-    });
+    const response = await fetchPraktikumUser(cookies);
 
-    if (response.data && response.data.id) {
+    if (response?.data && response?.data.id) {
       req.userId = response.data.id;
       req.userLogin =
         response.data.login || response.data.display_name || response.data.first_name || 'User';

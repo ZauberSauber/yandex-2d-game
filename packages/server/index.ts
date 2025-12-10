@@ -1,12 +1,22 @@
-import dotenv from 'dotenv';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-dotenv.config();
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import express from 'express';
-import { createClientAndConnect, initSequelize } from './db';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// из dist до .env
+const envPath = path.resolve(__dirname, '..', '..', '..', '.env');
+dotenv.config({ path: envPath });
+
+import { createClientAndConnect } from './db.js';
 import { LOCATIONS } from './mock.js';
 import reactionRoutes from './src/routes/reactionRoutes.js';
+import themeRoutes from './src/routes/themeRoutes.js';
 
 const app = express();
 app.use(cors({ credentials: true, origin: true }));
@@ -15,7 +25,6 @@ app.use(express.json());
 const port = Number(process.env.SERVER_PORT) || 3001;
 
 createClientAndConnect();
-initSequelize();
 
 app.get('/friends', (_, res) => {
   res.json([
@@ -38,6 +47,7 @@ app.get('/locations', (_, res) => {
 });
 
 app.use('/api', reactionRoutes);
+app.use('/theme', themeRoutes);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

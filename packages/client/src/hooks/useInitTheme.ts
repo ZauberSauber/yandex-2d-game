@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchThemeThunk } from '@slices/ThemeSlice';
+import { ThemesId } from '@src/api/themeApi/types';
 import { useDispatch } from '@src/store';
 
 export const useInitTheme = () => {
@@ -14,17 +15,18 @@ export const useInitTheme = () => {
 
         if (themeCache !== null) {
           // Используем сохраненную тему из localStorage
-          const isDark = themeCache === '1';
+          const isDark = themeCache === String(ThemesId.Dark);
           setIsDarkTheme(isDark);
           document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         } else {
           // Если нет в localStorage, загружаем с бэка
           const result = await dispatch(fetchThemeThunk());
           if (fetchThemeThunk.fulfilled.match(result)) {
-            const isDark = result.payload.theme === 1; // бэк возвращает { theme: 0|1 }
+            const isDark = result.payload === ThemesId.Dark;
             setIsDarkTheme(isDark);
             document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-            localStorage.setItem('darkTheme', isDark ? '1' : '0');
+            const theme = (isDark ? ThemesId.Dark : ThemesId.Light) as unknown as string;
+            localStorage.setItem('darkTheme', theme);
           }
         }
       } catch (error) {

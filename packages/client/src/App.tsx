@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { saveThemeThunk } from '@slices';
+import { ThemesId } from '@src/api/themeApi/types';
 import { ThemeContext } from '@src/context';
 import { useInitTheme } from '@src/hooks/useInitTheme';
 import { useDispatch } from '@src/store';
@@ -14,14 +15,14 @@ export const App = () => {
   const dispatch = useDispatch();
   const { isDarkTheme: initIsDarkTheme } = useInitTheme();
   const [isDarkTheme, setIsDarkTheme] = useState(initIsDarkTheme);
-  
+
   useEffect(() => {
     setIsDarkTheme(initIsDarkTheme);
   }, [initIsDarkTheme]);
 
   const handleThemeChange = async (isDark: boolean) => {
     try {
-      const themeValue = isDark ? 1 : 0;
+      const themeValue = isDark ? ThemesId.Dark : ThemesId.Light;
 
       localStorage.setItem('darkTheme', themeValue.toString());
 
@@ -30,11 +31,10 @@ export const App = () => {
       setIsDarkTheme(isDark);
 
       await dispatch(saveThemeThunk(themeValue));
-
     } catch (error) {
       console.error('Failed to save theme:', error);
 
-      const fallbackTheme = localStorage.getItem('darkTheme') === '1';
+      const fallbackTheme = localStorage.getItem('darkTheme') === String(ThemesId.Dark);
       setIsDarkTheme(fallbackTheme);
       document.documentElement.setAttribute('data-theme', fallbackTheme ? 'dark' : 'light');
     }

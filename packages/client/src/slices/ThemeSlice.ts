@@ -1,72 +1,73 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { HttpStatusCode } from 'axios';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { SERVER_HOST } from '../constants';
+import { profileApi } from '@src/api/profileApi';
+import { themeApi } from '@src/api/themeApi';
+import { ThemesId } from '@src/api/themeApi/types';
+
 import type { RootState } from '../store';
 
 export interface ThemeState {
-  theme: number; // 0 - light, 1 - dark
+  theme: ThemesId;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: ThemeState = {
-  theme: 1,
+  theme: ThemesId.Dark,
   isLoading: false,
   error: null,
 };
 
 // Thunk для получения темы
-export const fetchThemeThunk = createAsyncThunk(
-  'theme/fetch',
-  async (_, { rejectWithValue }) => {
-    try {
-      const url = `${SERVER_HOST}/theme`;
-      const response = await fetch(url);
+export const fetchThemeThunk = createAsyncThunk('theme/fetch', async (_, { rejectWithValue }) => {
+  try {
+    const responseUser = await profileApi.getUserInfo();
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+    const user = responseUser?.data;
 
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+    if (!user?.id) return ThemesId.Dark;
+
+    const response = await themeApi.getTheme(user);
+
+    if (response.status !== HttpStatusCode.Ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  },
-);
 
+    return response.data?.id || ThemesId.Dark;
+  } catch (error) {
+    return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+  }
+});
 
-export const saveThemeThunk = createAsyncThunk(
+export const saveThemeThunk = createAsyncThunk<ThemesId, ThemesId, { state: RootState }>(
   'theme/save',
-  async (theme: number, { rejectWithValue }) => {
+  async (themeId: ThemesId, { rejectWithValue }) => {
     try {
-      const url = `${SERVER_HOST}/theme`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ theme }),
-      });
+      const responseUser = await profileApi.getUserInfo();
 
-      if (!response.ok) {
+      const user = responseUser?.data;
+
+      if (!user?.id) return themeId;
+
+      const response = await themeApi.saveTheme({ theme: { id: themeId }, user });
+
+      if (response.status !== HttpStatusCode.Ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const data = await response.json();
-      return data;
+      return themeId;
     } catch (error) {
       return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
     }
-  },
+  }
 );
 
 export const ThemeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    setTheme: (state, action: PayloadAction<number>) => {
+    setTheme: (state, action: PayloadAction<ThemesId>) => {
       state.theme = action.payload;
     },
     clearError: (state) => {
@@ -80,9 +81,9 @@ export const ThemeSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchThemeThunk.fulfilled, (state, action: PayloadAction<{ theme: number }>) => {
+      .addCase(fetchThemeThunk.fulfilled, (state, action: PayloadAction<ThemesId>) => {
         state.isLoading = false;
-        state.theme = action.payload.theme;
+        state.theme = action.payload;
       })
       .addCase(fetchThemeThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -94,9 +95,9 @@ export const ThemeSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(saveThemeThunk.fulfilled, (state, action: PayloadAction<{ theme: number }>) => {
+      .addCase(saveThemeThunk.fulfilled, (state, action: PayloadAction<ThemesId>) => {
         state.isLoading = false;
-        state.theme = action.payload.theme;
+        state.theme = action.payload;
       })
       .addCase(saveThemeThunk.rejected, (state, action) => {
         state.isLoading = false;

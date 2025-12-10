@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import type { Optional } from 'sequelize';
-import { sequelize } from '../../db';
+
+import sequelize from '../config/database.js';
 
 interface TopicAttributes {
   id: number;

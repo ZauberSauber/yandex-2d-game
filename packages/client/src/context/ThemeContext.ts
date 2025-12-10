@@ -6,9 +6,8 @@ interface ThemeContextType {
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
-  isDarkTheme: false,
-  setIsDarkTheme: () => {
-  },
+  isDarkTheme: true,
+  setIsDarkTheme: () => {},
 });
 
 export const useTheme = () => useContext(ThemeContext);
