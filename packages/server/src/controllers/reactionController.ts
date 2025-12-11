@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
-import { Reaction, Topic, Comment } from '../models/index.js';
+
+import { Comment,Reaction, Topic } from '../models/index.js';
 
 interface AuthRequest extends Request {
   userId?: number;

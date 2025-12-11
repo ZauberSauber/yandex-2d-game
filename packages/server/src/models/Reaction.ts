@@ -1,8 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import type { Optional } from 'sequelize';
+
 import sequelize from '../config/database.js';
-import Topic from './Topic.js';
 import Comment from './Comment.js';
+import Topic from './Topic.js';
 
 interface ReactionAttributes {
   id: number;
@@ -14,9 +15,13 @@ interface ReactionAttributes {
   updatedAt?: Date;
 }
 
-interface ReactionCreationAttributes extends Optional<ReactionAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+interface ReactionCreationAttributes
+  extends Optional<ReactionAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
 
-class Reaction extends Model<ReactionAttributes, ReactionCreationAttributes> implements ReactionAttributes {
+class Reaction
+  extends Model<ReactionAttributes, ReactionCreationAttributes>
+  implements ReactionAttributes
+{
   public id!: number;
 
   public emoji!: string;
@@ -96,4 +101,3 @@ Reaction.belongsTo(Topic, { foreignKey: 'topicId' });
 Reaction.belongsTo(Comment, { foreignKey: 'commentId' });
 
 export default Reaction;
-

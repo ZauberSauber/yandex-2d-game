@@ -1,5 +1,5 @@
-import type { QueryInterface } from 'sequelize';
 import { DataTypes } from 'sequelize';
+import type { QueryInterface } from 'sequelize';
 
 export const up = async (queryInterface: QueryInterface): Promise<void> => {
   await queryInterface.createTable('comments', {

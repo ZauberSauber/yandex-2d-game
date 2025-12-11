@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { addReaction, getTopicReactions, getCommentReactions } from '../controllers/reactionController.js';
+
+import { addReaction, getCommentReactions,getTopicReactions } from '../controllers/reactionController.js';
 import { authMiddleware } from '../middleware/auth.js';
 
 const router = Router();
