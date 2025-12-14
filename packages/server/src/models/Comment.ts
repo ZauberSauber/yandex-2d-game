@@ -16,7 +16,7 @@ interface CommentAttributes {
 }
 
 interface CommentCreationAttributes
-  extends Optional<CommentAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+  extends Optional<CommentAttributes, 'id' | 'createdAt' | 'updatedAt' | 'parentCommentId'> {}
 
 class Comment
   extends Model<CommentAttributes, CommentCreationAttributes>
@@ -92,5 +92,9 @@ Comment.init(
 
 Comment.belongsTo(Topic, { foreignKey: 'topicId' });
 Comment.belongsTo(Comment, { foreignKey: 'parentCommentId', as: 'parent' });
+Comment.hasMany(Comment, {
+  foreignKey: 'parentCommentId',
+  as: 'replies',
+});
 
 export default Comment;

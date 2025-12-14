@@ -1,44 +1,28 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { EyeOutlined, MessageOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Card, Divider, Input, Space, Tag, Typography } from 'antd';
 import type React from 'react';
 
 import { ForumBreadcrumb, ForumStats } from '@components';
+import { forumApi } from '@src/api/forumApi';
 import { PATHS } from '@src/routes/constants';
+
+import type { Category, TTopic } from './types';
 
 import styles from './ForumPage.module.scss';
 
 const { Title, Text: TextComponent } = Typography;
 
-interface Topic {
-  id: string;
-  title: string;
-  author: string;
-  category: string;
-  lastMessage: string;
-  lastMessageAuthor: string;
-  lastMessageTime: string;
-  replies: number;
-  views: number;
-  tags: string[];
-  isNew?: boolean;
-  isHot?: boolean;
-  isPinned?: boolean;
-}
-
-interface Category {
-  id: string;
-  name: string;
-  description: string;
-  topicsCount: number;
-  messagesCount: number;
-  lastTopic: string;
-  lastTopicAuthor: string;
-  lastTopicTime: string;
-}
-
 const ForumPage: React.FC = () => {
+  const [topics, setTopics] = useState<TTopic[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    forumApi.getTopics().then(({ data }) => {
+      setTopics(data || []);
+    });
+  }, []);
 
   // Моковые данные для демонстрации
   const categories: Category[] = [
@@ -84,60 +68,6 @@ const ForumPage: React.FC = () => {
     },
   ];
 
-  const topics: Topic[] = [
-    {
-      id: '1',
-      title: 'Новый алгоритм шифрования на квантовых принципах',
-      author: 'Cyber_Samurai',
-      category: 'Кибербезопасность',
-      lastMessage: 'Квантовая криптография открывает новые горизонты...',
-      lastMessageAuthor: 'Quantum_Expert',
-      lastMessageTime: '2 часа назад',
-      replies: 24,
-      views: 156,
-      tags: ['NEW'],
-      isNew: true,
-    },
-    {
-      id: '2',
-      title: 'GPT-5: революция в обработке естественного языка',
-      author: 'AI_Researcher',
-      category: 'Нейронные сети и ИИ',
-      lastMessage: 'Новая архитектура показывает невероятные результаты...',
-      lastMessageAuthor: 'ML_Engineer',
-      lastMessageTime: '4 часа назад',
-      replies: 18,
-      views: 234,
-      tags: ['HOT'],
-      isHot: true,
-    },
-    {
-      id: '3',
-      title: 'Нейроинтерфейсы нового поколения',
-      author: 'Neural_Link',
-      category: 'Кибернетические импланты',
-      lastMessage: 'Прямое подключение к мозгу становится реальностью...',
-      lastMessageAuthor: 'Brain_Interface',
-      lastMessageTime: '1 день назад',
-      replies: 31,
-      views: 189,
-      tags: ['PINNED'],
-      isPinned: true,
-    },
-    {
-      id: '4',
-      title: 'Метавселенная 2.0: что нас ждет',
-      author: 'VR_Pioneer',
-      category: 'Виртуальная реальность',
-      lastMessage: 'Полное погружение в цифровые миры...',
-      lastMessageAuthor: 'Digital_Explorer',
-      lastMessageTime: '3 часа назад',
-      replies: 42,
-      views: 312,
-      tags: [],
-    },
-  ];
-
   const handleCreateTopic = () => {
     navigate(PATHS.FORUM_CREATE_TOPIC);
   };
@@ -153,6 +83,10 @@ const ForumPage: React.FC = () => {
       default:
         return 'blue';
     }
+  };
+
+  const onTopciClick = (topicId: string) => {
+    navigate(topicId);
   };
 
   return (
@@ -227,10 +161,10 @@ const ForumPage: React.FC = () => {
               <Card
                 key={topic.id}
                 className={styles['topic-card']}
-                onClick={() => navigate(topic.id)}>
+                onClick={() => onTopciClick(`${topic.id}`)}>
                 <div className={styles['topic-header']}>
                   <div className={styles['topic-title']}>
-                    {topic.tags.map((tag) => (
+                    {topic.tags?.map((tag) => (
                       <Tag key={tag} color={getTagColor(tag)} className={styles['topic-tag']}>
                         {tag}
                       </Tag>
@@ -242,7 +176,7 @@ const ForumPage: React.FC = () => {
                   <div className={styles['topic-stats']}>
                     <Space>
                       <TextComponent className={styles.stat}>
-                        <MessageOutlined /> {topic.replies}
+                        <MessageOutlined /> {topic.commentCount}
                       </TextComponent>
                       <TextComponent className={styles.stat}>
                         <EyeOutlined /> {topic.views}
@@ -253,14 +187,8 @@ const ForumPage: React.FC = () => {
 
                 <div className={styles['topic-meta']}>
                   <TextComponent className={styles['topic-meta-text']}>
-                    Автор: {topic.author} | Раздел: {topic.category} | Последнее сообщение:{' '}
-                    {topic.lastMessageTime}
-                  </TextComponent>
-                </div>
-
-                <div className={styles['topic-excerpt']}>
-                  <TextComponent className={styles['topic-excerpt-text']}>
-                    {topic.lastMessage}
+                    Автор: {topic.authorLogin} | Раздел: {topic.category} | Последнее сообщение:{' '}
+                    {`${new Date(topic.updatedAt).getUTCDate()}.${new Date(topic.updatedAt).getUTCMonth()}.${new Date(topic.updatedAt).getUTCFullYear()}`}
                   </TextComponent>
                 </div>
               </Card>

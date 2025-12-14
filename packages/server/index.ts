@@ -15,6 +15,7 @@ dotenv.config({ path: envPath });
 
 import { createClientAndConnect } from './db.js';
 import { LOCATIONS } from './mock.js';
+import forumRoutes from './src/routes/forumRoutes.js';
 import reactionRoutes from './src/routes/reactionRoutes.js';
 import themeRoutes from './src/routes/themeRoutes.js';
 
@@ -48,6 +49,7 @@ app.get('/locations', (_, res) => {
 
 app.use('/api', reactionRoutes);
 app.use('/theme', themeRoutes);
+app.use('/api/forum', forumRoutes);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
