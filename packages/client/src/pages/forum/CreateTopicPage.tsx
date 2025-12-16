@@ -5,7 +5,11 @@ import { Button, Card, Form, Input, message, Select, Typography } from 'antd';
 import type { FC } from 'react';
 
 import { ForumBreadcrumb } from '@components';
+import { forumApi } from '@src/api/forumApi';
+import { profileApi } from '@src/api/profileApi';
 import { PATHS } from '@src/routes/constants';
+
+import type { TTopic } from './types';
 
 import styles from './CreateTopicPage.module.scss';
 
@@ -31,22 +35,33 @@ const CreateTopicPage: FC = () => {
     { value: 'vr', label: 'Виртуальная реальность' },
   ];
 
-  const handleSubmit = async (_values: CreateTopicForm) => {
+  const handleSubmit = async (values: CreateTopicForm) => {
     setLoading(true);
-    try {
-      // Здесь будет логика отправки данных на сервер
-      // console.log('Creating topic:', values);
 
-      // Имитация задержки
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    const responseUser = await profileApi.getUserInfo();
 
-      message.success('Тема успешно создана!');
-      navigate(PATHS.FORUM);
-    } catch (error) {
-      message.error('Ошибка при создании темы');
-    } finally {
-      setLoading(false);
+    if (!responseUser.data) {
+      message.error('Ошибка получения пользователя');
+      return;
     }
+
+    const topicValues: Omit<TTopic, 'replies' | 'id'> = {
+      ...values,
+      authorId: responseUser.data.id,
+      authorLogin: responseUser.data.login,
+      views: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    await forumApi
+      .createTopic(topicValues)
+      .then(() => {
+        message.success('Тема успешно создана!');
+        navigate(PATHS.FORUM);
+      })
+      .catch(() => message.error('Ошибка при создании темы'))
+      .finally(() => setLoading(false));
   };
 
   const handleBack = () => {
