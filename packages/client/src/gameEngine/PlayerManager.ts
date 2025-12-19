@@ -1,18 +1,16 @@
 import ActivityManager from './ActivityManager';
 import Battle from './Battle';
 import { SKILLS } from './mock/skills';
-import { ESkillName } from './types';
+import { EItem, ESkillName } from './types';
 import { getExpToNextLvl } from './utils/expToNextLvl';
-import type { EItem, IPlayerState, TBattle, TLocation } from './types';
+import type { IPlayerState, TBattle, TLocation } from './types';
 
 export default class PlayerManager {
   private static _instance: PlayerManager | null = null;
 
   private activityManager;
 
-  private inventory: Map<string, number> = new Map();
-
-  private lastTimeStamps: Map<string, number> = new Map();
+  private inventory: Map<string, number> = new Map([[EItem.rustyIron, 10]]);
 
   private playerHP = 75;
 
@@ -62,9 +60,7 @@ export default class PlayerManager {
     return PlayerManager._instance;
   }
 
-  update(currentTime: number): void {
-    this.lastTimeStamps.set('update', currentTime);
-
+  update(): void {
     if (this.battle) {
       this.battle.update(
         this.playerHP,
@@ -149,7 +145,6 @@ export default class PlayerManager {
       production: initStats.skills.production,
     };
     this.inventory = new Map<string, number>([]);
-    this.lastTimeStamps = new Map<string, number>([]);
     this.playerHP = initStats.playerHP;
     this.maxPlayerHP = initStats.maxPlayerHP;
     this.healthRegenInterval = initStats.healthRegenInterval;

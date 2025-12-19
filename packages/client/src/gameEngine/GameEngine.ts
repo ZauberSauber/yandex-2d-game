@@ -25,7 +25,7 @@ type TGameEngine = {
   onResourceUpdate: () => void;
   onGameOver: () => void;
   playerStatsInit?: IPlayerState;
-  isDarkTheme?: boolean
+  isDarkTheme?: boolean;
 };
 
 export default class GameEngine {
@@ -52,12 +52,12 @@ export default class GameEngine {
   private isDarkTheme: boolean;
 
   constructor({
-                containerId = 'game',
-                onGameOver,
-                onResourceUpdate,
-                playerStatsInit,
-                isDarkTheme = true,
-              }: TGameEngine) {
+    containerId = 'game',
+    onGameOver,
+    onResourceUpdate,
+    playerStatsInit,
+    isDarkTheme = true,
+  }: TGameEngine) {
     const gameContainer = document.getElementById(containerId);
     this.isDarkTheme = isDarkTheme;
 
@@ -121,7 +121,7 @@ export default class GameEngine {
         this.lastFrameTime = currenetTime;
 
         this.activutyManager.update(currenetTime);
-        this.playerManager.update(currenetTime);
+        this.playerManager.update();
 
         if (this.playerManager.getHP() <= 0) {
           this.endGame();
