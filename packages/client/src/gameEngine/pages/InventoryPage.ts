@@ -2,9 +2,10 @@ import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
 import { HEAD_FONT, MAIN_FONT, PAGE_X, SCALE } from '../constants';
+import { ITEMS } from '../constants/items';
 import PlayerManager from '../PlayerManager';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { TButton } from '../types';
+import type { EItem, TButton } from '../types';
 
 export default class InventoryPage extends AbstractGamePage {
   private isAnimating: boolean = true;
@@ -15,7 +16,7 @@ export default class InventoryPage extends AbstractGamePage {
 
   private scrollOffset: number = 0;
 
-  private items: { name: string; count: number }[] = [];
+  private items: { key: string; count: number }[] = [];
 
   constructor() {
     super();
@@ -42,13 +43,13 @@ export default class InventoryPage extends AbstractGamePage {
     if (this.isAnimating) {
       this.isAnimating = false;
     }
-    
+
     this.drawInventory(ctx, PAGE_X, 80);
   }
 
   override onEnter(): void {
-    this.items = Array.from(PlayerManager.getInstance().getInventory(), ([name, count]) => ({
-      name,
+    this.items = Array.from(PlayerManager.getInstance().getInventory(), ([key, count]) => ({
+      key,
       count,
     }));
 
@@ -90,7 +91,6 @@ export default class InventoryPage extends AbstractGamePage {
   }
 
   private drawInventory(ctx: CanvasRenderingContext2D, posX: number, posY: number) {
-
     ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(posX, 0, ctx.canvas.width - posX, ctx.canvas.height);
 
@@ -103,7 +103,7 @@ export default class InventoryPage extends AbstractGamePage {
       ctx.fillText(
         'Сейчас инвентарь пуст',
         ctx.canvas.width / (2 * SCALE) + 100,
-        ctx.canvas.height / (2 * SCALE),
+        ctx.canvas.height / (2 * SCALE)
       );
 
       return;
@@ -118,9 +118,9 @@ export default class InventoryPage extends AbstractGamePage {
       ctx.fillStyle = StyleColors.colorNeonBlue;
       ctx.font = MAIN_FONT;
       ctx.textAlign = 'left';
-      ctx.fillText(this.items[itemIndex].name, posX, rowY);
+      ctx.fillText(ITEMS[this.items[itemIndex].key as EItem].name, posX, rowY);
       ctx.textAlign = 'right';
-      ctx.fillText(`${this.items[itemIndex].count}`, ctx.canvas.width - 80, rowY);
+      ctx.fillText(`${this.items[itemIndex].count}`, ctx.canvas.width / SCALE - 80, rowY);
     }
 
     const upButton = this.buttonManager.getButtonByName('up') as TButton;
@@ -138,7 +138,7 @@ export default class InventoryPage extends AbstractGamePage {
       ctx.fillText(
         '\u2193',
         downButton.x + downButton.width / 2,
-        downButton.y + downButton.height / 2 + 5,
+        downButton.y + downButton.height / 2 + 5
       );
     }
 
