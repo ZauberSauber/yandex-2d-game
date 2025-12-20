@@ -4,69 +4,69 @@ export const MEDKITS = {
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health1.png',
+    imageSrc: 'img/health/health1.png',
   },
   bacterialCocktail2: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health2.png',
+    imageSrc: 'img/health/health2.png',
   },
   bacterialCocktail3: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health3.png',
+    imageSrc: 'img/health/health3.png',
   },
   bacterialCocktail4: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health4.png',
+    imageSrc: 'img/health/health4.png',
   },
   bacterialCocktail5: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health5.png',
+    imageSrc: 'img/health/health5.png',
   },
   bacterialCocktail6: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health6.png',
+    imageSrc: 'img/health/health6.png',
   },
   bacterialCocktail7: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health7.png',
+    imageSrc: 'img/health/health7.png',
   },
   bacterialCocktail8: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health8.png',
+    imageSrc: 'img/health/health8.png',
   },
   bacterialCocktail9: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health9.png',
+    imageSrc: 'img/health/health9.png',
   },
   bacterialCocktail10: {
     name: 'Бактериальный Коктейль',
     lvl: 1,
     description:
       'Ржавая банка из-под синт-пива, заполненная мутной жидкостью с плавающими кусочками биомассы. Гарантированно содержит штаммы бактерий, неизвестные науке.',
-    imageSrc: 'public/img/health/health10.png',
+    imageSrc: 'img/health/health10.png',
   },
 };

@@ -118,7 +118,7 @@ export default class FactoryPage extends AbstractGamePage {
       posY: posY + 20,
       width: 90,
       height: 90,
-      src: 'public/img/suit.png',
+      src: 'img/suit.png',
     });
 
     // Кнопка "Сделать" - запускает производство, пока не кончатся ресурсы, повторное нажатие - остановка производства

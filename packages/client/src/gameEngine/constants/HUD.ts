@@ -1,6 +1,6 @@
 export const HUD = [
-  'public/img/hud/strength.png',
-  'public/img/hud/defense.png',
-  'public/img/hud/accuracy.png',
-  'public/img/hud/health.png',
+  'img/hud/strength.png',
+  'img/hud/defense.png',
+  'img/hud/accuracy.png',
+  'img/hud/health.png',
 ];

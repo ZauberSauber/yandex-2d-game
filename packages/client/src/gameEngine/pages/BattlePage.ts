@@ -178,7 +178,7 @@ export default class BattlePage extends AbstractGamePage {
       posY: accuracyButton.y,
       width: accuracyButton.width,
       height: accuracyButton.height,
-      src: 'public/img/fightStyle/accuracy.png',
+      src: 'img/fightStyle/accuracy.png',
     });
 
     drawImg({
@@ -187,7 +187,7 @@ export default class BattlePage extends AbstractGamePage {
       posY: defenseButton.y,
       width: defenseButton.width,
       height: defenseButton.height,
-      src: 'public/img/fightStyle/defense.png',
+      src: 'img/fightStyle/defense.png',
     });
 
     drawImg({
@@ -196,7 +196,7 @@ export default class BattlePage extends AbstractGamePage {
       posY: powerButton.y,
       width: powerButton.width,
       height: powerButton.height,
-      src: 'public/img/fightStyle/power.png',
+      src: 'img/fightStyle/power.png',
     });
 
     ctx.strokeStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
@@ -213,7 +213,7 @@ export default class BattlePage extends AbstractGamePage {
       width: healButton.width,
       height: healButton.height,
       // TODO: пока заглушка в виде одной картинки
-      src: 'public/img/health/health2.png',
+      src: 'img/health/health2.png',
     });
 
     // Количество аптечек
@@ -229,7 +229,7 @@ export default class BattlePage extends AbstractGamePage {
       posY: runButton.y,
       width: runButton.width,
       height: runButton.height,
-      src: 'public/img/escape.png',
+      src: 'img/escape.png',
     });
   }
 

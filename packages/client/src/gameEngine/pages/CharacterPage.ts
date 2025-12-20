@@ -35,7 +35,7 @@ export default class CharacterPage extends AbstractGamePage {
       posY: 100,
       width: 60,
       height: 60,
-      src: 'public/img/character/weapon.png',
+      src: 'img/character/weapon.png',
     });
 
     drawImg({
@@ -44,7 +44,7 @@ export default class CharacterPage extends AbstractGamePage {
       posY: 200,
       width: 60,
       height: 60,
-      src: 'public/img/character/armour.png',
+      src: 'img/character/armour.png',
     });
 
     drawImg({
@@ -53,7 +53,7 @@ export default class CharacterPage extends AbstractGamePage {
       posY: 300,
       width: 60,
       height: 60,
-      src: 'public/img/character/aid.png',
+      src: 'img/character/aid.png',
     });
 
     ctx.font = MAIN_FONT;
