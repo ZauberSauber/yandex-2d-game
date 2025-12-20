@@ -4,69 +4,69 @@ export const ARMORS = {
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour1.png',
+    imageSrc: 'img/armour/armour1.png',
   },
   scrapSuit2: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour2.png',
+    imageSrc: 'img/armour/armour2.png',
   },
   scrapSuit3: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour3.png',
+    imageSrc: 'img/armour/armour3.png',
   },
   scrapSuit4: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour4.png',
+    imageSrc: 'img/armour/armour4.png',
   },
   scrapSuit5: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour5.png',
+    imageSrc: 'img/armour/armour5.png',
   },
   scrapSuit6: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour6.png',
+    imageSrc: 'img/armour/armour6.png',
   },
   scrapSuit7: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour7.png',
+    imageSrc: 'img/armour/armour7.png',
   },
   scrapSuit8: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour8.png',
+    imageSrc: 'img/armour/armour8.png',
   },
   scrapSuit9: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour9.png',
+    imageSrc: 'img/armour/armour9.png',
   },
   scrapSuit10: {
     name: 'Костюм Утиля',
     lvl: 1,
     description:
       'Набор рваной кожи, к которой болтами и проволокой прикручены куски металла, пластика и резины. Подбит мусорным текстилем для хоть какой-то амортизации',
-    imageSrc: 'public/img/armour/armour10.png',
+    imageSrc: 'img/armour/armour10.png',
   },
 };
