@@ -25,7 +25,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 1500,
     exp: 20,
     lvl: 1,
-    iconSrc: 'img/enemies/gibberingHorde.png',
+    iconSrc: 'img/enemies/gibberingHorde.jpg',
   },
   scrapjackers: {
     name: 'Ловчие-Таксидермисты',
