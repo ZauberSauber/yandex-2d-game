@@ -130,6 +130,7 @@ export default class InventoryPage extends AbstractGamePage {
     ctx.textAlign = 'center';
     ctx.font = HEAD_FONT;
 
+    // код стрелки вниз '\u2193', код стрелки вверх '\u2191'
     if (
       this.items.length > this.visibleRows &&
       this.items.length - this.scrollOffset !== this.visibleRows

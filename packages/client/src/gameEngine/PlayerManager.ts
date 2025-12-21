@@ -1,5 +1,8 @@
+import { message } from 'antd';
+
 import ActivityManager from './ActivityManager';
 import Battle from './Battle';
+import { ITEMS } from './constants/items';
 import { SKILLS } from './mock/skills';
 import { EItem, ESkillName } from './types';
 import { getExpToNextLvl } from './utils/expToNextLvl';
@@ -231,9 +234,16 @@ export default class PlayerManager {
   }
 
   private addResources(resources: { name: EItem; count: number }[]): void {
-    resources.forEach((resource) => {
-      this.setInventoryItem(resource.name, resource.count);
-    });
+    message.info(
+      resources
+        .map((resource) => {
+          // сайд эффект - добавляем ресурсы в инвентарь
+          this.setInventoryItem(resource.name, resource.count);
+
+          return `получено ${ITEMS[resource.name].name} ${resource.count}шт`;
+        })
+        .join('\n')
+    );
   }
 
   private onHealthRegen(): void {
