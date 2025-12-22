@@ -129,7 +129,7 @@ export default class BattlePage extends AbstractGamePage {
 
     ctx.font = MAIN_FONT;
     ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
-    ;
+
     ctx.textAlign = 'left';
     ctx.fillText('Вы', 240, 120);
     ctx.fillText('Враг', 640, 120);
@@ -200,7 +200,7 @@ export default class BattlePage extends AbstractGamePage {
     });
 
     ctx.strokeStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
-    ;
+
     ctx.lineWidth = 2;
     ctx.strokeRect(activeButton.x, activeButton.y, activeButton.width, activeButton.height);
 

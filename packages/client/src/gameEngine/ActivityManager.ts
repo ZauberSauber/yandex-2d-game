@@ -23,13 +23,14 @@ export default class ActivityManager {
     return ActivityManager._instance;
   }
 
-  getActivityState(name: string): { progress: number; isComplete: boolean } | null {
+  getActivityState(name: string): Pick<TActivity, 'progress' | 'isComplete' | 'isRunning'> | null {
     const activity = this.activities.get(name);
 
     return activity
       ? {
           progress: activity.progress,
           isComplete: activity.isComplete,
+          isRunning: activity.isRunning,
         }
       : null;
   }
@@ -40,6 +41,7 @@ export default class ActivityManager {
       duration,
       progress: 0,
       isComplete: false,
+      isRunning: true,
       onComplete,
     });
   }
@@ -62,6 +64,7 @@ export default class ActivityManager {
       if (deltaTime >= activity.duration) {
         if (!activity.isComplete) {
           activity.isComplete = true;
+          activity.isRunning = false;
           activity.onComplete?.();
         }
       }

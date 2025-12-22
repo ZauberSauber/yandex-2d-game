@@ -1,6 +1,4 @@
-import type { EItem, TItem } from '../types';
-
-export const ITEMS: Record<EItem, TItem> = {
+export const ITEMS = {
   rustyIron: {
     name: 'Ржавое железо',
   },
