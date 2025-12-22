@@ -1,11 +1,10 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
-import { HEAD_FONT, MAIN_FONT, PAGE_X, SCALE } from '../constants';
-import { ITEMS } from '../constants/items';
+import { HEAD_FONT, INVENTORY_ITEMS, MAIN_FONT, PAGE_X, SCALE } from '../constants';
 import PlayerManager from '../PlayerManager';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { EItem, TButton } from '../types';
+import type { TButton, TInvetoryItemName } from '../types';
 
 export default class InventoryPage extends AbstractGamePage {
   private isAnimating: boolean = true;
@@ -16,7 +15,7 @@ export default class InventoryPage extends AbstractGamePage {
 
   private scrollOffset: number = 0;
 
-  private items: { key: string; count: number }[] = [];
+  private items: { key: TInvetoryItemName; count: number }[] = [];
 
   constructor() {
     super();
@@ -118,7 +117,7 @@ export default class InventoryPage extends AbstractGamePage {
       ctx.fillStyle = StyleColors.colorNeonBlue;
       ctx.font = MAIN_FONT;
       ctx.textAlign = 'left';
-      ctx.fillText(ITEMS[this.items[itemIndex].key as EItem].name, posX, rowY);
+      ctx.fillText(INVENTORY_ITEMS[this.items[itemIndex].key].name, posX, rowY);
       ctx.textAlign = 'right';
       ctx.fillText(`${this.items[itemIndex].count}`, ctx.canvas.width / SCALE - 80, rowY);
     }

@@ -94,17 +94,19 @@ export default class GameEngine {
   }
 
   private setupPages(): void {
+    // Отображаются в меню, порядок добавления соответвует порядку отображения
     this.pageManager.registerPage(EGamePage.character, new CharacterPage());
-    this.pageManager.registerPage(EGamePage.factory, new FactoryPage());
+    this.pageManager.registerPage(EGamePage.skills, new SkillsPage());
     this.pageManager.registerPage(EGamePage.inventory, new InventoryPage());
     this.pageManager.registerPage(EGamePage.raids, new RaidsPage());
-    this.pageManager.registerPage(EGamePage.skills, new SkillsPage());
+    this.pageManager.registerPage(EGamePage.factory, new FactoryPage());
+    // НЕ отображаются в меню
     this.pageManager.registerPage(EGamePage.battle, new BattlePage());
-
-    this.pageManager.setTheme(this.isDarkTheme);
 
     // Стартовая страница
     this.pageManager.setPage(EGamePage.raids);
+
+    this.pageManager.setTheme(this.isDarkTheme);
   }
 
   private startRendering(): void {
@@ -168,8 +170,6 @@ export default class GameEngine {
     if (this.isDarkTheme !== isDark) {
       this.isDarkTheme = isDark;
       this.pageManager.setTheme(isDark);
-
-      this.pageManager.render();
     }
   }
 }

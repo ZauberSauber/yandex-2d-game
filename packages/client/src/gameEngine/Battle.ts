@@ -3,11 +3,11 @@ import { notificationsApi } from '@src/api/notificationsApi';
 import { ESkillName } from './types';
 import type ActivityManager from './ActivityManager';
 import type {
-  EItem,
   TBattle,
   TBattleEnemy,
   TBattlePlayer,
   TEnemy,
+  TInvetoryItemName,
   TLocation,
   TSetupBattleProps,
 } from './types';
@@ -49,8 +49,8 @@ export default class Battle {
   constructor(
     battleLocation: TLocation,
     activityManager: ActivityManager,
-    addResources: (resources: { name: EItem; count: number }[]) => void,
-    addSkillExp: (exp: number) => void,
+    addResources: (resources: { name: TInvetoryItemName; count: number }[]) => void,
+    addSkillExp: (exp: number) => void
   ) {
     this.battleLocation = battleLocation;
     this.activityManager = activityManager;
@@ -87,7 +87,7 @@ export default class Battle {
     accuracy: number,
     defense: number,
     power: number,
-    activeSkill: ESkillName,
+    activeSkill: ESkillName
   ): void {
     if (this.battle.state === 'battle') {
       this.battle.player = {
@@ -215,7 +215,7 @@ export default class Battle {
           Math.random() < (isPerson ? this.battle.player.criticalHitChance : this.critChance);
 
         finalDamage = Math.floor(
-          potentialDamage * finalDamageMultiplier * (isCritical ? this.critMultiplier : 1),
+          potentialDamage * finalDamageMultiplier * (isCritical ? this.critMultiplier : 1)
         );
       }
 

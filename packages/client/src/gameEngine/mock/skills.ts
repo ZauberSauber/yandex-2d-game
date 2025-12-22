@@ -28,7 +28,7 @@ export const SKILLS: TSkills = {
   production: {
     name: 'Производство',
     lvl: 1,
-    maxLvl: 10,
+    maxLvl: 100,
     exp: 0,
     isActive: false,
     img: 'img/skills/production.png',

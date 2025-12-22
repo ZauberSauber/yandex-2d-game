@@ -6,14 +6,13 @@ import { PAGE_X } from '../constants';
 import { drawBar } from '../utils/drawBar';
 import { drawImg } from '../utils/drawImg';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import { getExpToNextLvl } from '../utils/expToNextLvl';
+import { getExpToNextLvl } from '../utils/getExpToNextLvl';
 import type { ESkillName } from '../types';
 
 export default class SkillsPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     // Фон
     ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
-    ;
     ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
     drawPageTitle(ctx, this.isDarkTheme, 'Навыки');
@@ -51,10 +50,12 @@ export default class SkillsPage extends AbstractGamePage {
 
       const textYpos = rowHeight + rowHeight / 2 + shiftY + 5;
 
-      const { expToNextLvl, expToPercentages } = getExpToNextLvl(skill);
+      const { expToNextLvl, expToPercentages } = getExpToNextLvl({ lvl, currentExp: exp });
 
+      // Название навыка
+      ctx.fillText(name, posX + 50, textYpos - 10);
       // Уровень
-      ctx.fillText(`${name} ${lvl}/${maxLvl}`, posX + 50, textYpos);
+      ctx.fillText(`${lvl}/${maxLvl}`, posX + 50, textYpos + 10);
       // Прогресс в процентах
       ctx.fillText(`${expToPercentages}%`, posX + 195, textYpos);
       // Прогресс в количестве
@@ -73,7 +74,5 @@ export default class SkillsPage extends AbstractGamePage {
       ctx.fillStyle = StyleColors.colorNeonPurple;
       ctx.fillRect(posX, rowHeight * 2 + shiftY, 500, 1);
     }
-    ;
-
   }
 }
