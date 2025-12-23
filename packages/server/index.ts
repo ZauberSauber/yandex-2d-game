@@ -27,7 +27,7 @@ const port = Number(process.env.SERVER_PORT) || 3001;
 
 createClientAndConnect();
 
-app.get('/friends', (_, res) => {
+app.get('/api/friends', (_, res) => {
   res.json([
     { name: 'Саша', secondName: 'Панов' },
     { name: 'Лёша', secondName: 'Садовников' },
@@ -35,7 +35,7 @@ app.get('/friends', (_, res) => {
   ]);
 });
 
-app.get('/user', (_, res) => {
+app.get('/api/user', (_, res) => {
   res.json({ name: '</script>Степа', secondName: 'Степанов' });
 });
 
@@ -43,12 +43,12 @@ app.get('/', (_, res) => {
   res.json('👋 Howdy from the server :)');
 });
 
-app.get('/locations', (_, res) => {
+app.get('/api/locations', (_, res) => {
   res.json(LOCATIONS);
 });
 
 app.use('/api', reactionRoutes);
-app.use('/theme', themeRoutes);
+app.use('/api/theme', themeRoutes);
 app.use('/api/forum', forumRoutes);
 
 app.listen(port, () => {
