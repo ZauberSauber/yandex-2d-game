@@ -11,7 +11,7 @@ export const useInitTheme = () => {
   useEffect(() => {
     const initTheme = async () => {
       try {
-        const themeCache = localStorage.getItem('darkTheme');
+        const themeCache = localStorage.getItem('theme');
 
         if (themeCache !== null) {
           // Используем сохраненную тему из localStorage
@@ -26,7 +26,7 @@ export const useInitTheme = () => {
             setIsDarkTheme(isDark);
             document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
             const theme = (isDark ? ThemesId.Dark : ThemesId.Light) as unknown as string;
-            localStorage.setItem('darkTheme', theme);
+            localStorage.setItem('theme', theme);
           }
         }
       } catch (error) {
