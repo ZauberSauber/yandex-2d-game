@@ -24,7 +24,7 @@ export const App = () => {
     try {
       const themeValue = isDark ? ThemesId.Dark : ThemesId.Light;
 
-      localStorage.setItem('darkTheme', themeValue.toString());
+      localStorage.setItem('theme', themeValue.toString());
 
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
 
@@ -34,7 +34,7 @@ export const App = () => {
     } catch (error) {
       console.error('Failed to save theme:', error);
 
-      const fallbackTheme = localStorage.getItem('darkTheme') === String(ThemesId.Dark);
+      const fallbackTheme = localStorage.getItem('theme') === String(ThemesId.Dark);
       setIsDarkTheme(fallbackTheme);
       document.documentElement.setAttribute('data-theme', fallbackTheme ? 'dark' : 'light');
     }
