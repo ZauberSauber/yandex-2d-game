@@ -2,7 +2,8 @@
   "name": "client-server-template-with-vite",
   "private": true,
   "scripts": {
-    "bootstrap": "node init.js && lerna bootstrap",
+    "init": "node init.js",
+    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "dev:client": "lerna run dev  --scope=client",
     "dev:server": "lerna run dev --scope=server",
