@@ -124,7 +124,7 @@ export const LOCATIONS = {
     reward: 'Мусорный криптор',
     achievementText: 'Покинуть свалку',
     isComplete: true,
-    img: '/img/raids/megaplexDumps.png',
+    img: '/img/raids/megaplexDumps.webp',
   },
   gutterStreets: {
     key: 'gutterStreets',
