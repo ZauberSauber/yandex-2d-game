@@ -37,7 +37,7 @@ export const createClientAndConnect = async (): Promise<Client | null> => {
         // eslint-disable-next-line no-console
         console.log('  ➜ 🎸 Database synchronized');
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         // eslint-disable-next-line no-console
         console.error('  ➜ ❌ Database connection error:', err.message);
         // eslint-disable-next-line no-console

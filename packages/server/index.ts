@@ -7,7 +7,14 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import type { Request, Response, NextFunction } from 'express';
+import type { NextFunction, Request, Response } from 'express';
+
+import { createClientAndConnect } from './db.js';
+import { authMiddleware } from './mddleware/authMiddleware.js';
+import { LOCATIONS } from './mock.js';
+import forumRoutes from './src/routes/forumRoutes.js';
+import reactionRoutes from './src/routes/reactionRoutes.js';
+import themeRoutes from './src/routes/themeRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,13 +23,6 @@ const __dirname = path.dirname(__filename);
 const envPath = path.resolve(__dirname, '..', '..', '..', '.env');
 dotenv.config({ path: envPath });
 
-import { createClientAndConnect } from './db.js';
-import { LOCATIONS } from './mock.js';
-import { authMiddleware } from './mddleware/authMiddleware.js';
-import forumRoutes from './src/routes/forumRoutes.js';
-import reactionRoutes from './src/routes/reactionRoutes.js';
-import themeRoutes from './src/routes/themeRoutes.js';
-
 const app = express();
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(cookieParser());
@@ -30,7 +30,7 @@ app.use(express.json());
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const publicPaths = ['/auth/signin', '/auth/signup', '/auth/logout', '/oauth'];
-  const isPublicPath = publicPaths.some((path) => req.path.startsWith(path));
+  const isPublicPath = publicPaths.some((publicPath) => req.path.startsWith(publicPath));
 
   if (isPublicPath) {
     next();

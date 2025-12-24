@@ -1,5 +1,6 @@
-import type { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
+import type { NextFunction, Request, Response } from 'express';
+
 import type { User } from '../types/express-augment.js';
 
 const AUTH_CHECK_URL = 'https://ya-praktikum.tech/api/v2/auth/user';
