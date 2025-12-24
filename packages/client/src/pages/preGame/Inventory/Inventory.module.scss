@@ -5,7 +5,7 @@ $space: 10px;
 $height-title: 23px;
 
 .wrapper {
-  height: calc(100% - v.$tabsBottomMargin);
+  height: calc(100% - #{v.$tabsBottomMargin});
   margin-right: 15px;
   padding: $space;
   border: 1px solid v.$color-neon-blue;
