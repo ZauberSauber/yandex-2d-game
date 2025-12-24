@@ -22,6 +22,18 @@
 }
 
 
+@at-root [data-theme='light'] {
+  ::-webkit-scrollbar-thumb {
+    background: v.$color-neon-purple;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: v.$color-neon-green;
+  }
+}
+
+
 /* Global Resets */
 * {
   margin: 0;
