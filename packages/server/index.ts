@@ -1,3 +1,5 @@
+import './src/models/index.js';
+
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -25,8 +27,6 @@ app.use(cookieParser());
 app.use(express.json());
 const port = Number(process.env.SERVER_PORT) || 3001;
 
-createClientAndConnect();
-
 app.get('/api/friends', (_, res) => {
   res.json([
     { name: 'Саша', secondName: 'Панов' },
@@ -51,7 +51,16 @@ app.use('/api', reactionRoutes);
 app.use('/api/theme', themeRoutes);
 app.use('/api/forum', forumRoutes);
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+async function bootstrap() {
+  await createClientAndConnect();
+
+  app.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+  });
+}
+
+bootstrap().catch((err) => {
+  console.error('Bootstrap failed:', err);
+  process.exit(1);
 });
