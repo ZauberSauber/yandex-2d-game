@@ -10,6 +10,7 @@ import authReducer from './slices/authSlice';
 import leaderboardReducer from './slices/leaderboardSlice/leaderboardSlice';
 import preGameReducer from './slices/preGameSlice';
 import ssrReducer from './slices/ssrSlice';
+import themeReducer from './slices/ThemeSlice';
 import userReducer from './slices/userSlice/userSlice';
 
 declare global {
@@ -24,6 +25,7 @@ export const reducer = combineReducers({
   user: userReducer,
   leaderboard: leaderboardReducer,
   preGame: preGameReducer,
+  theme: themeReducer,
 });
 
 export type RootState = ReturnType<typeof reducer>;

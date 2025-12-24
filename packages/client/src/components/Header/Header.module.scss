@@ -32,6 +32,11 @@
   font-size: 14px;
   border-radius: 4px;
   white-space: nowrap;
+
+  @at-root [data-theme='light'] & {
+    background: rgb(v.$color-neon-purple, 0.1);
+    color: v.$color-neon-purple;
+  }
 }
 
 .toggler {

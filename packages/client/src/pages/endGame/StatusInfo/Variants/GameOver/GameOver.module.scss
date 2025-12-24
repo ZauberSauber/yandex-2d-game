@@ -2,5 +2,9 @@
 @use 'styles/default' as d;
 
 .title {
-  @include d.neonTitle(v.$color-neon-pink)
+  @include d.neonTitle(v.$color-neon-pink);
+
+  @at-root [data-theme='light'] & {
+    @include d.neonTitle(v.$color-neon-pink);
+  }
 }

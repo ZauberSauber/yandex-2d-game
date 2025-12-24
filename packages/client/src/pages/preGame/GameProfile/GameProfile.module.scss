@@ -15,10 +15,18 @@ $gap: 20px;
     margin-bottom: 10px;
 
     @include d.neonTitle;
+
+    @at-root [data-theme='light'] & {
+      @include d.neonTitle(v.$color-neon-pink)
+    }
   }
 
   .name-value {
-    @include d.neonTitle(v.$color-neon-cyan)
+    @include d.neonTitle(v.$color-neon-cyan);
+
+    @at-root [data-theme='light'] & {
+      @include d.neonTitle(v.$color-neon-purple)
+    }
   }
 
   .progress {
@@ -31,6 +39,15 @@ $gap: 20px;
       border: 1px solid v.$color-neon-purple;
       background: rgba(v.$color-neon-purple, 0.1);
       color: v.$color-neon-blue;
+
+      @at-root [data-theme='light'] & {
+        color: v.$color-neon-purple;
+      }
+
     }
+  }
+
+  @at-root [data-theme='light'] & {
+    border: 1px solid v.$color-neon-purple;
   }
 }

@@ -28,4 +28,8 @@ $gap: 20px;
 
     @include d.neonTitle(rgba(v.$color-neon-pink, 0.75));
   }
+
+  @at-root [data-theme='light'] & {
+    border: 1px solid v.$color-neon-purple;
+  }
 }

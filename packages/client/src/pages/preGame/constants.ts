@@ -11,7 +11,7 @@ const SKILLS: TSkills = {
     maxLvl: 100,
     exp: 10,
     isActive: false,
-    img: 'public/img/hud/accuracy.png',
+    img: 'img/hud/accuracy.png',
   },
   defense: {
     name: 'Защита',
@@ -19,7 +19,7 @@ const SKILLS: TSkills = {
     maxLvl: 100,
     exp: 10,
     isActive: false,
-    img: 'public/img/hud/defense.png',
+    img: 'img/hud/defense.png',
   },
   power: {
     name: 'Сила',
@@ -27,7 +27,7 @@ const SKILLS: TSkills = {
     maxLvl: 100,
     exp: 25,
     isActive: false,
-    img: 'public/img/hud/strength.png',
+    img: 'img/hud/strength.png',
   },
   production: {
     name: 'Производство',
@@ -35,7 +35,7 @@ const SKILLS: TSkills = {
     maxLvl: 10,
     exp: 50,
     isActive: false,
-    img: 'public/img/hud/health.png',
+    img: 'img/hud/health.png',
   },
 };
 
@@ -50,6 +50,6 @@ export const PLAYER_INFO: IPlayerState = {
   criticalHitChance: 0.1,
   attackSpeed: 1000,
   skills: SKILLS,
-  battleLocation: LOCATIONS[ELocation.gutterStreets],
+  battleLocation: LOCATIONS[ELocation.megaplexDumps],
   damageMultiplier: 1.1,
 };

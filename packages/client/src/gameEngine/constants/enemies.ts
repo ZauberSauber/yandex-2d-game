@@ -11,7 +11,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 3,
     attackSpeed: 2000,
     exp: 10,
-    iconSrc: 'public/img/enemies/scavScum.png',
+    iconSrc: 'img/enemies/scavScum.png',
     lvl: 1,
   },
   gibberingHorde: {
@@ -25,7 +25,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 1500,
     exp: 20,
     lvl: 1,
-    iconSrc: 'public/img/enemies/gibberingHorde.png',
+    iconSrc: 'img/enemies/gibberingHorde.jpg',
   },
   scrapjackers: {
     name: 'Ловчие-Таксидермисты',
@@ -37,7 +37,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 5,
     attackSpeed: 1500,
     exp: 30,
-    iconSrc: 'public/img/enemies/scrapjackers.png',
+    iconSrc: 'img/enemies/scrapjackers.png',
     lvl: 1,
   },
   ratKing: {
@@ -50,7 +50,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     maxAttack: 12,
     attackSpeed: 1000,
     exp: 100,
-    iconSrc: 'public/img/enemies/ratKing.png',
+    iconSrc: 'img/enemies/ratKing.png',
     lvl: 2,
     damageMultiplier: 1.1,
   },
@@ -67,7 +67,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 2,
-    iconSrc: 'public/img/enemies/gutterPunk.png',
+    iconSrc: 'img/enemies/gutterPunk.png',
   },
   shadyBackAlleyDealer: {
     name: 'Торговец-Обманщик',
@@ -80,7 +80,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 2,
-    iconSrc: 'public/img/enemies/shadyBackAlleyDealer.png',
+    iconSrc: 'img/enemies/shadyBackAlleyDealer.png',
   },
   roadRashRider: {
     name: 'Гонщик-Наездник',
@@ -93,7 +93,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 2,
-    iconSrc: 'public/img/enemies/roadRashRider.png',
+    iconSrc: 'img/enemies/roadRashRider.png',
   },
   gangLeaderSledgehammer: {
     name: 'Главарь Банды "Штурмовой Молот"',
@@ -107,7 +107,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 3,
     damageMultiplier: 1.1,
-    iconSrc: 'public/img/enemies/gangLeaderSledgehammer.png',
+    iconSrc: 'img/enemies/gangLeaderSledgehammer.png',
   },
 
   // Группа 3
@@ -122,7 +122,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 3,
-    iconSrc: 'public/img/enemies/rentaCop.png',
+    iconSrc: 'img/enemies/rentaCop.png',
   },
   adDroneAggressor: {
     name: 'Рекламный Дрон-Провокатор',
@@ -135,7 +135,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 3,
-    iconSrc: 'public/img/enemies/adDroneAggressor.png',
+    iconSrc: 'img/enemies/adDroneAggressor.png',
   },
   mallMaulers: {
     name: 'Банда "Шопоголиков"',
@@ -148,7 +148,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 3,
-    iconSrc: 'public/img/enemies/mallMaulers.png',
+    iconSrc: 'img/enemies/mallMaulers.png',
   },
   securityAiSphinx: {
     name: 'Охранный ИИ "Сфинкс"',
@@ -162,7 +162,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 4,
     damageMultiplier: 1.2,
-    iconSrc: 'public/img/enemies/securityAiSphinx.png',
+    iconSrc: 'img/enemies/securityAiSphinx.png',
   },
 
   // Группа 4
@@ -177,7 +177,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 4,
-    iconSrc: 'public/img/enemies/undergroundBrawler.png',
+    iconSrc: 'img/enemies/undergroundBrawler.png',
   },
   ghostInTheSystem: {
     name: 'Хакер-Призрак',
@@ -190,7 +190,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 4,
-    iconSrc: 'public/img/enemies/ghostInTheSystem.png',
+    iconSrc: 'img/enemies/ghostInTheSystem.png',
   },
   graftedBrute: {
     name: 'Модифицированный "Зверь"',
@@ -203,7 +203,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 4,
-    iconSrc: 'public/img/enemies/graftedBrute.png',
+    iconSrc: 'img/enemies/graftedBrute.png',
   },
   legendaryMechanic: {
     name: 'Легендарный Механик "Док"',
@@ -217,7 +217,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 5,
     damageMultiplier: 1.2,
-    iconSrc: 'public/img/enemies/legendaryMechanic.png',
+    iconSrc: 'img/enemies/legendaryMechanic.png',
   },
 
   // Группа 5
@@ -232,7 +232,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 5,
-    iconSrc: 'public/img/enemies/corporateSecurityOfficer.png',
+    iconSrc: 'img/enemies/corporateSecurityOfficer.png',
   },
   surveillanceDroneVulture: {
     name: 'Следящий Дрон "Стервятник"',
@@ -245,7 +245,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 5,
-    iconSrc: 'public/img/enemies/surveillanceDroneVulture.png',
+    iconSrc: 'img/enemies/surveillanceDroneVulture.png',
   },
   combatCustodianAndroid: {
     name: 'Боевой Андроид-Уборщик',
@@ -258,7 +258,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 5,
-    iconSrc: 'public/img/enemies/combatCustodianAndroid.png',
+    iconSrc: 'img/enemies/combatCustodianAndroid.png',
   },
   assaultLeaderGreyHornet: {
     name: 'Тактический Штурмовой Лидер "Серая Шершень"',
@@ -272,7 +272,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 6,
     damageMultiplier: 1.2,
-    iconSrc: 'public/img/enemies/assaultLeaderGreyHornet.png',
+    iconSrc: 'img/enemies/assaultLeaderGreyHornet.png',
   },
 
   // Группа 6
@@ -287,7 +287,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 6,
-    iconSrc: 'public/img/enemies/specOpsTrooper.png',
+    iconSrc: 'img/enemies/specOpsTrooper.png',
   },
   phantomSniper: {
     name: 'Снайпер-Призрак',
@@ -300,7 +300,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 6,
-    iconSrc: 'public/img/enemies/phantomSniper.png',
+    iconSrc: 'img/enemies/phantomSniper.png',
   },
   combatEngineer: {
     name: 'Сапёр-Инженер',
@@ -313,7 +313,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 6,
-    iconSrc: 'public/img/enemies/combatEngineer.png',
+    iconSrc: 'img/enemies/combatEngineer.png',
   },
   squadCommanderValkyrie: {
     name: 'Командир Отряда "Валькирия"',
@@ -327,7 +327,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 7,
     damageMultiplier: 1.2,
-    iconSrc: 'public/img/enemies/squadCommanderValkyrie.png',
+    iconSrc: 'img/enemies/squadCommanderValkyrie.png',
   },
 
   // Группа 7
@@ -342,7 +342,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 7,
-    iconSrc: 'public/img/enemies/corperateResearcherGoneMad.png',
+    iconSrc: 'img/enemies/corperateResearcherGoneMad.png',
   },
   unstableSecurityDronePrototype: {
     name: 'Нестабильный Прототип Охранного Дрона',
@@ -355,7 +355,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 7,
-    iconSrc: 'public/img/enemies/unstableSecurityDronePrototype.png',
+    iconSrc: 'img/enemies/unstableSecurityDronePrototype.png',
   },
   bioEngineeredHorror: {
     name: 'Био-Инженерный Ужас',
@@ -368,7 +368,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 7,
-    iconSrc: 'public/img/enemies/bioEngineeredHorror.png',
+    iconSrc: 'img/enemies/bioEngineeredHorror.png',
   },
   leadScientistCuratorDrArkadyVolf: {
     name: 'Главный Учёный-Куратор Доктор Аркадий Вольф',
@@ -382,7 +382,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 8,
     damageMultiplier: 1.3,
-    iconSrc: 'public/img/enemies/leadScientistCuratorDrArkadyVolf.png',
+    iconSrc: 'img/enemies/leadScientistCuratorDrArkadyVolf.png',
   },
 
   // Группа 8
@@ -397,7 +397,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 8,
-    iconSrc: 'public/img/enemies/elitePrivateGuards.png',
+    iconSrc: 'img/enemies/elitePrivateGuards.png',
   },
   smartHomeSystem: {
     name: 'Система "Умный Дом"',
@@ -410,7 +410,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 8,
-    iconSrc: 'public/img/enemies/smartHomeSystem.png',
+    iconSrc: 'img/enemies/smartHomeSystem.png',
   },
   automatedCombatButler: {
     name: 'Автоматизированный Боевой Дворецкий',
@@ -423,7 +423,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 8,
-    iconSrc: 'public/img/enemies/automatedCombatButler.png',
+    iconSrc: 'img/enemies/automatedCombatButler.png',
   },
   legendaryArtisan: {
     name: 'Сам Легендарный Оружейник',
@@ -437,7 +437,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 10,
     damageMultiplier: 1.3,
-    iconSrc: 'public/img/enemies/legendaryArtisan.png',
+    iconSrc: 'img/enemies/legendaryArtisan.png',
   },
 
   // Группа 9
@@ -452,7 +452,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 9,
-    iconSrc: 'public/img/enemies/eliteCyberGuard.png',
+    iconSrc: 'img/enemies/eliteCyberGuard.png',
   },
   realitySuppressor: {
     name: 'Подавитель Реальности',
@@ -465,7 +465,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 9,
-    iconSrc: 'public/img/enemies/realitySuppressor.png',
+    iconSrc: 'img/enemies/realitySuppressor.png',
   },
   aiAspect: {
     name: 'Аспект ИИ',
@@ -478,7 +478,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 9,
-    iconSrc: 'public/img/enemies/aiAspect.png',
+    iconSrc: 'img/enemies/aiAspect.png',
   },
   directorOfNewTechnologies: {
     name: 'Директор по Новым Технологиям',
@@ -492,7 +492,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 10,
     damageMultiplier: 1.3,
-    iconSrc: 'public/img/enemies/directorOfNewTechnologies.png',
+    iconSrc: 'img/enemies/directorOfNewTechnologies.png',
   },
 
   // Группа 10
@@ -507,7 +507,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 10,
-    iconSrc: 'public/img/enemies/shardsOfLostMinds.png',
+    iconSrc: 'img/enemies/shardsOfLostMinds.png',
   },
   thresholdGuardian: {
     name: 'Страж Порога',
@@ -520,7 +520,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 10,
-    iconSrc: 'public/img/enemies/thresholdGuardian.png',
+    iconSrc: 'img/enemies/thresholdGuardian.png',
   },
   echoOfTheFirstAI: {
     name: 'Отголосок Первого ИИ',
@@ -533,7 +533,7 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 10,
-    iconSrc: 'public/img/enemies/echoOfTheFirstAI.png',
+    iconSrc: 'img/enemies/echoOfTheFirstAI.png',
   },
   abyss: {
     name: 'Бездна',
@@ -547,6 +547,6 @@ export const ENEMIES: Record<EEnemy, TEnemy> = {
     exp: 100,
     lvl: 12,
     damageMultiplier: 1.4,
-    iconSrc: 'public/img/enemies/abyss.png',
+    iconSrc: 'img/enemies/abyss.png',
   },
 };

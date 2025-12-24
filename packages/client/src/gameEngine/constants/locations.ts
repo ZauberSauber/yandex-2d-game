@@ -1,4 +1,4 @@
-import { EItem, ELocation } from '../types';
+import { ELocation } from '../types';
 import { ENEMIES } from './enemies';
 import type { TLocation } from '../types';
 
@@ -9,11 +9,11 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.scavScum, ENEMIES.gibberingHorde, ENEMIES.scrapjackers],
     enemyBoss: ENEMIES.ratKing,
     enemysCount: 10,
-    resources: [EItem.rustyIron],
+    resources: ['rustyIron'],
     reward: 'Мусорный криптор',
     achievementText: 'Покинуть свалку',
     isComplete: true,
-    img: '/public/img/raids/megaplexDumps.png',
+    img: '/img/raids/megaplexDumps.webp',
   },
   gutterStreets: {
     key: ELocation.gutterStreets,
@@ -21,9 +21,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.gutterPunk, ENEMIES.shadyBackAlleyDealer, ENEMIES.roadRashRider],
     enemyBoss: ENEMIES.gangLeaderSledgehammer,
     enemysCount: 10,
-    resources: [EItem.waterPipes],
+    resources: ['waterPipes'],
     reward: 'Уличный криптор',
-    img: '/public/img/raids/gutterStreets.png',
+    img: '/img/raids/gutterStreets.png',
   },
   neonDistricts: {
     key: ELocation.neonDistricts,
@@ -31,9 +31,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.rentaCop, ENEMIES.adDroneAggressor, ENEMIES.mallMaulers],
     enemyBoss: ENEMIES.securityAiSphinx,
     enemysCount: 10,
-    resources: [EItem.cheapPolymerPlastic],
+    resources: ['cheapPolymerPlastic'],
     reward: 'Световой криптор',
-    img: '/public/img/raids/neonDistricts.png',
+    img: '/img/raids/neonDistricts.png',
   },
   undergroundTechBars: {
     key: ELocation.undergroundTechBars,
@@ -41,9 +41,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.undergroundBrawler, ENEMIES.ghostInTheSystem, ENEMIES.graftedBrute],
     enemyBoss: ENEMIES.legendaryMechanic,
     enemysCount: 10,
-    resources: [EItem.aluminumAlloys],
+    resources: ['aluminumAlloys'],
     reward: 'Техно-Барный криптор',
-    img: '/public/img/raids/undergroundTechBars.png',
+    img: '/img/raids/undergroundTechBars.png',
   },
   corporateWarehouses: {
     key: ELocation.corporateWarehouses,
@@ -55,9 +55,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     ],
     enemyBoss: ENEMIES.assaultLeaderGreyHornet,
     enemysCount: 10,
-    resources: [EItem.specialPolymers],
+    resources: ['specialPolymers'],
     reward: 'Складской криптор',
-    img: '/public/img/raids/corporateWarehouses.png',
+    img: '/img/raids/corporateWarehouses.png',
   },
   specOpsBarracks: {
     key: ELocation.specOpsBarracks,
@@ -65,9 +65,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.specOpsTrooper, ENEMIES.phantomSniper, ENEMIES.combatEngineer],
     enemyBoss: ENEMIES.squadCommanderValkyrie,
     enemysCount: 10,
-    resources: [EItem.carbonFiber],
+    resources: ['carbonFiber'],
     reward: 'Спец криптор',
-    img: '/public/img/raids/specOpsBarracks.png',
+    img: '/img/raids/specOpsBarracks.png',
   },
   corporateBlackBagDumps: {
     key: ELocation.corporateBlackBagDumps,
@@ -79,9 +79,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     ],
     enemyBoss: ENEMIES.leadScientistCuratorDrArkadyVolf,
     enemysCount: 10,
-    resources: [EItem.metamaterials],
+    resources: ['metamaterials'],
     reward: 'Складской криптор',
-    img: '/public/img/raids/corporateBlackBagDumps.png',
+    img: '/img/raids/corporateBlackBagDumps.png',
   },
   digitizedWorkshops: {
     key: ELocation.digitizedWorkshops,
@@ -89,9 +89,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.elitePrivateGuards, ENEMIES.smartHomeSystem, ENEMIES.automatedCombatButler],
     enemyBoss: ENEMIES.legendaryArtisan,
     enemysCount: 10,
-    resources: [EItem.polishedMacrame],
+    resources: ['polishedMacrame'],
     reward: 'Мастерский криптор',
-    img: '/public/img/raids/digitizedWorkshops.png',
+    img: '/img/raids/digitizedWorkshops.png',
   },
   corporateSpireCores: {
     key: ELocation.corporateSpireCores,
@@ -99,9 +99,9 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.eliteCyberGuard, ENEMIES.realitySuppressor, ENEMIES.aiAspect],
     enemyBoss: ENEMIES.directorOfNewTechnologies,
     enemysCount: 10,
-    resources: [EItem.nanocarbonTubes],
+    resources: ['nanocarbonTubes'],
     reward: 'Ядерный криптор',
-    img: '/public/img/raids/corporateSpireCores.png',
+    img: '/img/raids/corporateSpireCores.png',
   },
   netsDeadZones: {
     key: ELocation.netsDeadZones,
@@ -109,8 +109,8 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     enemies: [ENEMIES.shardsOfLostMinds, ENEMIES.thresholdGuardian, ENEMIES.echoOfTheFirstAI],
     enemyBoss: ENEMIES.abyss,
     enemysCount: 10,
-    resources: [EItem.unidentifiedCrystallineStructures],
+    resources: ['unidentifiedCrystallineStructures'],
     reward: 'Мертвый криптор',
-    img: '/public/img/raids/netsDeadZones.png',
+    img: '/img/raids/netsDeadZones.png',
   },
 };

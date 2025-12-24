@@ -1,10 +1,10 @@
 import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
-import { HEAD_FONT, MAIN_FONT, PAGE_X, SCALE } from '../constants';
+import { HEAD_FONT, INVENTORY_ITEMS, MAIN_FONT, PAGE_X, SCALE } from '../constants';
 import PlayerManager from '../PlayerManager';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { TButton } from '../types';
+import type { TButton, TInventoryItemValue, TInvetoryItemName } from '../types';
 
 export default class InventoryPage extends AbstractGamePage {
   private isAnimating: boolean = true;
@@ -15,7 +15,7 @@ export default class InventoryPage extends AbstractGamePage {
 
   private scrollOffset: number = 0;
 
-  private items: { name: string; count: number }[] = [];
+  private items: { key: TInvetoryItemName; item: TInventoryItemValue }[] = [];
 
   constructor() {
     super();
@@ -41,14 +41,15 @@ export default class InventoryPage extends AbstractGamePage {
   render(ctx: CanvasRenderingContext2D) {
     if (this.isAnimating) {
       this.isAnimating = false;
-      this.drawInventory(ctx, PAGE_X, 80);
     }
+
+    this.drawInventory(ctx, PAGE_X, 80);
   }
 
   override onEnter(): void {
-    this.items = Array.from(PlayerManager.getInstance().getInventory(), ([name, count]) => ({
-      name,
-      count,
+    this.items = Array.from(PlayerManager.getInstance().getInventory(), ([key, item]) => ({
+      key,
+      item,
     }));
 
     this.isAnimating = true;
@@ -89,14 +90,13 @@ export default class InventoryPage extends AbstractGamePage {
   }
 
   private drawInventory(ctx: CanvasRenderingContext2D, posX: number, posY: number) {
-    // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(posX, 0, ctx.canvas.width - posX, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Инвентарь');
+    drawPageTitle(ctx, this.isDarkTheme, 'Инвевнтарь');
 
     if (this.items.length === 0) {
-      ctx.fillStyle = StyleColors.colorNeonBlue;
+      ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorDarkBg;
       ctx.font = MAIN_FONT;
       ctx.textAlign = 'center';
       ctx.fillText(
@@ -117,9 +117,9 @@ export default class InventoryPage extends AbstractGamePage {
       ctx.fillStyle = StyleColors.colorNeonBlue;
       ctx.font = MAIN_FONT;
       ctx.textAlign = 'left';
-      ctx.fillText(this.items[itemIndex].name, posX, rowY);
+      ctx.fillText(INVENTORY_ITEMS[this.items[itemIndex].key].name, posX, rowY);
       ctx.textAlign = 'right';
-      ctx.fillText(`${this.items[itemIndex].count}`, ctx.canvas.width - 80, rowY);
+      ctx.fillText(`${this.items[itemIndex].item.count}`, ctx.canvas.width / SCALE - 80, rowY);
     }
 
     const upButton = this.buttonManager.getButtonByName('up') as TButton;
@@ -129,6 +129,7 @@ export default class InventoryPage extends AbstractGamePage {
     ctx.textAlign = 'center';
     ctx.font = HEAD_FONT;
 
+    // код стрелки вниз '\u2193', код стрелки вверх '\u2191'
     if (
       this.items.length > this.visibleRows &&
       this.items.length - this.scrollOffset !== this.visibleRows

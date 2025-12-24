@@ -102,7 +102,7 @@ export const MainPage = () => {
 
         <Row justify="center" className={styles['action-row']}>
           <Col>
-            <Button>НАЧАТЬ ПОГРУЖЕНИЕ</Button>
+            <Button href="/start">НАЧАТЬ ПОГРУЖЕНИЕ</Button>
           </Col>
         </Row>
       </Content>

@@ -3,25 +3,36 @@
 
 .tabs {
   :global {
-    .ant-tabs-content,.ant-tabs-tabpane,.ant-tabs-content-holder {
+    .ant-tabs-content, .ant-tabs-tabpane, .ant-tabs-content-holder {
       height: 100%;
     }
-
 
     .ant-tabs-tab {
       font-size: 15px;
 
       .ant-tabs-tab-btn:hover {
-        @include d.neonTitle(v.$color-neon-pink);
+        @include d.neonTitle(v.$color-neon-purple);
+
+        @at-root [data-theme='light'] & {
+          @include d.neonTitle(v.$color-neon-pink);
+        }
       }
 
       .ant-tabs-tab-btn {
-        @include d.neonTitle
+        @include d.neonTitle;
+
+        @at-root [data-theme='light'] & {
+          @include d.neonTitle(v.$color-neon-purple);
+        }
       }
 
       &.ant-tabs-tab-active {
         .ant-tabs-tab-btn {
           @include d.neonTitle(v.$color-neon-cyan);
+
+          @at-root [data-theme='light'] & {
+            @include d.neonTitle(v.$color-neon-pink);
+          }
         }
       }
     }

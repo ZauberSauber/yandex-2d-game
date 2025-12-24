@@ -1,12 +1,12 @@
 {
   "name": "client",
   "version": "0.0.0",
-    "type": "module",
+  "type": "module",
   "scripts": {
     "runInDocker": "node server/index.js",
     "start": "vite",
     "preDevBuild": "rimraf ./tsconfig.server.tsbuildinfo && tsc -p tsconfig.server.json",
-    "dev": "npm run preDevBuild && concurrently --kill-others \"tsc -w -p tsconfig.server.json\" \"cross-env NODE_ENV=development EXTERNAL_SERVER_URL=http://localhost:3001 INTERNAL_SERVER_URL=http://localhost:3001 nodemon\"",
+    "dev": "npm run preDevBuild && concurrently --kill-others \"tsc -w -p tsconfig.server.json\" \"cross-env NODE_ENV=development EXTERNAL_SERVER_URL=http://localhost:3001/api INTERNAL_SERVER_URL=http://localhost:3001/api nodemon\"",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "build": "npm run preDevBuild && vite build && npm rum build:ssr",
     "preview": "node server/index.js",

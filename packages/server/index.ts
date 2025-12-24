@@ -1,17 +1,32 @@
-import dotenv from 'dotenv';
-import cors from 'cors';
-dotenv.config();
+import './src/models/index.js';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// из dist до .env
+const envPath = path.resolve(__dirname, '..', '..', '..', '.env');
+dotenv.config({ path: envPath });
+
 import { createClientAndConnect } from './db.js';
 import { LOCATIONS } from './mock.js';
-import cookieParser from 'cookie-parser';
 import { authMiddleware } from './mddleware/authMiddleware.js';
+import forumRoutes from './src/routes/forumRoutes.js';
+import reactionRoutes from './src/routes/reactionRoutes.js';
+import themeRoutes from './src/routes/themeRoutes.js';
 
 const app = express();
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(cookieParser());
+app.use(express.json());
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const publicPaths = ['/auth/signin', '/auth/signup', '/auth/logout', '/oauth'];
@@ -26,9 +41,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 const port = Number(process.env.SERVER_PORT) || 3001;
 
-createClientAndConnect();
-
-app.get('/friends', (_: Request, res: Response) => {
+app.get('/api/friends', (_: Request, res: Response) => {
   res.json([
     { name: 'Саша', secondName: 'Панов' },
     { name: 'Лёша', secondName: 'Садовников' },
@@ -36,7 +49,7 @@ app.get('/friends', (_: Request, res: Response) => {
   ]);
 });
 
-app.get('/user', (_: Request, res: Response) => {
+app.get('/api/user', (_: Request, res: Response) => {
   res.json({ name: '</script>Степа', secondName: 'Степанов' });
 });
 
@@ -44,7 +57,7 @@ app.get('/', (_: Request, res: Response) => {
   res.json('👋 Howdy from the server :)');
 });
 
-app.get('/locations', (_req: Request, res: Response) => {
+app.get('/api/locations', (_req: Request, res: Response) => {
   res.json(LOCATIONS);
 });
 
@@ -57,4 +70,20 @@ app.get('/auth/check', (req: Request, res: Response) => {
   });
 });
 
-app.listen(port, () => {});
+app.use('/api', reactionRoutes);
+app.use('/api/theme', themeRoutes);
+app.use('/api/forum', forumRoutes);
+
+async function bootstrap() {
+  await createClientAndConnect();
+
+  app.listen(port, () => {
+    // eslint-disable-next-line no-console
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+  });
+}
+
+bootstrap().catch((err) => {
+  console.error('Bootstrap failed:', err);
+  process.exit(1);
+});

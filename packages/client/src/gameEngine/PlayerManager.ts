@@ -1,18 +1,28 @@
+import { message } from 'antd';
+
 import ActivityManager from './ActivityManager';
 import Battle from './Battle';
+import { INVENTORY_ITEMS, MESSAGE_DURATION } from './constants';
 import { SKILLS } from './mock/skills';
 import { ESkillName } from './types';
-import { getExpToNextLvl } from './utils/expToNextLvl';
-import type { EItem, IPlayerState, TBattle, TLocation } from './types';
+import { getExpToNextLvl } from './utils/getExpToNextLvl';
+import type {
+  IPlayerState,
+  TBattle,
+  TInventory,
+  TInventoryItemValue,
+  TInvetoryItemName,
+  TLocation,
+} from './types';
 
 export default class PlayerManager {
   private static _instance: PlayerManager | null = null;
 
   private activityManager;
 
-  private inventory: Map<string, number> = new Map();
-
-  private lastTimeStamps: Map<string, number> = new Map();
+  private inventory: Map<TInvetoryItemName, TInventoryItemValue> = new Map([
+    ['rustyIron', { count: 10, type: 'resource' }],
+  ]);
 
   private playerHP = 75;
 
@@ -34,7 +44,7 @@ export default class PlayerManager {
 
   private skills = SKILLS;
 
-  private activeSkill: ESkillName = ESkillName.accuracy;
+  private activeSkillName: ESkillName = ESkillName.accuracy;
 
   private battleLocation: TLocation | null = null;
 
@@ -62,16 +72,14 @@ export default class PlayerManager {
     return PlayerManager._instance;
   }
 
-  update(currentTime: number): void {
-    this.lastTimeStamps.set('update', currentTime);
-
+  update(): void {
     if (this.battle) {
       this.battle.update(
         this.playerHP,
         this.skills.accuracy.lvl,
         this.skills.defense.lvl,
         this.skills.power.lvl,
-        this.activeSkill
+        this.activeSkillName
       );
 
       const battleState = this.battle.getBattleState();
@@ -86,25 +94,27 @@ export default class PlayerManager {
     return this.playerHP;
   }
 
-  heal(): void {
-    // todo: добавить лечение
+  heal(healPower: number): void {
+    this.playerHP = Math.min(this.playerHP + healPower, this.maxPlayerHP);
   }
 
   setActiveSkill(skillName: ESkillName): void {
-    this.activeSkill = skillName;
+    this.activeSkillName = skillName;
   }
 
-  addSkillExp(exp: number): void {
+  addSkillExp(exp: number, skillName?: ESkillName): void {
     if (exp === 0) {
       return;
     }
 
-    const skill = this.skills[this.activeSkill];
+    const skill = this.skills[skillName || this.activeSkillName];
+
+    message.info(`Умение ${skill.name} получает ${exp} опыта`, MESSAGE_DURATION);
 
     skill.exp += exp;
 
     while (true) {
-      const { expToNextLvl } = getExpToNextLvl(skill);
+      const { expToNextLvl } = getExpToNextLvl({ lvl: skill.lvl, currentExp: skill.exp });
 
       if (skill.exp < expToNextLvl) {
         break;
@@ -117,14 +127,15 @@ export default class PlayerManager {
     this.skills.accuracy.lvl = SKILLS.accuracy.lvl;
     this.skills.defense.lvl = SKILLS.defense.lvl;
     this.skills.power.lvl = SKILLS.power.lvl;
+    this.skills.production.lvl = SKILLS.production.lvl;
   }
 
   get playerState(): IPlayerState {
     return {
       skills: {
-        accuracy: this.skills.accuracy,
-        defense: this.skills.defense,
         power: this.skills.power,
+        defense: this.skills.defense,
+        accuracy: this.skills.accuracy,
         production: this.skills.production,
       },
       inventory: this.inventory,
@@ -148,8 +159,7 @@ export default class PlayerManager {
       power: initStats.skills.power,
       production: initStats.skills.production,
     };
-    this.inventory = new Map<string, number>([]);
-    this.lastTimeStamps = new Map<string, number>([]);
+    this.inventory = new Map([]);
     this.playerHP = initStats.playerHP;
     this.maxPlayerHP = initStats.maxPlayerHP;
     this.healthRegenInterval = initStats.healthRegenInterval;
@@ -162,17 +172,24 @@ export default class PlayerManager {
     this.damageMultiplier = initStats.damageMultiplier;
   }
 
-  setInventoryItem(itemName: string, count: number): void {
-    const itemCount = (this.inventory.get(itemName) || 0) + count;
+  private setInventoryItem(
+    itemName: TInvetoryItemName,
+    { count, type }: TInventoryItemValue
+  ): void {
+    const totalCount = (this.inventory.get(itemName)?.count || 0) + count;
 
-    if (itemCount > 0) {
-      this.inventory.set(itemName, itemCount);
+    if (totalCount > 0) {
+      this.inventory.set(itemName, { count: totalCount, type });
+
+      if (count > 0) {
+        message.info(`получено ${INVENTORY_ITEMS[itemName].name} ${count}шт`, MESSAGE_DURATION);
+      }
     } else {
       this.inventory.delete(itemName);
     }
   }
 
-  getInventory(): Map<string, number> {
+  getInventory(): TInventory {
     return this.inventory;
   }
 
@@ -235,9 +252,9 @@ export default class PlayerManager {
     this.battleLocation = location;
   }
 
-  private addResources(resources: { name: EItem; count: number }[]): void {
-    resources.forEach((resource) => {
-      this.setInventoryItem(resource.name, resource.count);
+  public addResources(resources: { name: TInvetoryItemName; item: TInventoryItemValue }[]): void {
+    resources.forEach(({ name, item }) => {
+      this.setInventoryItem(name, { count: item.count, type: item.type });
     });
   }
 

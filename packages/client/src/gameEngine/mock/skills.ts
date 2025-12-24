@@ -7,7 +7,7 @@ export const SKILLS: TSkills = {
     maxLvl: 100,
     exp: 0,
     isActive: false,
-    img: 'public/img/hud/accuracy.png',
+    img: 'img/hud/accuracy.png',
   },
   defense: {
     name: 'Защита',
@@ -15,7 +15,7 @@ export const SKILLS: TSkills = {
     maxLvl: 100,
     exp: 0,
     isActive: false,
-    img: 'public/img/hud/defense.png',
+    img: 'img/hud/defense.png',
   },
   power: {
     name: 'Сила',
@@ -23,15 +23,14 @@ export const SKILLS: TSkills = {
     maxLvl: 100,
     exp: 0,
     isActive: false,
-    img: 'public/img/hud/strength.png',
+    img: 'img/hud/strength.png',
   },
   production: {
     name: 'Производство',
     lvl: 1,
-    maxLvl: 10,
+    maxLvl: 100,
     exp: 0,
     isActive: false,
-    // изначально здесь было здоровье, картинку можно позже заменить
-    img: 'public/img/hud/health.png',
+    img: 'img/skills/production.png',
   },
 };

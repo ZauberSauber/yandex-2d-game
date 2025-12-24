@@ -1,8 +1,10 @@
 import { Client } from 'pg';
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_DB, POSTGRES_PORT } = process.env;
+import sequelize from './src/config/database.js';
 
 export const createClientAndConnect = async (): Promise<Client | null> => {
+  const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_HOST, POSTGRES_DB, POSTGRES_PORT } =
+    process.env;
   try {
     const client = new Client({
       user: POSTGRES_USER,
@@ -18,6 +20,31 @@ export const createClientAndConnect = async (): Promise<Client | null> => {
     // eslint-disable-next-line no-console
     console.log('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now);
     client.end();
+
+    sequelize
+      .authenticate()
+      .then(() => {
+        // eslint-disable-next-line no-console
+        console.log('  ➜ 🎸 Sequelize connection established');
+
+        return sequelize.sync({
+          alter: false,
+          // eslint-disable-next-line no-console
+          logging: console.log,
+        });
+      })
+      .then(() => {
+        // eslint-disable-next-line no-console
+        console.log('  ➜ 🎸 Database synchronized');
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error('  ➜ ❌ Database connection error:', err.message);
+        // eslint-disable-next-line no-console
+        console.error(
+          '  ➜ ⚠️  Make sure PostgreSQL is running. Start it with: docker-compose up postgres -d'
+        );
+      });
 
     return client;
   } catch (e) {

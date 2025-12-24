@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { MoonOutlined, SunOutlined } from '@ant-design/icons';
 import type { TabsProps } from 'antd';
 
 import { Button } from '@components/Button';
@@ -8,10 +9,10 @@ import {
 } from '@src/api/fullscreenApi';
 import { notificationsApi } from '@src/api/notificationsApi';
 import { Tabs } from '@src/components/Tabs';
+import { useTheme } from '@src/context';
 import { PATHS } from '@src/routes/constants';
 
 import styles from './Header.module.scss';
-
 
 
 const tabsItems: TabsProps['items'] = [
@@ -27,6 +28,8 @@ const tabsItems: TabsProps['items'] = [
 
 export const Header = () => {
   const navigate = useNavigate();
+  const { isDarkTheme, setIsDarkTheme } = useTheme();
+
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isNotifiesEnabled, setIsNotifiesEnabled] = useState(false);
   const fullScreenBtnRef = useRef<HTMLParagraphElement>(null);
@@ -39,6 +42,10 @@ export const Header = () => {
   }, [location, location.pathname]);
 
   const onTabClick = (key: string) => navigate(key);
+
+  const handleThemeToggle = () => {
+    setIsDarkTheme(!isDarkTheme);
+  };
 
   const handleFullscreenToggle = () => {
     const fullscreenElement = fullscreenApi.getFullscreenElement();
@@ -129,7 +136,8 @@ export const Header = () => {
       <Button onClick={handleNotifiesEnable}>
         Уведомления: {isNotifiesEnabled ? 'включены' : 'включить'}
       </Button>
-      <Tabs activeKey={activeKey} onTabClick={onTabClick} hideBottomLine className={styles.header} items={tabsItems} />
+      <Tabs activeKey={activeKey} onTabClick={onTabClick} hideBottomLine className={styles.header}
+            items={tabsItems} />
       <div className={styles.fullscreenControls}>
         <p ref={fullScreenBtnRef} className={styles.message} style={{ display: 'none' }}>
           Полноэкранный режим включен
@@ -138,6 +146,9 @@ export const Header = () => {
           Fullscreen: {isFullscreen ? 'OFF' : 'ON'}
         </Button>
       </div>
+      <Button onClick={handleThemeToggle}>
+        {isDarkTheme ? <SunOutlined /> : <MoonOutlined />}
+      </Button>
     </div>
   );
 };

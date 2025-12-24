@@ -1,3 +1,7 @@
+import type { ARMORS } from './constants/armors';
+import type { ITEMS } from './constants/items';
+import type { MEDKITS } from './constants/medkits';
+import type { WEAPONS } from './constants/weapons';
 import type PageManager from './PageManager';
 
 export enum ESkillName {
@@ -13,7 +17,7 @@ export type TSkill = {
   maxLvl: number;
   exp: number;
   isActive: boolean;
-  img: string
+  img: string;
 };
 
 export type TSkills = {
@@ -54,6 +58,7 @@ export type TActivity = {
   startTime: number;
   duration: number;
   isComplete: boolean;
+  isRunning: boolean;
   progress: number;
   onComplete?: () => void;
 };
@@ -90,7 +95,7 @@ export type TSetupBattleProps = Pick<
 >;
 
 export interface IPlayerState extends IPlayerStats {
-  inventory: Map<string, number>;
+  inventory: TInventory;
   skills: TSkills;
   battleLocation: TLocation | null;
 }
@@ -124,62 +129,18 @@ export type TBattle = {
   exp: number;
 };
 
-export enum EItem {
-  rustyIron = 'rustyIron',
-  scrapsOfAluminumCans = 'scrapsOfAluminumCans',
-  copperWires = 'copperWires',
-  oldPlasticHousings = 'oldPlasticHousings',
-  tireRubber = 'tireRubber',
-  //
-  waterPipes = 'waterPipes',
-  sheetSteel = 'sheetSteel',
-  remeltedPlastic = 'remeltedPlastic',
-  refurbishedElectronics = 'refurbishedElectronics',
-  batteriesFromOldConsoles = 'batteriesFromOldConsoles',
-  //
-  cheapPolymerPlastic = 'cheapPolymerPlastic',
-  lowGradeSteel = 'lowGradeSteel',
-  silicone = 'silicone',
-  standardPrintedCircuit = 'standardPrintedCircuit',
-  fiberglass = 'fiberglass',
-  //
-  aluminumAlloys = 'aluminumAlloys',
-  copperForHeatSinks = 'copperForHeatSinks',
-  ceramicInserts = 'ceramicInserts',
-  homemadeCarbonFibers = 'homemadeCarbonFibers',
-  //
-  specialPolymers = 'specialPolymers',
-  stainlessSteel = 'stainlessSteel',
-  lightweightAluminumAlloys = 'lightweightAluminumAlloys',
-  standardizedHQPrintedCircuit = 'standardizedHQPrintedCircuit',
-  //
-  carbonFiber = 'carbonFiber',
-  titaniumAlloys = 'titaniumAlloys',
-  bulletproofGlass = 'bulletproofGlass',
-  compositeCeramicTiles = 'compositeCeramicTiles',
-  //
-  metamaterials = 'metamaterials',
-  shapeMemoryAlloys = 'shapeMemoryAlloys',
-  organosyntheticFlesh = 'organosyntheticFlesh',
-  superconductingElements = 'superconductingElements',
-  liquidCrystals = 'liquidCrystals',
-  //
-  polishedMacrame = 'polishedMacrame',
-  solidTitanium = 'solidTitanium',
-  goldAndPlatinumForConductors = 'goldAndPlatinumForConductors',
-  volcanicGlass = 'volcanicGlass',
-  //
-  nanocarbonTubes = 'nanocarbonTubes',
-  transparentAluminum = 'transparentAluminum',
-  programmableMatter = 'programmableMatter',
-  quantumProcessors = 'quantumProcessors',
-  //
-  unidentifiedCrystallineStructures = 'unidentifiedCrystallineStructures',
-  solidLightMatter = 'solidLightMatter',
-  blackCeramics = 'blackCeramics',
-  metalFromTheCoreOfADeadAi = 'metalFromTheCoreOfADeadAi',
-  frozenData = 'frozenData',
-}
+export type TInvetoryItemName =
+  | keyof typeof ITEMS
+  | keyof typeof WEAPONS
+  | keyof typeof MEDKITS
+  | keyof typeof ARMORS;
+
+export type TInventoryItemValue = {
+  count: number;
+  type: 'resource' | 'weapon' | 'armor' | 'medkit';
+};
+
+export type TInventory = Map<TInvetoryItemName, TInventoryItemValue>;
 
 export enum EEnemy {
   scavScum = 'scavScum',
@@ -254,7 +215,7 @@ export type TLocation = {
   enemies: TEnemy[];
   enemyBoss: TEnemy;
   enemysCount: number;
-  resources: EItem[];
+  resources: TInvetoryItemName[];
   reward: string;
   description?: string;
   achievementText?: string;

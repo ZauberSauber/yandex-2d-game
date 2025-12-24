@@ -5,7 +5,7 @@
   margin: 20px auto;
   padding: 20px;
   border: 1px solid v.$color-neon-blue;
-  background: v.$color-dark-bg;
+  background: transparent;
   min-height: 100vh;
 
   .header {
@@ -29,12 +29,16 @@
       color: v.$color-neon-blue;
       text-shadow: 0 0 10px v.$color-neon-blue, 0 0 20px v.$color-neon-blue;
       font-family: v.$font-heading;
+
+      @at-root [data-theme='light'] & {
+        color: v.$color-neon-purple;
+      }
     }
   }
 
   .form-card {
     border: 1px solid v.$color-neon-blue;
-    background: rgb(0 0 0 / 70%);
+    background: transparent;
     border-radius: 8px;
     animation: glitch-border 3s infinite alternate;
 
@@ -43,6 +47,10 @@
         color: v.$color-neon-blue;
         font-size: 16px;
         font-weight: bold;
+
+        @at-root [data-theme='light'] & {
+          color: v.$color-neon-purple;
+        }
       }
 
       .input {
@@ -153,6 +161,10 @@
     }
   }
 
+  @at-root [data-theme='light'] & {
+    border: 1px solid v.$color-neon-purple;
+  }
+
   @keyframes glitch-border {
     0% {
       box-shadow: 0 0 10px rgb(v.$color-neon-blue, 0.5);
@@ -161,19 +173,19 @@
 
     25% {
       box-shadow: 0 0 20px rgb(v.$color-neon-pink, 0.7),
-        0 0 30px rgb(v.$color-neon-blue, 0.5);
+      0 0 30px rgb(v.$color-neon-blue, 0.5);
       border-color: v.$color-neon-pink;
     }
 
     50% {
       box-shadow: 0 0 25px rgb(v.$color-neon-blue, 0.8),
-        0 0 40px rgb(v.$color-neon-pink, 0.6);
+      0 0 40px rgb(v.$color-neon-pink, 0.6);
       border-color: v.$color-neon-blue;
     }
 
     75% {
       box-shadow: 0 0 15px rgb(v.$color-neon-pink, 0.9),
-        0 0 25px rgb(v.$color-neon-blue, 0.7);
+      0 0 25px rgb(v.$color-neon-blue, 0.7);
       border-color: v.$color-neon-pink;
     }
 

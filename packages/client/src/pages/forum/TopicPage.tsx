@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import {
   ArrowLeftOutlined,
@@ -11,121 +11,77 @@ import { Avatar, Button, Card, Divider, Input, message, Space, Typography } from
 import type { FC } from 'react';
 
 import { ForumBreadcrumb } from '@components/ForumBreadcrumb';
+import { forumApi } from '@src/api/forumApi';
+import { profileApi } from '@src/api/profileApi';
 import { PATHS } from '@src/routes/constants';
+
+import type { ForumComment, TTopic } from './types';
 
 import styles from './TopicPage.module.scss';
 
 const { Title, Text: TextComponent, Paragraph } = Typography;
 const { TextArea } = Input;
 
-interface ForumComment {
-  id: string;
-  author: string;
-  content: string;
-  timestamp: string;
-  likes: number;
-  dislikes: number;
-  replies?: ForumComment[];
-}
-
-interface Topic {
-  id: string;
-  title: string;
-  author: string;
-  category: string;
-  content: string;
-  timestamp: string;
-  views: number;
-  likes: number;
-  dislikes: number;
-  comments: ForumComment[];
-}
-
 const TopicPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
   const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(false);
+  const [topic, setTopic] = useState<TTopic | null>(null);
 
-  // Моковые данные для демонстрации
-  const topic: Topic = {
-    id: id || '1',
-    title: 'Новый алгоритм шифрования на квантовых принципах',
-    author: 'Cyber_Samurai',
-    category: 'Кибербезопасность',
-    content: `Добро пожаловать в обсуждение революционного алгоритма шифрования, основанного на принципах квантовой механики.
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
 
-Этот новый подход к криптографии использует квантовые свойства частиц для создания практически невзламываемых систем шифрования. В отличие от традиционных методов, которые полагаются на сложность математических операций, квантовое шифрование использует фундаментальные законы физики.
-
-Основные преимущества:
-- Квантовая запутанность для генерации ключей
-- Принцип неопределенности Гейзенберга для обнаружения подслушивания
-- Квантовые вычисления для оптимизации алгоритмов
-
-Мы приглашаем всех специалистов в области квантовой физики, криптографии и информационной безопасности к обсуждению этого прорывного направления.`,
-    timestamp: '2 часа назад',
-    views: 156,
-    likes: 12,
-    dislikes: 1,
-    comments: [
-      {
-        id: '1',
-        author: 'Quantum_Expert',
-        content:
-          'Интересный подход! Как вы планируете решать проблему декогеренции в реальных условиях?',
-        timestamp: '1 час назад',
-        likes: 5,
-        dislikes: 0,
-        replies: [
-          {
-            id: '1-1',
-            author: 'Cyber_Samurai',
-            content:
-              'Мы используем специальные квантовые корректоры ошибок и изоляцию от внешних воздействий.',
-            timestamp: '45 минут назад',
-            likes: 3,
-            dislikes: 0,
-          },
-        ],
-      },
-      {
-        id: '2',
-        author: 'Crypto_Analyst',
-        content:
-          'А как насчет совместимости с существующими системами? Это может стать серьезным препятствием для внедрения.',
-        timestamp: '30 минут назад',
-        likes: 2,
-        dislikes: 1,
-        replies: [],
-      },
-    ],
-  };
+    forumApi.getTopicById(id).then(({ data }) => {
+      setTopic(data || null);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleBack = () => {
     navigate(PATHS.FORUM);
   };
 
   const handleAddComment = async () => {
-    if (!newComment.trim()) {
+    const content = newComment.trim();
+    if (!content) {
       message.warning('Введите текст комментария');
       return;
     }
 
     setLoading(true);
-    try {
-      // Здесь будет логика отправки комментария на сервер
-      // console.log('Adding comment:', newComment);
 
-      // Имитация задержки
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    const responseUser = await profileApi.getUserInfo();
 
-      message.success('Комментарий добавлен!');
-      setNewComment('');
-    } catch (error) {
-      message.error('Ошибка при добавлении комментария');
-    } finally {
-      setLoading(false);
+    if (!responseUser.data) {
+      message.error('Ошибка получения пользователя');
+      return;
     }
+
+    forumApi
+      .createComment({
+        authorId: `${responseUser.data.id}`,
+        authorLogin: responseUser.data.login,
+        content,
+        topicId: id || '',
+        parentCommentId: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .then((comment) => {
+        message.success('Комментарий успешно добавлен!');
+        setNewComment('');
+
+        const newTopic = {
+          ...topic,
+          replies: [...(topic?.replies || []), comment.data],
+        };
+        setTopic(newTopic as TTopic);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleLike = (_commentId: string) => {
@@ -146,8 +102,7 @@ const TopicPage: FC = () => {
         <div className={styles['comment-author']}>
           <Avatar icon={<UserOutlined />} className={styles.avatar} />
           <div className={styles['author-info']}>
-            <TextComponent className={styles['author-name']}>{comment.author}</TextComponent>
-            <TextComponent className={styles['comment-time']}>{comment.timestamp}</TextComponent>
+            <TextComponent className={styles['author-name']}>{comment.authorId}</TextComponent>
           </div>
         </div>
         <div className={styles['comment-actions']}>
@@ -190,71 +145,75 @@ const TopicPage: FC = () => {
         </Button>
       </div>
 
-      <Card className={styles['topic-card']}>
-        <div className={styles['topic-header']}>
-          <div className={styles['topic-meta']}>
-            <Title level={1} className={styles['topic-title']}>
-              {topic.title}
+      {topic ? (
+        <>
+          <Card className={styles['topic-card']}>
+            <div className={styles['topic-header']}>
+              <div className={styles['topic-meta']}>
+                <Title level={1} className={styles['topic-title']}>
+                  {topic.title}
+                </Title>
+                <div className={styles['topic-info']}>
+                  <TextComponent className={styles['topic-author']}>
+                    Автор: {topic.authorLogin}
+                  </TextComponent>
+                  <TextComponent className={styles['topic-category']}>
+                    Категория: {topic.category}
+                  </TextComponent>
+                </div>
+              </div>
+              <div className={styles['topic-stats']}>
+                <Space>
+                  <TextComponent className={styles.stat}>
+                    <LikeOutlined /> {'topic.likes'}
+                  </TextComponent>
+                  <TextComponent className={styles.stat}>
+                    <DislikeOutlined /> {'topic.dislikes'}
+                  </TextComponent>
+                  <TextComponent className={styles.stat}>Просмотров: {topic.views}</TextComponent>
+                </Space>
+              </div>
+            </div>
+
+            <Divider className={styles.divider} />
+
+            <div className={styles['topic-content']}>
+              <Paragraph className={styles['content-text']}>{topic.content}</Paragraph>
+            </div>
+          </Card>
+
+          <div className={styles['comments-section']}>
+            <Title level={2} className={styles['comments-title']}>
+              Комментарии ({topic.replies.length})
             </Title>
-            <div className={styles['topic-info']}>
-              <TextComponent className={styles['topic-author']}>
-                Автор: {topic.author}
-              </TextComponent>
-              <TextComponent className={styles['topic-category']}>
-                Категория: {topic.category}
-              </TextComponent>
-              <TextComponent className={styles['topic-time']}>{topic.timestamp}</TextComponent>
+
+            <Card className={styles['add-comment-card']}>
+              <div className={styles['add-comment-form']}>
+                <TextArea
+                  placeholder="Добавить комментарий..."
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  rows={3}
+                  className={styles['comment-input']}
+                />
+                <Button
+                  type="primary"
+                  icon={<SendOutlined />}
+                  onClick={handleAddComment}
+                  loading={loading}
+                  className={styles['submit-comment-button']}
+                  disabled={loading}>
+                  Отправить
+                </Button>
+              </div>
+            </Card>
+
+            <div className={styles['comments-list']}>
+              {topic.replies.map((comment) => renderComment(comment))}
             </div>
           </div>
-          <div className={styles['topic-stats']}>
-            <Space>
-              <TextComponent className={styles.stat}>
-                <LikeOutlined /> {topic.likes}
-              </TextComponent>
-              <TextComponent className={styles.stat}>
-                <DislikeOutlined /> {topic.dislikes}
-              </TextComponent>
-              <TextComponent className={styles.stat}>Просмотров: {topic.views}</TextComponent>
-            </Space>
-          </div>
-        </div>
-
-        <Divider className={styles.divider} />
-
-        <div className={styles['topic-content']}>
-          <Paragraph className={styles['content-text']}>{topic.content}</Paragraph>
-        </div>
-      </Card>
-
-      <div className={styles['comments-section']}>
-        <Title level={2} className={styles['comments-title']}>
-          Комментарии ({topic.comments.length})
-        </Title>
-
-        <Card className={styles['add-comment-card']}>
-          <div className={styles['add-comment-form']}>
-            <TextArea
-              placeholder="Добавить комментарий..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              rows={3}
-              className={styles['comment-input']}
-            />
-            <Button
-              type="primary"
-              icon={<SendOutlined />}
-              onClick={handleAddComment}
-              loading={loading}
-              className={styles['submit-comment-button']}>
-              Отправить
-            </Button>
-          </div>
-        </Card>
-
-        <div className={styles['comments-list']}>
-          {topic.comments.map((comment) => renderComment(comment))}
-        </div>
-      </div>
+        </>
+      ) : null}
     </div>
   );
 };

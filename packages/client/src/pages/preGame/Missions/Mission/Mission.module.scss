@@ -33,4 +33,14 @@
   .btn {
     place-self: center center;
   }
+
+  @at-root [data-theme='light'] & {
+    border: 1px solid v.$color-neon-purple;
+    background: rgba(v.$color-neon-purple, 0.6);
+
+    .btn {
+      background-color: v.$color-neon-blue;
+      color:  v.$color-neon-pink;
+    }
+  }
 }

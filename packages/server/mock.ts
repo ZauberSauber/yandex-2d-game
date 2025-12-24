@@ -14,7 +14,7 @@ const ENEMIES = {
     maxAttack: 3,
     attackSpeed: 2000,
     exp: 10,
-    iconSrc: 'public/img/enemies/scavScum.png',
+    iconSrc: 'img/enemies/scavScum.png',
     lvl: 1,
   },
   gibberingHorde: {
@@ -28,7 +28,7 @@ const ENEMIES = {
     attackSpeed: 1500,
     exp: 20,
     lvl: 1,
-    iconSrc: 'public/img/enemies/gibberingHorde.png',
+    iconSrc: 'img/enemies/gibberingHorde.png',
   },
   scrapjackers: {
     name: 'Ловчие-Таксидермисты',
@@ -40,7 +40,7 @@ const ENEMIES = {
     maxAttack: 5,
     attackSpeed: 1500,
     exp: 30,
-    iconSrc: 'public/img/enemies/scrapjackers.png',
+    iconSrc: 'img/enemies/scrapjackers.png',
     lvl: 1,
   },
   ratKing: {
@@ -53,7 +53,7 @@ const ENEMIES = {
     maxAttack: 12,
     attackSpeed: 1000,
     exp: 100,
-    iconSrc: 'public/img/enemies/ratKing.png',
+    iconSrc: 'img/enemies/ratKing.png',
     lvl: 2,
     damageMultiplier: 1.1,
   },
@@ -69,7 +69,7 @@ const ENEMIES = {
     attackSpeed: 2000,
     exp: 10,
     lvl: 2,
-    iconSrc: 'public/img/enemies/gutterPunk.png',
+    iconSrc: 'img/enemies/gutterPunk.png',
   },
   shadyBackAlleyDealer: {
     name: 'Торговец-Обманщик',
@@ -82,7 +82,7 @@ const ENEMIES = {
     attackSpeed: 2000,
     exp: 20,
     lvl: 2,
-    iconSrc: 'public/img/enemies/shadyBackAlleyDealer.png',
+    iconSrc: 'img/enemies/shadyBackAlleyDealer.png',
   },
   roadRashRider: {
     name: 'Гонщик-Наездник',
@@ -95,7 +95,7 @@ const ENEMIES = {
     attackSpeed: 2000,
     exp: 30,
     lvl: 2,
-    iconSrc: 'public/img/enemies/roadRashRider.png',
+    iconSrc: 'img/enemies/roadRashRider.png',
   },
   gangLeaderSledgehammer: {
     name: 'Главарь Банды "Штурмовой Молот"',
@@ -109,7 +109,7 @@ const ENEMIES = {
     exp: 100,
     lvl: 3,
     damageMultiplier: 1.1,
-    iconSrc: 'public/img/enemies/gangLeaderSledgehammer.png',
+    iconSrc: 'img/enemies/gangLeaderSledgehammer.png',
   },
 };
 
@@ -123,8 +123,8 @@ export const LOCATIONS = {
     resources: [EItem.rustyIron],
     reward: 'Мусорный криптор',
     achievementText: 'Покинуть свалку',
-    isComplete: true,
-    img: '/public/img/raids/megaplexDumps.png',
+    isComplete: false,
+    img: '/img/raids/megaplexDumps.webp',
   },
   gutterStreets: {
     key: 'gutterStreets',
@@ -132,9 +132,9 @@ export const LOCATIONS = {
     enemies: [ENEMIES.gutterPunk, ENEMIES.shadyBackAlleyDealer, ENEMIES.roadRashRider],
     enemyBoss: ENEMIES.gangLeaderSledgehammer,
     enemysCount: 10,
-    isComplete: true,
+    isComplete: false,
     resources: [EItem.waterPipes],
     reward: 'Уличный криптор',
-    img: '/public/img/raids/gutterStreets.png',
+    img: '/img/raids/gutterStreets.png',
   },
 };

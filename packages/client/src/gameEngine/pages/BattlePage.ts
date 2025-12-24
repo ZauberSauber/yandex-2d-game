@@ -2,14 +2,17 @@ import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
 import { MAIN_FONT, PAGE_X } from '../constants';
+import { MEDKITS } from '../constants/medkits';
 import PlayerManager from '../PlayerManager';
 import { EGamePage, ESkillName } from '../types';
 import { drawBar } from '../utils/drawBar';
 import { drawImg } from '../utils/drawImg';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { TButton } from '../types';
+import type { TButton, TInvetoryItemName } from '../types';
 
 export default class BattlePage extends AbstractGamePage {
+  private medkits: { key: string; count: number; power: number }[] = [];
+
   constructor() {
     super();
 
@@ -54,15 +57,37 @@ export default class BattlePage extends AbstractGamePage {
 
   render(ctx: CanvasRenderingContext2D) {
     // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Страница сражения');
+    drawPageTitle(ctx, this.isDarkTheme, 'Страница сражения');
 
     this.drawBattle(ctx);
   }
 
   override onEnter(): void {
+    this.medkits = [];
+
+    PlayerManager.getInstance()
+      .getInventory()
+      .forEach((item, key) => {
+        if (item.type === 'medkit') {
+          this.medkits.push({
+            key,
+            count: item.count,
+            power: MEDKITS[key as keyof typeof MEDKITS].lvl * 10,
+          });
+        }
+      });
+
+    this.medkits.sort((a, b) => {
+      if (a.power === b.power) {
+        return a.count - b.count;
+      } else {
+        return a.power - b.power;
+      }
+    });
+
     PlayerManager.getInstance().setupBattle();
   }
 
@@ -100,7 +125,7 @@ export default class BattlePage extends AbstractGamePage {
       height: 5,
       value: battle.player.cooldown,
       maxValue: battle.player.attackSpeed,
-      startHexColor: StyleColors.colorNeonBlue,
+      startHexColor: this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple,
     });
 
     // хп врага
@@ -128,7 +153,8 @@ export default class BattlePage extends AbstractGamePage {
     });
 
     ctx.font = MAIN_FONT;
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+
     ctx.textAlign = 'left';
     ctx.fillText('Вы', 240, 120);
     ctx.fillText('Враг', 640, 120);
@@ -177,7 +203,7 @@ export default class BattlePage extends AbstractGamePage {
       posY: accuracyButton.y,
       width: accuracyButton.width,
       height: accuracyButton.height,
-      src: 'public/img/fightStyle/accuracy.png',
+      src: 'img/fightStyle/accuracy.png',
     });
 
     drawImg({
@@ -186,7 +212,7 @@ export default class BattlePage extends AbstractGamePage {
       posY: defenseButton.y,
       width: defenseButton.width,
       height: defenseButton.height,
-      src: 'public/img/fightStyle/defense.png',
+      src: 'img/fightStyle/defense.png',
     });
 
     drawImg({
@@ -195,10 +221,11 @@ export default class BattlePage extends AbstractGamePage {
       posY: powerButton.y,
       width: powerButton.width,
       height: powerButton.height,
-      src: 'public/img/fightStyle/power.png',
+      src: 'img/fightStyle/power.png',
     });
 
-    ctx.strokeStyle = StyleColors.colorNeonBlue;
+    ctx.strokeStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+
     ctx.lineWidth = 2;
     ctx.strokeRect(activeButton.x, activeButton.y, activeButton.width, activeButton.height);
 
@@ -210,14 +237,20 @@ export default class BattlePage extends AbstractGamePage {
       posY: healButton.y,
       width: healButton.width,
       height: healButton.height,
-      // TODO: пока заглушка в виде одной картинки
-      src: 'public/img/health/health2.png',
+      src: this.medkits.length ? 'img/health/health2.png' : 'img/health/no_medkit.png',
     });
 
     // Количество аптечек
-    ctx.fillStyle = StyleColors.colorNeonCyan;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonCyan : StyleColors.colorNeonPink;
     ctx.textAlign = 'center';
-    ctx.fillText('10', healButton.x + healButton.width / 2, healButton.y - 10);
+    ctx.fillText(
+      `${this.medkits.reduce((acc, medkit) => {
+        acc += medkit.count;
+        return acc;
+      }, 0)}`,
+      healButton.x + healButton.width / 2,
+      healButton.y - 10
+    );
 
     // Кнопка сбежать
     const runButton = this.buttonManager.getButtonByName('run') as TButton;
@@ -227,7 +260,7 @@ export default class BattlePage extends AbstractGamePage {
       posY: runButton.y,
       width: runButton.width,
       height: runButton.height,
-      src: 'public/img/escape.png',
+      src: 'img/escape.png',
     });
   }
 
@@ -251,7 +284,22 @@ export default class BattlePage extends AbstractGamePage {
     }
 
     if (buttonName === 'heal') {
-      PlayerManager.getInstance().heal();
+      if (!this.medkits.length) {
+        return;
+      }
+
+      const medkit = this.medkits[this.medkits.length - 1];
+
+      PlayerManager.getInstance().heal(medkit?.power || 0);
+      PlayerManager.getInstance().addResources([
+        { name: medkit!.key as TInvetoryItemName, item: { count: -1, type: 'medkit' } },
+      ]);
+
+      medkit.count -= 1;
+
+      if (medkit.count <= 0) {
+        this.medkits.pop();
+      }
     }
 
     if (buttonName === 'run') {

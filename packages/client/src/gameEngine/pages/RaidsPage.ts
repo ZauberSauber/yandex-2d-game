@@ -44,10 +44,10 @@ export default class RaidsPage extends AbstractGamePage {
 
   render(ctx: CanvasRenderingContext2D) {
     // Фон
-    ctx.fillStyle = StyleColors.colorDarkBg;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorDarkBg : StyleColors.colorNeonBlue;
     ctx.fillRect(PAGE_X, 0, ctx.canvas.width - PAGE_X, ctx.canvas.height);
 
-    drawPageTitle(ctx, 'Рейды');
+    drawPageTitle(ctx, this.isDarkTheme, 'Рейды');
 
     this.drawRaidCard(ctx, PAGE_X, 60);
     this.drawButtons(ctx);
@@ -55,7 +55,8 @@ export default class RaidsPage extends AbstractGamePage {
 
   private drawRaidCard(ctx: CanvasRenderingContext2D, posX: number, posY: number) {
     // Рамка
-    ctx.strokeStyle = StyleColors.colorNeonBlue;
+    ctx.strokeStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+    ;
     ctx.lineWidth = 1;
     ctx.strokeRect(posX, posY, 540, 285);
 
@@ -71,7 +72,7 @@ export default class RaidsPage extends AbstractGamePage {
 
     const textX = posX + 180;
 
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
     ctx.font = MAIN_FONT;
     ctx.textAlign = 'left';
     // Название локации
@@ -101,7 +102,7 @@ export default class RaidsPage extends AbstractGamePage {
     ctx.fillText(
       `Макс ур противников: ${this.activeLocation.enemies.reduce((acc, { lvl }) => (acc > lvl ? acc : lvl), 0)}`,
       textX,
-      posY + 205
+      posY + 205,
     );
     ctx.fillText(`Награда: ${this.activeLocation.reward}`, textX, posY + 230);
 
@@ -119,11 +120,12 @@ export default class RaidsPage extends AbstractGamePage {
     const nextButton = this.buttonManager.getButtonByName('next') as TButton;
     const backButton = this.buttonManager.getButtonByName('back') as TButton;
 
-    ctx.strokeStyle = StyleColors.colorNeonBlue;
+    ctx.strokeStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
+
     ctx.strokeRect(nextButton.x, nextButton.y, nextButton.width, nextButton.height);
     ctx.strokeRect(backButton.x, backButton.y, backButton.width, backButton.height);
 
-    ctx.fillStyle = StyleColors.colorNeonBlue;
+    ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonBlue : StyleColors.colorNeonPurple;
     ctx.font = MAIN_FONT;
     ctx.textAlign = 'left';
     ctx.fillText('< назад', backButton.x + 10, backButton.y + 25);
