@@ -13,7 +13,7 @@ export const LOCATIONS: Record<ELocation, TLocation> = {
     reward: 'Мусорный криптор',
     achievementText: 'Покинуть свалку',
     isComplete: true,
-    img: '/img/raids/megaplexDumps.png',
+    img: '/img/raids/megaplexDumps.webp',
   },
   gutterStreets: {
     key: ELocation.gutterStreets,
