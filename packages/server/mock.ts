@@ -123,7 +123,7 @@ export const LOCATIONS = {
     resources: [EItem.rustyIron],
     reward: 'Мусорный криптор',
     achievementText: 'Покинуть свалку',
-    isComplete: true,
+    isComplete: false,
     img: '/img/raids/megaplexDumps.webp',
   },
   gutterStreets: {
@@ -132,7 +132,7 @@ export const LOCATIONS = {
     enemies: [ENEMIES.gutterPunk, ENEMIES.shadyBackAlleyDealer, ENEMIES.roadRashRider],
     enemyBoss: ENEMIES.gangLeaderSledgehammer,
     enemysCount: 10,
-    isComplete: true,
+    isComplete: false,
     resources: [EItem.waterPipes],
     reward: 'Уличный криптор',
     img: '/img/raids/gutterStreets.png',
