@@ -4,7 +4,7 @@ import AbstractGamePage from '../AbstractGamePage';
 import { HEAD_FONT, INVENTORY_ITEMS, MAIN_FONT, PAGE_X, SCALE } from '../constants';
 import PlayerManager from '../PlayerManager';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { TButton, TInvetoryItemName } from '../types';
+import type { TButton, TInventoryItemValue, TInvetoryItemName } from '../types';
 
 export default class InventoryPage extends AbstractGamePage {
   private isAnimating: boolean = true;
@@ -15,7 +15,7 @@ export default class InventoryPage extends AbstractGamePage {
 
   private scrollOffset: number = 0;
 
-  private items: { key: TInvetoryItemName; count: number }[] = [];
+  private items: { key: TInvetoryItemName; item: TInventoryItemValue }[] = [];
 
   constructor() {
     super();
@@ -47,9 +47,9 @@ export default class InventoryPage extends AbstractGamePage {
   }
 
   override onEnter(): void {
-    this.items = Array.from(PlayerManager.getInstance().getInventory(), ([key, count]) => ({
+    this.items = Array.from(PlayerManager.getInstance().getInventory(), ([key, item]) => ({
       key,
-      count,
+      item,
     }));
 
     this.isAnimating = true;
@@ -119,7 +119,7 @@ export default class InventoryPage extends AbstractGamePage {
       ctx.textAlign = 'left';
       ctx.fillText(INVENTORY_ITEMS[this.items[itemIndex].key].name, posX, rowY);
       ctx.textAlign = 'right';
-      ctx.fillText(`${this.items[itemIndex].count}`, ctx.canvas.width / SCALE - 80, rowY);
+      ctx.fillText(`${this.items[itemIndex].item.count}`, ctx.canvas.width / SCALE - 80, rowY);
     }
 
     const upButton = this.buttonManager.getButtonByName('up') as TButton;

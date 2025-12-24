@@ -21,8 +21,8 @@ import { getItemCraftTime } from '../utils/getItemCraftTime';
 import { getItemExp } from '../utils/getItemExp';
 import type { TButton, TInvetoryItemName } from '../types';
 
-const convertToTabContent = (items: Record<string, Record<string, unknown>>) =>
-  Object.entries(items).map((item) => ({ ...item[1], id: item[0] }));
+const convertToTabContent = (items: Record<string, Record<string, unknown>>, type: 'weapon' | 'armor' | 'medkit') =>
+  Object.entries(items).map((item) => ({ ...item[1], id: item[0], type }));
 
 export default class FactoryPage extends AbstractGamePage {
   private playerManager;
@@ -47,6 +47,7 @@ export default class FactoryPage extends AbstractGamePage {
     description: string;
     imageSrc: string;
     id: TInvetoryItemName;
+    type: 'weapon' | 'armor' | 'medkit';
   } | null = null;
 
   private assembleButtonName = 'assemble';
@@ -65,9 +66,9 @@ export default class FactoryPage extends AbstractGamePage {
     this.playerManager = PlayerManager.getInstance();
     this.activityManager = ActivityManager.getInstance();
 
-    this.tabs.set('weapon', { name: 'Оружие', content: convertToTabContent(WEAPONS) });
-    this.tabs.set('armor', { name: 'Броня', content: convertToTabContent(ARMORS) });
-    this.tabs.set('medkit', { name: 'Аптечки', content: convertToTabContent(MEDKITS) });
+    this.tabs.set('weapon', { name: 'Оружие', content: convertToTabContent(WEAPONS, 'weapon') });
+    this.tabs.set('armor', { name: 'Броня', content: convertToTabContent(ARMORS, 'armor') });
+    this.tabs.set('medkit', { name: 'Аптечки', content: convertToTabContent(MEDKITS, 'medkit') });
 
     let i = 0;
     this.tabs.forEach((_, key) => {
@@ -120,7 +121,7 @@ export default class FactoryPage extends AbstractGamePage {
     this.resKey = Object.values(LOCATIONS)[this.currentCraftItem.lvl - 1].resources[0];
     this.resName = ITEMS[this.resKey as keyof typeof ITEMS]?.name || 'неизветсно';
     this.needToAssemble = this.currentCraftItem.lvl;
-    this.playerHasToAssemble = this.playerManager.getInventory().get(this.resKey) || 0;
+    this.playerHasToAssemble = this.playerManager.getInventory().get(this.resKey)?.count || 0;
   }
 
   private craftItem(): void {
@@ -131,6 +132,7 @@ export default class FactoryPage extends AbstractGamePage {
     const itemId = this.currentCraftItem.id;
     const craftTime = getItemCraftTime(this.currentCraftItem.lvl);
     const exp = getItemExp(this.currentCraftItem.lvl);
+    const craftItemType = this.currentCraftItem.type;
 
     if (this.playerHasToAssemble < this.needToAssemble) {
       this.activityManager.stopActivity(this.assembleButtonName);
@@ -141,8 +143,8 @@ export default class FactoryPage extends AbstractGamePage {
     this.activityManager.startActivity(this.assembleButtonName, craftTime, () => {
       this.playerManager.addSkillExp(exp, ESkillName.production);
       this.playerManager.addResources([
-        { name: this.resKey, count: -this.needToAssemble },
-        { name: itemId, count: 1 },
+        { name: this.resKey, item: { count: -this.needToAssemble, type: 'resource' } },
+        { name: itemId, item: { count: 1, type: craftItemType } },
       ]);
       this.setCraftRequirements();
 

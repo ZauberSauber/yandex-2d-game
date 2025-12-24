@@ -95,7 +95,7 @@ export type TSetupBattleProps = Pick<
 >;
 
 export interface IPlayerState extends IPlayerStats {
-  inventory: Map<string, number>;
+  inventory: TInventory;
   skills: TSkills;
   battleLocation: TLocation | null;
 }
@@ -134,6 +134,13 @@ export type TInvetoryItemName =
   | keyof typeof WEAPONS
   | keyof typeof MEDKITS
   | keyof typeof ARMORS;
+
+export type TInventoryItemValue = {
+  count: number;
+  type: 'resource' | 'weapon' | 'armor' | 'medkit';
+};
+
+export type TInventory = Map<TInvetoryItemName, TInventoryItemValue>;
 
 export enum EEnemy {
   scavScum = 'scavScum',

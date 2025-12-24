@@ -2,14 +2,17 @@ import { StyleColors } from '@src/styles/colors';
 
 import AbstractGamePage from '../AbstractGamePage';
 import { MAIN_FONT, PAGE_X } from '../constants';
+import { MEDKITS } from '../constants/medkits';
 import PlayerManager from '../PlayerManager';
 import { EGamePage, ESkillName } from '../types';
 import { drawBar } from '../utils/drawBar';
 import { drawImg } from '../utils/drawImg';
 import { drawPageTitle } from '../utils/drawPageTitle';
-import type { TButton } from '../types';
+import type { TButton, TInvetoryItemName } from '../types';
 
 export default class BattlePage extends AbstractGamePage {
+  private medkits: { key: string; count: number; power: number }[] = [];
+
   constructor() {
     super();
 
@@ -63,6 +66,28 @@ export default class BattlePage extends AbstractGamePage {
   }
 
   override onEnter(): void {
+    this.medkits = [];
+
+    PlayerManager.getInstance()
+      .getInventory()
+      .forEach((item, key) => {
+        if (item.type === 'medkit') {
+          this.medkits.push({
+            key,
+            count: item.count,
+            power: MEDKITS[key as keyof typeof MEDKITS].lvl * 10,
+          });
+        }
+      });
+
+    this.medkits.sort((a, b) => {
+      if (a.power === b.power) {
+        return a.count - b.count;
+      } else {
+        return a.power - b.power;
+      }
+    });
+
     PlayerManager.getInstance().setupBattle();
   }
 
@@ -212,14 +237,20 @@ export default class BattlePage extends AbstractGamePage {
       posY: healButton.y,
       width: healButton.width,
       height: healButton.height,
-      // TODO: пока заглушка в виде одной картинки
-      src: 'img/health/health2.png',
+      src: this.medkits.length ? 'img/health/health2.png' : 'img/health/no_medkit.png',
     });
 
     // Количество аптечек
     ctx.fillStyle = this.isDarkTheme ? StyleColors.colorNeonCyan : StyleColors.colorNeonPink;
     ctx.textAlign = 'center';
-    ctx.fillText('10', healButton.x + healButton.width / 2, healButton.y - 10);
+    ctx.fillText(
+      `${this.medkits.reduce((acc, medkit) => {
+        acc += medkit.count;
+        return acc;
+      }, 0)}`,
+      healButton.x + healButton.width / 2,
+      healButton.y - 10
+    );
 
     // Кнопка сбежать
     const runButton = this.buttonManager.getButtonByName('run') as TButton;
@@ -253,7 +284,22 @@ export default class BattlePage extends AbstractGamePage {
     }
 
     if (buttonName === 'heal') {
-      PlayerManager.getInstance().heal();
+      if (!this.medkits.length) {
+        return;
+      }
+
+      const medkit = this.medkits[this.medkits.length - 1];
+
+      PlayerManager.getInstance().heal(medkit?.power || 0);
+      PlayerManager.getInstance().addResources([
+        { name: medkit!.key as TInvetoryItemName, item: { count: -1, type: 'medkit' } },
+      ]);
+
+      medkit.count -= 1;
+
+      if (medkit.count <= 0) {
+        this.medkits.pop();
+      }
     }
 
     if (buttonName === 'run') {

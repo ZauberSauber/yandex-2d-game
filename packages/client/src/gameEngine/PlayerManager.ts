@@ -6,14 +6,23 @@ import { INVENTORY_ITEMS, MESSAGE_DURATION } from './constants';
 import { SKILLS } from './mock/skills';
 import { ESkillName } from './types';
 import { getExpToNextLvl } from './utils/getExpToNextLvl';
-import type { IPlayerState, TBattle, TInvetoryItemName, TLocation } from './types';
+import type {
+  IPlayerState,
+  TBattle,
+  TInventory,
+  TInventoryItemValue,
+  TInvetoryItemName,
+  TLocation,
+} from './types';
 
 export default class PlayerManager {
   private static _instance: PlayerManager | null = null;
 
   private activityManager;
 
-  private inventory: Map<TInvetoryItemName, number> = new Map([['rustyIron', 10]]);
+  private inventory: Map<TInvetoryItemName, TInventoryItemValue> = new Map([
+    ['rustyIron', { count: 10, type: 'resource' }],
+  ]);
 
   private playerHP = 75;
 
@@ -85,8 +94,8 @@ export default class PlayerManager {
     return this.playerHP;
   }
 
-  heal(): void {
-    // todo: добавить лечение
+  heal(healPower: number): void {
+    this.playerHP = Math.min(this.playerHP + healPower, this.maxPlayerHP);
   }
 
   setActiveSkill(skillName: ESkillName): void {
@@ -150,7 +159,7 @@ export default class PlayerManager {
       power: initStats.skills.power,
       production: initStats.skills.production,
     };
-    this.inventory = new Map<TInvetoryItemName, number>([]);
+    this.inventory = new Map([]);
     this.playerHP = initStats.playerHP;
     this.maxPlayerHP = initStats.maxPlayerHP;
     this.healthRegenInterval = initStats.healthRegenInterval;
@@ -163,11 +172,14 @@ export default class PlayerManager {
     this.damageMultiplier = initStats.damageMultiplier;
   }
 
-  private setInventoryItem(itemName: TInvetoryItemName, count: number): void {
-    const totalCount = (this.inventory.get(itemName) || 0) + count;
+  private setInventoryItem(
+    itemName: TInvetoryItemName,
+    { count, type }: TInventoryItemValue
+  ): void {
+    const totalCount = (this.inventory.get(itemName)?.count || 0) + count;
 
     if (totalCount > 0) {
-      this.inventory.set(itemName, totalCount);
+      this.inventory.set(itemName, { count: totalCount, type });
 
       if (count > 0) {
         message.info(`получено ${INVENTORY_ITEMS[itemName].name} ${count}шт`, MESSAGE_DURATION);
@@ -177,7 +189,7 @@ export default class PlayerManager {
     }
   }
 
-  getInventory(): Map<TInvetoryItemName, number> {
+  getInventory(): TInventory {
     return this.inventory;
   }
 
@@ -240,9 +252,9 @@ export default class PlayerManager {
     this.battleLocation = location;
   }
 
-  public addResources(resources: { name: TInvetoryItemName; count: number }[]): void {
-    resources.forEach((resource) => {
-      this.setInventoryItem(resource.name, resource.count);
+  public addResources(resources: { name: TInvetoryItemName; item: TInventoryItemValue }[]): void {
+    resources.forEach(({ name, item }) => {
+      this.setInventoryItem(name, { count: item.count, type: item.type });
     });
   }
 

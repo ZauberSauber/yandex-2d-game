@@ -7,6 +7,7 @@ import type {
   TBattleEnemy,
   TBattlePlayer,
   TEnemy,
+  TInventoryItemValue,
   TInvetoryItemName,
   TLocation,
   TSetupBattleProps,
@@ -49,7 +50,7 @@ export default class Battle {
   constructor(
     battleLocation: TLocation,
     activityManager: ActivityManager,
-    addResources: (resources: { name: TInvetoryItemName; count: number }[]) => void,
+    addResources: (resources: { name: TInvetoryItemName; item: TInventoryItemValue }[]) => void,
     addSkillExp: (exp: number) => void
   ) {
     this.battleLocation = battleLocation;
@@ -147,13 +148,17 @@ export default class Battle {
       void notificationsApi.show(`Вы одержали победу над ${this.battle.enemy.name}!`);
 
       if (this.enemyDefeated >= this.battleLocation.enemysCount) {
-        this.addResources([{ name: this.battleLocation.resources[0], count: 5 }]);
+        this.addResources([
+          { name: this.battleLocation.resources[0], item: { count: 5, type: 'resource' } },
+        ]);
         this.stop();
         this.battle.state = 'victory';
 
         void notificationsApi.show('Победа!', `Победжено ${this.enemyDefeated} врагов`);
       } else {
-        this.addResources([{ name: this.battleLocation.resources[0], count: 1 }]);
+        this.addResources([
+          { name: this.battleLocation.resources[0], item: { count: 1, type: 'resource' } },
+        ]);
         this.searchEnemy();
       }
     }
