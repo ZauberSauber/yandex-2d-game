@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Flex } from 'antd';
 
 import { selectLocation } from '@slices';
@@ -13,17 +13,25 @@ export const Missions = () => {
 
   const values = Object.values(locations);
 
-  let firstUncompleted = 0;
+  let uncompletedMission: number | null = null;
+  let allCompleted = false;
 
   for (let i = 0; i < values.length; i++) {
     const { isComplete } = values[i];
     if (!isComplete) {
-      firstUncompleted = i;
+      uncompletedMission = i;
       break;
+    }
+    if (isComplete && i === values.length - 1) {
+      allCompleted = true;
     }
   }
 
-  const displayMissions = !firstUncompleted ? values : values.slice(0, firstUncompleted + 1);
+  const displayMissions = useMemo(() => {
+    if (allCompleted) return values;
+    if (uncompletedMission) return values.slice(0, uncompletedMission + 1);
+    return values[0] ? [values[0]] : values;
+  }, [allCompleted, uncompletedMission, values]);
 
   const missions = displayMissions.map(({ name, isComplete, achievementText, reward }, idx) => (
     <Fragment key={name}>

@@ -16,6 +16,9 @@ $title-margin-top: 10px;
   @include d.neonTitle;
 
   @at-root [data-theme='light'] & {
+    border-bottom: 1px solid v.$color-neon-purple;
+    border-top: 1px solid v.$color-neon-purple;
+
     @include d.neonTitle(v.$color-neon-purple);
   }
 }
@@ -44,7 +47,7 @@ $title-margin-top: 10px;
         border-color: v.$color-neon-blue;
 
         @at-root [data-theme='light'] & {
-          border-color: 1px solid v.$color-neon-purple;
+          border-color: v.$color-neon-purple;
         }
       }
     }

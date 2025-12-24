@@ -50,6 +50,6 @@ export const PLAYER_INFO: IPlayerState = {
   criticalHitChance: 0.1,
   attackSpeed: 1000,
   skills: SKILLS,
-  battleLocation: LOCATIONS[ELocation.gutterStreets],
+  battleLocation: LOCATIONS[ELocation.megaplexDumps],
   damageMultiplier: 1.1,
 };

@@ -12,6 +12,10 @@
 
       .ant-tabs-tab-btn:hover {
         @include d.neonTitle(v.$color-neon-purple);
+
+        @at-root [data-theme='light'] & {
+          @include d.neonTitle(v.$color-neon-pink);
+        }
       }
 
       .ant-tabs-tab-btn {
